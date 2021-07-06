@@ -103,7 +103,7 @@ export default {
     },
     showNormalUserBoard() {
       if (this.currentUser && this.currentUser.roles) {
-        return this.currentUser.roles.includes('ROLE_ADMIN');
+        return this.currentUser.roles.includes('ROLE_USER');
       }
 
       return false;

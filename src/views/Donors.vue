@@ -95,7 +95,7 @@
               <b-form-checkbox value="firstName">Imię</b-form-checkbox>
               <b-form-checkbox value="lastName">Nazwisko</b-form-checkbox>
               <b-form-checkbox value="pesel">Pesel</b-form-checkbox>
-              <b-form-checkbox value="blood">Grupa krwi</b-form-checkbox>
+              <b-form-checkbox value="bloodGroupWithRh">Grupa krwi</b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
@@ -144,6 +144,8 @@
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
           :sort-direction="sortDirection"
+          :empty-filtered-text="emptyFilteredText"
+          :empty-text="emptyText"
           show-empty
           small
 
@@ -213,10 +215,11 @@ export default {
       //   {isActive: false, age: 29, name: {first: 'Dick', last: 'Dunlap'}}
       // ],
       fields: [
+        {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         {key: 'firstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
         {key: 'lastName', label: 'Nazwisko', sortable: true, class: 'text-center'},
-        {key: 'pesel', label: 'Pesel', sortable: true, class: 'text-center'},
-        {key: 'blood', label: 'Rodzaj krwi', sortable: true,},
+        {key: 'pesel', label: 'PESEL', sortable: true, class: 'text-center'},
+        {key: 'bloodGroupWithRh', label: 'Rodzaj krwi', sortable: true,},
         // {
         //   key: 'blood',
         //   label: 'Czy aktywny?',
@@ -231,12 +234,15 @@ export default {
       ],
       totalRows: 1,
       currentPage: 1,
-      perPage: 8,
-      pageOptions: [4, 8, 12, {value: 100, text: "Pokaż wszystko (max: 100)"}],
+      perPage: 10,
+      pageOptions: [5, 10, 20, {value: 100, text: "Pokaż wszystko (max: 100)"}],
       sortBy: 'lastName',
       sortDesc: false,
+      emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
+      emptyText: 'Brak danych. Coś poszło nie tak... ☹',
       sortDirection: ' ',
       filter: null,
+
       filterOn: [],
       infoModal: {
         id: 'info-modal',
@@ -263,10 +269,11 @@ export default {
           for (const idx in response.data) {
 
             results_tmp.push({
+              id: response.data[idx].id,
               firstName: response.data[idx].firstName,
               lastName: response.data[idx].lastName,
               pesel: response.data[idx].pesel,
-              blood: response.data[idx].blood.name
+              bloodGroupWithRh: response.data[idx].bloodGroupWithRh
             });
           }
           this.items = results_tmp;
