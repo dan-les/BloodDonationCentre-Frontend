@@ -65,7 +65,7 @@
               <b-form-input
                   id="filter-input"
                   v-model="filter"
-                  placeholder="Type to Search"
+                  placeholder="Wpisz, aby wyszukać"
                   type="search"
               ></b-form-input>
 
@@ -92,17 +92,18 @@
                 :aria-describedby="ariaDescribedby"
                 class="mt-1"
             >
-              <b-form-checkbox value="name">Imię</b-form-checkbox>
-              <b-form-checkbox value="age">Wiek</b-form-checkbox>
-              <b-form-checkbox value="isActive">Czy aktywny</b-form-checkbox>
+              <b-form-checkbox value="firstName">Imię</b-form-checkbox>
+              <b-form-checkbox value="lastName">Nazwisko</b-form-checkbox>
+              <b-form-checkbox value="pesel">Pesel</b-form-checkbox>
+              <b-form-checkbox value="blood">Grupa krwi</b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
 
-        <b-col class="my-1" md="6" sm="5" >
+        <b-col class="my-1" md="6" sm="5">
           <b-form-group
               class="mb-0"
-              label="Ile danych"
+              label="Ile osób na stronę"
               label-align-sm="right"
               label-cols-lg="3"
               label-cols-md="4"
@@ -132,7 +133,6 @@
       </b-row>
 
 
-
       <!-- Main table element -->
       <b-table
           :current-page="currentPage"
@@ -146,12 +146,13 @@
           :sort-direction="sortDirection"
           show-empty
           small
+
           stacked="md"
           @filtered="onFiltered"
       >
-        <template #cell(name)="row">
-          {{ row.value.first }} {{ row.value.last }}
-        </template>
+        <!--        <template #cell(name)="row">-->
+        <!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
+        <!--        </template>-->
 
         <template #cell(actions)="row">
           <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">
@@ -182,52 +183,57 @@
 </template>
 
 <script>
+import DonorService from '../services/donor.service';
+
 export default {
   data() {
     return {
-      items: [
-        {isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}},
-        {isActive: false, age: 21, name: {first: 'Larsen', last: 'Shaw'}},
-        {
-          isActive: false,
-          age: 9,
-          name: {first: 'Mini', last: 'Navarro'},
-
-        },
-        {isActive: false, age: 89, name: {first: 'Geneva', last: 'Wilson'}},
-        {isActive: true, age: 38, name: {first: 'Jami', last: 'Carney'}},
-        {isActive: false, age: 27, name: {first: 'Essie', last: 'Dunlap'}},
-        {isActive: true, age: 40, name: {first: 'Thor', last: 'Macdonald'}},
-        {
-          isActive: true,
-          age: 87,
-          name: {first: 'Larsen', last: 'Shaw'},
-        },
-        {isActive: false, age: 26, name: {first: 'Mitzi', last: 'Navarro'}},
-        {isActive: false, age: 22, name: {first: 'Genevieve', last: 'Wilson'}},
-        {isActive: true, age: 38, name: {first: 'John', last: 'Carney'}},
-        {isActive: false, age: 29, name: {first: 'Dick', last: 'Dunlap'}}
-      ],
+      items: [],
+      // items2: [
+      //   {isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}},
+      //   {isActive: false, age: 21, name: {first: 'Larsen', last: 'Shaw'}},
+      //   {
+      //     isActive: false,
+      //     age: 9,
+      //     name: {first: 'Mini', last: 'Navarro'},
+      //
+      //   },
+      //   {isActive: false, age: 89, name: {first: 'Geneva', last: 'Wilson'}},
+      //   {isActive: true, age: 38, name: {first: 'Jami', last: 'Carney'}},
+      //   {isActive: false, age: 27, name: {first: 'Essie', last: 'Dunlap'}},
+      //   {isActive: true, age: 40, name: {first: 'Thor', last: 'Macdonald'}},
+      //   {
+      //     isActive: true,
+      //     age: 87,
+      //     name: {first: 'Larsen', last: 'Shaw'},
+      //   },
+      //   {isActive: false, age: 26, name: {first: 'Mitzi', last: 'Navarro'}},
+      //   {isActive: false, age: 22, name: {first: 'Genevieve', last: 'Wilson'}},
+      //   {isActive: true, age: 38, name: {first: 'John', last: 'Carney'}},
+      //   {isActive: false, age: 29, name: {first: 'Dick', last: 'Dunlap'}}
+      // ],
       fields: [
-        {key: 'name', label: 'Pełne imię', sortable: true, sortDirection: 'desc'},
-        {key: 'age', label: 'Wiek', sortable: true, class: 'text-center'},
-        {
-          key: 'isActive',
-          label: 'Czy aktywny?',
-          formatter: (value, key, item) => {
-            return value ? 'Yes' : 'No'
-          },
-          sortable: true,
-          sortByFormatted: true,
-          filterByFormatted: true
-        },
+        {key: 'firstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
+        {key: 'lastName', label: 'Nazwisko', sortable: true, class: 'text-center'},
+        {key: 'pesel', label: 'Pesel', sortable: true, class: 'text-center'},
+        {key: 'blood', label: 'Rodzaj krwi', sortable: true,},
+        // {
+        //   key: 'blood',
+        //   label: 'Czy aktywny?',
+        //   formatter: (value, key, item) => {
+        //     return value ? 'Yes' : 'No'
+        //   },
+        //   sortable: true,
+        //   sortByFormatted: true,
+        //   filterByFormatted: true
+        // },
         {key: 'actions', label: 'Akcje'}
       ],
       totalRows: 1,
       currentPage: 1,
       perPage: 8,
-      pageOptions: [4, 8, 12, {value: 100, text: "Show a lot (100)"}],
-      sortBy: '',
+      pageOptions: [4, 8, 12, {value: 100, text: "Pokaż wszystko (max: 100)"}],
+      sortBy: 'lastName',
       sortDesc: false,
       sortDirection: ' ',
       filter: null,
@@ -250,8 +256,32 @@ export default {
     }
   },
   mounted() {
-    // Set the initial number of items
-    this.totalRows = this.items.length
+
+    DonorService.getAllDonors().then(
+        response => {
+          const results_tmp = [];
+          for (const idx in response.data) {
+
+            results_tmp.push({
+              firstName: response.data[idx].firstName,
+              lastName: response.data[idx].lastName,
+              pesel: response.data[idx].pesel,
+              blood: response.data[idx].blood.name
+            });
+          }
+          this.items = results_tmp;
+          // Set the initial number of items
+          this.totalRows = this.items.length;
+        },
+        error => {
+          this.content =
+              (error.response && error.response.data && error.response.data.message) ||
+              error.message ||
+              error.toString();
+        }
+    )
+
+
   },
   methods: {
     info(item, index, button) {
