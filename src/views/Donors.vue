@@ -3,20 +3,19 @@
 
     <b-row>
       <b-col md="2" offset-md="10">
-
         <b-button block variant="primary">Dodaj dawcę!</b-button>
       </b-col>
-
     </b-row>
 
-    <b-row style="margin-top: 1rem">
+    <b-row style="margin-top: 1rem;">
       <!-- User Interface controls -->
       <b-row>
+        <!-- sortowanie-->
         <b-col class="my-1" lg="6">
           <b-form-group
               v-slot="{ ariaDescribedby }"
               class="mb-0"
-              label="Sort"
+              label="Sortowanie danych"
               label-align-sm="right"
               label-cols-sm="3"
               label-for="sort-by-select"
@@ -28,10 +27,10 @@
                   v-model="sortBy"
                   :aria-describedby="ariaDescribedby"
                   :options="sortOptions"
-                  class="w-75"
+                  class="w-50"
               >
                 <template #first>
-                  <option value="">-- none --</option>
+                  <option value="">-- brak sortowania --</option>
                 </template>
               </b-form-select>
 
@@ -42,35 +41,21 @@
                   class="w-25"
                   size="sm"
               >
-                <option :value="false">Asc</option>
-                <option :value="true">Desc</option>
+                <option :value="false">Rosnąco (A-Z)</option>
+                <option :value="true">Malejąco (Z-A)</option>
               </b-form-select>
             </b-input-group>
           </b-form-group>
         </b-col>
 
         <b-col class="my-1" lg="6">
-          <b-form-group
-              class="mb-0"
-              label="Initial sort"
-              label-align-sm="right"
-              label-cols-sm="3"
-              label-for="initial-sort-select"
-              label-size="sm"
-          >
-            <b-form-select
-                id="initial-sort-select"
-                v-model="sortDirection"
-                :options="['asc', 'desc', 'last']"
-                size="sm"
-            ></b-form-select>
-          </b-form-group>
+
         </b-col>
 
         <b-col class="my-1" lg="6">
           <b-form-group
               class="mb-0"
-              label="Filter"
+              label="Filtrowanie danych"
               label-align-sm="right"
               label-cols-sm="3"
               label-for="filter-input"
@@ -85,7 +70,7 @@
               ></b-form-input>
 
               <b-input-group-append>
-                <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                <b-button :disabled="!filter" @click="filter = ''">Wyczyść pole</b-button>
               </b-input-group-append>
             </b-input-group>
           </b-form-group>
@@ -96,8 +81,8 @@
               v-slot="{ ariaDescribedby }"
               v-model="sortDirection"
               class="mb-0"
-              description="Leave all unchecked to filter on all data"
-              label="Filter On"
+              description="Aby filtrować po wszystkich danych odznacz wszystko"
+              label="Filtruj według"
               label-align-sm="right"
               label-cols-sm="3"
               label-size="sm"
@@ -107,17 +92,17 @@
                 :aria-describedby="ariaDescribedby"
                 class="mt-1"
             >
-              <b-form-checkbox value="name">Name</b-form-checkbox>
-              <b-form-checkbox value="age">Age</b-form-checkbox>
-              <b-form-checkbox value="isActive">Active</b-form-checkbox>
+              <b-form-checkbox value="name">Imię</b-form-checkbox>
+              <b-form-checkbox value="age">Wiek</b-form-checkbox>
+              <b-form-checkbox value="isActive">Czy aktywny</b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
 
-        <b-col class="my-1" md="6" sm="5">
+        <b-col class="my-1" md="6" sm="5" >
           <b-form-group
               class="mb-0"
-              label="Per page"
+              label="Ile danych"
               label-align-sm="right"
               label-cols-lg="3"
               label-cols-md="4"
@@ -145,6 +130,7 @@
           ></b-pagination>
         </b-col>
       </b-row>
+
 
 
       <!-- Main table element -->
@@ -223,11 +209,11 @@ export default {
         {isActive: false, age: 29, name: {first: 'Dick', last: 'Dunlap'}}
       ],
       fields: [
-        {key: 'name', label: 'Person full name', sortable: true, sortDirection: 'desc'},
-        {key: 'age', label: 'Person age', sortable: true, class: 'text-center'},
+        {key: 'name', label: 'Pełne imię', sortable: true, sortDirection: 'desc'},
+        {key: 'age', label: 'Wiek', sortable: true, class: 'text-center'},
         {
           key: 'isActive',
-          label: 'Is Active',
+          label: 'Czy aktywny?',
           formatter: (value, key, item) => {
             return value ? 'Yes' : 'No'
           },
@@ -235,7 +221,7 @@ export default {
           sortByFormatted: true,
           filterByFormatted: true
         },
-        {key: 'actions', label: 'Actions'}
+        {key: 'actions', label: 'Akcje'}
       ],
       totalRows: 1,
       currentPage: 1,
@@ -243,7 +229,7 @@ export default {
       pageOptions: [4, 8, 12, {value: 100, text: "Show a lot (100)"}],
       sortBy: '',
       sortDesc: false,
-      sortDirection: 'asc',
+      sortDirection: ' ',
       filter: null,
       filterOn: [],
       infoModal: {
