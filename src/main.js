@@ -21,7 +21,7 @@ Vue.use(VeeValidate);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.use(Vuex);
-
+Vue.config.devtools = true
 Vue.use(BootstrapVue)
 // Optionally install the BootstrapVue icon components plugin
 Vue.use(IconsPlugin)

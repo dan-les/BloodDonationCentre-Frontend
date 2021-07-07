@@ -2,13 +2,10 @@
   <div id="app">
 
 
-    <b-navbar toggleable="lg" type="dark" variant="primary">
+    <b-navbar style="margin-bottom: 2rem;" toggleable="lg" type="dark" variant="primary">
       <b-navbar-brand @click.prevent>Centrum Krwiodwstwa</b-navbar-brand>
 
       <b-navbar-nav>
-
-
-
         <b-nav-item>
           <b-link router-tag="li" to="/home">
             <font-awesome-icon icon="home"/>
@@ -23,9 +20,9 @@
         </b-nav-item>
 
         <!---->
-        <b-nav-item v-if="showStaffBoard">
-          <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>
-        </b-nav-item>
+<!--        <b-nav-item v-if="showStaffBoard">-->
+<!--          <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>-->
+<!--        </b-nav-item>-->
 
         <b-nav-item-dropdown v-if="showStaffBoard" right text="Dawcy">
           <b-dropdown-item>
@@ -33,7 +30,7 @@
             <!--            <router-link to="/donors" id="thisLink" class="nav-item">Wyświetl dawców</router-link>-->
           </b-dropdown-item>
           <b-dropdown-item>
-            <b-link router-tag="li" to="/add">Dodaj dawcę</b-link>
+            <b-link router-tag="li" to="/donors/add">Dodaj dawcę</b-link>
             <!--            <router-link to="/donors">Dodaj dawcę</router-link>-->
           </b-dropdown-item>
         </b-nav-item-dropdown>

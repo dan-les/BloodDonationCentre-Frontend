@@ -61,11 +61,13 @@
 
         <b-card
             img-alt="Image"
-            img-src="https://bi.im-g.pl/im/77/39/16/z23303543Q,Warto-znac-swoja-grupe-krwi--oznaczenie-grupy-krwi.jpg" overlay></b-card>
+            img-src="https://bi.im-g.pl/im/77/39/16/z23303543Q,Warto-znac-swoja-grupe-krwi--oznaczenie-grupy-krwi.jpg"
+            overlay></b-card>
 
         <b-card
             img-alt="Image"
-            img-src="https://1.bp.blogspot.com/-jCNEDiu1kJc/XPfZ9DdVgKI/AAAAAAAAAVU/vPLjciZhyQ08N3qvXhqVQcXqG8R5iLvrACEwYBhgL/s1600/Zrzut%2Bekranu%2B%25287%2529.png" img-top>
+            img-src="https://1.bp.blogspot.com/-jCNEDiu1kJc/XPfZ9DdVgKI/AAAAAAAAAVU/vPLjciZhyQ08N3qvXhqVQcXqG8R5iLvrACEwYBhgL/s1600/Zrzut%2Bekranu%2B%25287%2529.png"
+            img-top>
           <b-card-text>
             This is a wider card with supporting text below as a natural lead-in to additional content.
             This card has even longer content than the first.

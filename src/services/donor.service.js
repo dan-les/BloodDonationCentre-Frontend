@@ -7,6 +7,10 @@ class DonorService {
     getAllDonors() {
         return axios.get(API_URL + 'list', {headers: authHeader()});
     }
+
+    addDonor(data) {
+        return axios.post(API_URL, data, {headers: authHeader()});
+    }
 }
 
 export default new DonorService();

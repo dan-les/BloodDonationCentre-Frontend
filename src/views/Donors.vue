@@ -1,9 +1,13 @@
 <template>
-  <b-container fluid style="margin-top: 1rem">
+  <b-container fluid>
 
     <b-row>
       <b-col md="2" offset-md="10">
-        <b-button block variant="primary">Dodaj dawcę!</b-button>
+        <b-link :to="{ name: 'addDonor' }">
+          <b-button block variant="primary">Dodaj dawcę!</b-button>
+        </b-link>
+
+
       </b-col>
     </b-row>
 
@@ -136,6 +140,8 @@
       <!-- Main table element -->
       <b-table
           :current-page="currentPage"
+          :empty-filtered-text="emptyFilteredText"
+          :empty-text="emptyText"
           :fields="fields"
           :filter="filter"
           :filter-included-fields="filterOn"
@@ -144,8 +150,6 @@
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
           :sort-direction="sortDirection"
-          :empty-filtered-text="emptyFilteredText"
-          :empty-text="emptyText"
           show-empty
           small
 
