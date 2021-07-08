@@ -20,9 +20,9 @@
         </b-nav-item>
 
         <!---->
-<!--        <b-nav-item v-if="showStaffBoard">-->
-<!--          <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>-->
-<!--        </b-nav-item>-->
+        <!--        <b-nav-item v-if="showStaffBoard">-->
+        <!--          <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>-->
+        <!--        </b-nav-item>-->
 
         <b-nav-item-dropdown v-if="showStaffBoard" right text="Dawcy">
           <b-dropdown-item>

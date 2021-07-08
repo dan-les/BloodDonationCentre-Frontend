@@ -57,9 +57,9 @@ export const router = new Router({
             component: () => import('./views/BoardUser.vue')
         },
         {
-            path: "/donors/add",
-            name: "addDonor",
-            component: () => import("./views/AddDonor.vue")
+            path: "/donors/edit/:id",
+            name: "editDonor",
+            component: () => import("./views/EditDonor.vue")
         }
     ]
 });

@@ -3,9 +3,9 @@
 
     <b-row>
       <b-col md="2" offset-md="10">
-        <b-link :to="{ name: 'addDonor' }">
-          <b-button block variant="primary">Dodaj dawcę!</b-button>
-        </b-link>
+        <!--        <b-link :to="{ name: 'editDonor', param:  12}">-->
+        <b-button block variant="primary">Dodaj dawcę!</b-button>
+        <!--        </b-link>-->
 
 
       </b-col>
@@ -156,17 +156,20 @@
           stacked="md"
           @filtered="onFiltered"
       >
-        <!--        <template #cell(name)="row">-->
-        <!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
-        <!--        </template>-->
+        <template #cell(name)="row">
+          {{ row.value.firstName }} {{ row.value.lastName }}
+        </template>
 
         <template #cell(actions)="row">
           <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">
-            Info modal
+            Info modal - JSON
           </b-button>
-          <b-button size="sm" @click="row.toggleDetails">
-            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details
+          <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">
+            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON
           </b-button>
+          <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
+            <b-button class="mr-1" size="sm">Edytuj dawcę</b-button>
+          </b-link>
         </template>
 
         <template #row-details="row">
@@ -174,8 +177,16 @@
             <ul>
               <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
             </ul>
+
           </b-card>
+
         </template>
+        <!--        <template #cell(actions)="row">-->
+        <!--        <b-link :to="{ name: 'addDonor' }">-->
+        <!--          <b-button block variant="primary">Dodaj dawcę!</b-button>-->
+        <!--        </b-link>-->
+        <!--        </template>-->
+
       </b-table>
 
       <!-- Info modal -->
@@ -220,8 +231,10 @@ export default {
       // ],
       fields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
+        {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
+        {key: 'email', label: 'Email', sortable: true, sortDirection: 'desc'},
         {key: 'firstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
-        {key: 'lastName', label: 'Nazwisko', sortable: true, class: 'text-center'},
+        {key: 'lastName', label: 'Nazwisko', sortable: true, sortDirection: 'desc'},
         {key: 'pesel', label: 'PESEL', sortable: true, class: 'text-center'},
         {key: 'bloodGroupWithRh', label: 'Rodzaj krwi', sortable: true,},
         // {
@@ -269,11 +282,14 @@ export default {
 
     DonorService.getAllDonors().then(
         response => {
+          // console.log(response);
           const results_tmp = [];
           for (const idx in response.data) {
 
             results_tmp.push({
               id: response.data[idx].id,
+              username: response.data[idx].username,
+              email: response.data[idx].email,
               firstName: response.data[idx].firstName,
               lastName: response.data[idx].lastName,
               pesel: response.data[idx].pesel,

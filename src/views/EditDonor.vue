@@ -4,20 +4,16 @@
     <b-row>
       <b-col md="6">
         <b-form v-if="show" @reset="onReset" @submit.prevent="onSubmit">
-          <!--      <b-form-group-->
-          <!--          id="input-group-1"-->
-          <!--          label="Email address:"-->
-          <!--          label-for="input-1"-->
-          <!--          description="We'll never share your email with anyone else."-->
-          <!--      >-->
-          <!--        <b-form-input-->
-          <!--            id="input-1"-->
-          <!--            v-model="form.email"-->
-          <!--            type="email"-->
-          <!--            placeholder="Enter email"-->
-          <!--            required-->
-          <!--        ></b-form-input>-->
-          <!--      </b-form-group>-->
+
+
+          <b-form-group id="input-group-2" label="Wpisz login:" label-for="input-11">
+            <b-form-input
+                id="first-name"
+                v-model="form.login"
+                placeholder="login"
+                required
+            ></b-form-input>
+          </b-form-group>
 
           <b-form-group id="input-group-2" label="Wpisz imię:" label-for="input-1">
             <b-form-input
@@ -34,6 +30,21 @@
                 v-model="form.lastName"
                 placeholder="nazwisko"
                 required
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group
+              id="input-group-1"
+              label="Wpisz Email:"
+              label-for="input-1"
+
+          >
+            <b-form-input
+                id="input-1"
+                v-model="form.email"
+                placeholder=" email"
+                required
+                type="email"
             ></b-form-input>
           </b-form-group>
 
@@ -55,7 +66,7 @@
             ></b-form-select>
           </b-form-group>
 
-          <b-button type="submit" variant="primary">Dodaj dawcę</b-button>
+          <b-button type="submit" variant="primary">Aktualizuj dane dawcy</b-button>
           <b-button type="reset" variant="danger">Resetuj pola</b-button>
         </b-form>
       </b-col>
@@ -71,9 +82,9 @@
     </b-row>
 
 
-        <b-card class="mt-3" header="JSON - POST">
-          <pre class="m-0">{{ form }}</pre>
-        </b-card>
+    <b-card class="mt-3" header="JSON - POST">
+      <pre class="m-0">{{ form }}</pre>
+    </b-card>
   </b-container>
 
 </template>
@@ -82,10 +93,37 @@
 import DonorService from '../services/donor.service';
 
 export default {
+  mounted() {
+
+    DonorService.getDonorById(this.$route.params.id).then(
+        response => {
+          // console.log(response);
+              this.form.login = response.data.username,
+              this.form.email = response.data.email,
+              this.form.firstName = response.data.firstName,
+              this.form.lastName = response.data.lastName,
+              this.form.pesel = response.data.pesel,
+              this.form.bloodGroupWithRh = response.data.bloodGroupWithRh
+
+          // Set the initial number of items
+          // this.totalRows = this.items.length;
+        },
+        error => {
+          this.content =
+              (error.response && error.response.data && error.response.data.message) ||
+              error.message ||
+              error.toString();
+        }
+    )
+
+
+  },
   data() {
     return {
       form: {
         // email: '',
+        login: '',
+        email: '',
         firstName: '',
         lastName: '',
         pesel: '',
@@ -98,33 +136,38 @@ export default {
     }
   },
   methods: {
-    onSubmit(event) {
-      event.preventDefault()
-      // alert(JSON.stringify(this.form))
+    // onSubmit(event) {
+    //   event.preventDefault()
+    //   // alert(JSON.stringify(this.form))
 
 
-      DonorService.addDonor(this.form)
-          .then(response => {
-
-            console.log(response.data);
-
-            this.form.firstName = '';
-            this.form.lastName = '';
-            this.form.pesel = '';
-            this.form.bloodGroupWithRh = null;
-            this.makeToastSuccess();
-          })
-          .catch(e => {
-            this.makeToastError();
-            console.log(e);
-          });
-
-    },
+    //   DonorService.getDonorById(this.form)
+    //       .then(response => {
+    //
+    //         console.log(response.data);
+    //
+    //         this.form.firstName = '';
+    //         this.form.lastName = '';
+    //         this.form.pesel = '';
+    //         this.form.bloodGroupWithRh = null;
+    //         this.makeToastSuccess();
+    //       })
+    //       .catch(e => {
+    //         this.makeToastError();
+    //         console.log(e);
+    //       });
+    //
+    // }
+    //   ,
     onReset(event) {
       event.preventDefault()
       // Reset our form values
-      this.form.firstName = ''
-      this.form.bloodGroupWithRh = null
+          this.form.login = '',
+          this.form.email = '',
+          this.form.firstName = '',
+          this.form.lastName = '',
+          this.form.pesel = '',
+          this.form.bloodGroupWithRh = null
 
       // Trick to reset/clear native browser form validation state
       this.show = false
@@ -134,8 +177,8 @@ export default {
     },
 
     makeToastSuccess() {
-      this.$bvToast.toast('Nowy dawca został pomyslnie dodany', {
-        title: `Dodanie nowego dawcy.`,
+      this.$bvToast.toast('Dawca został pomyslnie zedytowanydodany', {
+        title: `Edycja dawcy.`,
         variant: 'info',
         solid: true
       })
