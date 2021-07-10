@@ -9,7 +9,7 @@
           <b-form-group id="input-group-2" label="Wpisz login:" label-for="input-11">
             <b-form-input
                 id="first-name"
-                v-model="form.login"
+                v-model="form.username"
                 placeholder="login"
                 required
             ></b-form-input>
@@ -61,12 +61,20 @@
             <b-form-select
                 id="blood"
                 v-model="form.bloodGroupWithRh"
-                :options="foods"
+                :options="bloods"
+                required
+            ></b-form-select>
+          </b-form-group>
+          <b-form-group id="input-group-4" label="Płeć:" label-for="input-5">
+            <b-form-select
+                id="gender"
+                v-model="form.gender"
+                :options="genders"
                 required
             ></b-form-select>
           </b-form-group>
 
-          <b-button type="submit" variant="primary">Aktualizuj dane dawcy</b-button>
+          <b-button style="margin: 1rem" type="submit" variant="primary">Zapisz dane dawcy</b-button>
           <b-button type="reset" variant="danger">Resetuj pola</b-button>
         </b-form>
       </b-col>
@@ -74,9 +82,14 @@
       <b-col align-self="end">
         <b-row>
           <b-link :to="'/donors'">
-            <b-button>Powrót na stronę z dawcami
+            <b-button style="margin: 1rem">
+              Powrót na stronę z dawcami
             </b-button>
+
           </b-link>
+          <b-button style="margin: 1rem" variant="danger" @click="deleteDonor">
+            Usuń dawcę
+          </b-button>
         </b-row>
       </b-col>
     </b-row>
@@ -94,19 +107,24 @@ import DonorService from '../services/donor.service';
 
 export default {
   mounted() {
-
     DonorService.getDonorById(this.$route.params.id).then(
         response => {
           // console.log(response);
-              this.form.login = response.data.username,
-              this.form.email = response.data.email,
-              this.form.firstName = response.data.firstName,
-              this.form.lastName = response.data.lastName,
-              this.form.pesel = response.data.pesel,
-              this.form.bloodGroupWithRh = response.data.bloodGroupWithRh
+          this.form.username = response.data.username;
+          this.form.email = response.data.email;
+          this.form.firstName = response.data.firstName;
+          this.form.lastName = response.data.lastName;
+          this.form.pesel = response.data.pesel;
 
-          // Set the initial number of items
-          // this.totalRows = this.items.length;
+          if (response.data.bloodGroupWithRh !== '') {
+            this.form.bloodGroupWithRh = response.data.bloodGroupWithRh;
+          }
+
+          if (response.data.gender !== '') {
+            this.form.gender = response.data.gender;
+          }
+
+
         },
         error => {
           this.content =
@@ -115,59 +133,55 @@ export default {
               error.toString();
         }
     )
-
-
   },
   data() {
     return {
       form: {
         // email: '',
-        login: '',
+        username: '',
         email: '',
         firstName: '',
         lastName: '',
         pesel: '',
         bloodGroupWithRh: null,
+        gender: null,
         // checked: []
       },
-      foods: [{text: 'Wybierz grupę krwi', value: null},
+      bloods: [{text: 'wybierz grupę krwi', value: null},
         'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
+      genders: [{text: 'wybierz płeć', value: null}, {text: 'Kobieta', value: 'K'}, {text: 'Mężczyzna', value: 'M'}],
       show: true
+
     }
   },
   methods: {
-    // onSubmit(event) {
-    //   event.preventDefault()
-    //   // alert(JSON.stringify(this.form))
+    onSubmit(event) {
+      console.log(this.form);
 
+      event.preventDefault()
+      // alert(JSON.stringify(this.form))
 
-    //   DonorService.getDonorById(this.form)
-    //       .then(response => {
-    //
-    //         console.log(response.data);
-    //
-    //         this.form.firstName = '';
-    //         this.form.lastName = '';
-    //         this.form.pesel = '';
-    //         this.form.bloodGroupWithRh = null;
-    //         this.makeToastSuccess();
-    //       })
-    //       .catch(e => {
-    //         this.makeToastError();
-    //         console.log(e);
-    //       });
-    //
-    // }
-    //   ,
+      DonorService.putDonor(this.$route.params.id, this.form)
+          .then(response => {
+            this.makeToastSuccess('Dane dawcy zostały pomyślnie zmienione');
+          })
+          .catch(e => {
+            this.makeToastError();
+            console.log(e);
+          });
+
+    }
+    ,
     onReset(event) {
       event.preventDefault()
       // Reset our form values
-          this.form.login = '',
+      this.form.username = '',
           this.form.email = '',
           this.form.firstName = '',
           this.form.lastName = '',
           this.form.pesel = '',
           this.form.bloodGroupWithRh = null
+      this.form.gender = null
 
       // Trick to reset/clear native browser form validation state
       this.show = false
@@ -176,21 +190,41 @@ export default {
       })
     },
 
-    makeToastSuccess() {
-      this.$bvToast.toast('Dawca został pomyslnie zedytowanydodany', {
-        title: `Edycja dawcy.`,
+    makeToastSuccess: function (message) {
+      this.$bvToast.toast(message, {
+        title: `Sukces`,
         variant: 'info',
+        autoHideDelay: 2000,
+        solid: true
+      })
+
+    },
+    makeToastError() {
+      this.$bvToast.toast('Coś poszło nie tak...', {
+        title: `Błąd`,
+        variant: 'danger',
+        autoHideDelay: 2000,
         solid: true
       })
     },
-    // makeToastError() {
-    //   this.$bvToast.toast('Coś poszło nie tak...', {
-    //     title: `Dodanie nowego dawcy.`,
-    //     variant: 'error',
-    //     solid: true
-    //   })
+    deleteDonor() {
+      DonorService.deleteDonor(this.$route.params.id)
+          .then(response => {
+            this.form.username = '',
+                this.form.email = '',
+                this.form.firstName = '',
+                this.form.lastName = '',
+                this.form.pesel = '',
+                this.form.bloodGroupWithRh = null
+            this.form.gender = null
 
-
+            this.makeToastSuccess('Pomyślnie usunięto dawcę');
+          })
+          .catch(e => {
+            this.makeToastError();
+            console.log(e);
+          });
+    }
   }
 }
 </script>

@@ -99,7 +99,8 @@
               <b-form-checkbox value="firstName">Imię</b-form-checkbox>
               <b-form-checkbox value="lastName">Nazwisko</b-form-checkbox>
               <b-form-checkbox value="pesel">Pesel</b-form-checkbox>
-              <b-form-checkbox value="bloodGroupWithRh">Grupa krwi</b-form-checkbox>
+              <b-form-checkbox value="bloodGroupWithRh">Krew</b-form-checkbox>
+              <b-form-checkbox value="gender">Płeć</b-form-checkbox>
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
@@ -168,7 +169,7 @@
             {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON
           </b-button>
           <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
-            <b-button class="mr-1" size="sm">Edytuj dawcę</b-button>
+            <b-button class="mr-1" size="sm">Edytuj</b-button>
           </b-link>
         </template>
 
@@ -206,29 +207,7 @@ export default {
   data() {
     return {
       items: [],
-      // items2: [
-      //   {isActive: true, age: 40, name: {first: 'Dickerson', last: 'Macdonald'}},
-      //   {isActive: false, age: 21, name: {first: 'Larsen', last: 'Shaw'}},
-      //   {
-      //     isActive: false,
-      //     age: 9,
-      //     name: {first: 'Mini', last: 'Navarro'},
-      //
-      //   },
-      //   {isActive: false, age: 89, name: {first: 'Geneva', last: 'Wilson'}},
-      //   {isActive: true, age: 38, name: {first: 'Jami', last: 'Carney'}},
-      //   {isActive: false, age: 27, name: {first: 'Essie', last: 'Dunlap'}},
-      //   {isActive: true, age: 40, name: {first: 'Thor', last: 'Macdonald'}},
-      //   {
-      //     isActive: true,
-      //     age: 87,
-      //     name: {first: 'Larsen', last: 'Shaw'},
-      //   },
-      //   {isActive: false, age: 26, name: {first: 'Mitzi', last: 'Navarro'}},
-      //   {isActive: false, age: 22, name: {first: 'Genevieve', last: 'Wilson'}},
-      //   {isActive: true, age: 38, name: {first: 'John', last: 'Carney'}},
-      //   {isActive: false, age: 29, name: {first: 'Dick', last: 'Dunlap'}}
-      // ],
+
       fields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
@@ -236,7 +215,8 @@ export default {
         {key: 'firstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
         {key: 'lastName', label: 'Nazwisko', sortable: true, sortDirection: 'desc'},
         {key: 'pesel', label: 'PESEL', sortable: true, class: 'text-center'},
-        {key: 'bloodGroupWithRh', label: 'Rodzaj krwi', sortable: true,},
+        {key: 'bloodGroupWithRh', label: 'Krew', sortable: true,},
+        {key: 'gender', label: 'Płeć', sortable: true,},
         // {
         //   key: 'blood',
         //   label: 'Czy aktywny?',
@@ -293,7 +273,8 @@ export default {
               firstName: response.data[idx].firstName,
               lastName: response.data[idx].lastName,
               pesel: response.data[idx].pesel,
-              bloodGroupWithRh: response.data[idx].bloodGroupWithRh
+              bloodGroupWithRh: response.data[idx].bloodGroupWithRh,
+              gender: response.data[idx].gender
             });
           }
           this.items = results_tmp;
