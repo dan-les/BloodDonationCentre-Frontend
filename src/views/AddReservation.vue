@@ -12,7 +12,7 @@
 
     <b-form-group label="Wybór typu pobrania:" v-slot="{ ariaDescribedby }">
       <b-form-radio-group
-          v-model="selected"
+          v-model="selectedCollectionType"
           :options="options"
           :aria-describedby="ariaDescribedby"
           name="radios-stacked"
@@ -31,7 +31,7 @@
     >
       <b-form-radio-group
           id="btn-radios-2"
-          v-model="selected"
+          v-model="selectedTime"
           :options="optionsTime"
           :aria-describedby="ariaDescribedby"
           button-variant="outline-primary"
@@ -114,12 +114,13 @@ export default {
           labelHelp: "Poruszaj się po kalendarzu za pomocą klawiszy strzałek"
 
         }},
-      selected: 'blood',
+      selectedCollectionType: 'blood',
       options: [
         { text: 'Pobranie krwi pełnej', value: 'blood' },
         { text: 'Donacja osocza', value: 'plasma' },
         // { text: 'Third radio', value: 'third' }
       ],
+      selectedTime: null,
       optionsTime: [
         { text: '8:00', value: 'radio1' },
         { text: '9:00', value: 'radio2' },
