@@ -2,7 +2,7 @@
   <div id="app">
 
 
-    <b-navbar style="margin-bottom: 2rem;" toggleable="lg" type="dark" variant="primary">
+    <b-navbar style="margin-bottom: 1.5rem;" toggleable="lg" type="dark" variant="primary">
       <b-navbar-brand @click.prevent>Centrum Krwiodwstwa</b-navbar-brand>
 
       <b-navbar-nav>
@@ -67,7 +67,6 @@
             to="/logout" @click.prevent="logOut">
           <font-awesome-icon icon="sign-out-alt"/>
           Wyloguj się!
-
         </b-nav-item>
       </div>
     </b-navbar>

@@ -60,6 +60,11 @@ export const router = new Router({
             path: "/donors/edit/:id",
             name: "editDonor",
             component: () => import("./views/EditDonor.vue")
+        },
+        {
+            path: "/reservation/add/:id",
+            name: "addReservation",
+            component: () => import("./views/AddReservation.vue")
         }
     ]
 });

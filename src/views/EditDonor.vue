@@ -1,6 +1,9 @@
 <template>
 
   <b-container class="bv-example-row">
+    <b-jumbotron
+        header="Edycja danych dawcy" header-tag="h4" header-level="5" style="padding: 0.9rem">
+    </b-jumbotron>
     <b-row>
       <b-col md="6">
         <b-form v-if="show" @reset="onReset" @submit.prevent="onSubmit">

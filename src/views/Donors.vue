@@ -1,13 +1,13 @@
 <template>
   <b-container fluid>
-
+    <b-jumbotron
+        header="Przegląd dawców" header-tag="h4" header-level="5" style="padding: 0.9rem">
+    </b-jumbotron>
     <b-row>
       <b-col md="2" offset-md="10">
         <!--        <b-link :to="{ name: 'editDonor', param:  12}">-->
         <b-button block variant="primary">Dodaj dawcę!</b-button>
         <!--        </b-link>-->
-
-
       </b-col>
     </b-row>
 
@@ -162,15 +162,21 @@
         </template>
 
         <template #cell(actions)="row">
-          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">
-            Info modal - JSON
-          </b-button>
-          <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">
-            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON
-          </b-button>
-          <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
-            <b-button class="mr-1" size="sm">Edytuj</b-button>
+<!--          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">-->
+<!--            Info modal - JSON-->
+<!--          </b-button>-->
+<!--          <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
+<!--            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
+<!--          </b-button>-->
+
+          <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">
+            <b-button class="mr-1" variant="primary" size="sm">Umów wizytę</b-button>
           </b-link>
+
+          <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
+            <b-button class="mr-1" style="margin-left: 0.6rem" size="sm">Edytuj</b-button>
+          </b-link>
+
         </template>
 
         <template #row-details="row">
