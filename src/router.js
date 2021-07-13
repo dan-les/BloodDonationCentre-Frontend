@@ -8,6 +8,7 @@ Vue.use(Router);
 
 export const router = new Router({
     mode: 'history',
+    hidden: true,
     routes: [
         {
             path: '/',
@@ -51,6 +52,18 @@ export const router = new Router({
             component: () => import('./views/Donors.vue')
         },
         {
+            path: '/reservation',
+            name: 'reservations',
+            // lazy-loaded
+            component: () => import('./views/Reservations.vue')
+        },
+        {
+            path: '/donations',
+            name: 'donations',
+            // lazy-loaded
+            component: () => import('./views/Donations.vue')
+        },
+        {
             path: '/user',
             name: 'user',
             // lazy-loaded
@@ -59,12 +72,18 @@ export const router = new Router({
         {
             path: "/donors/edit/:id",
             name: "editDonor",
+            // lazy-loaded
             component: () => import("./views/EditDonor.vue")
         },
         {
             path: "/reservation/add/:id",
             name: "addReservation",
+            // lazy-loaded
             component: () => import("./views/AddReservation.vue")
+        },
+        {
+            path: '*',
+            redirect: '/'
         }
     ]
 });

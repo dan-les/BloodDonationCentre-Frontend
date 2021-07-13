@@ -36,6 +36,14 @@
         </b-nav-item-dropdown>
         <!---->
 
+        <b-nav-item v-if="showStaffBoard">
+          <b-link :to="{name: 'reservations'}" router-tag="li">Rezerwacje</b-link>
+        </b-nav-item>
+
+        <b-nav-item v-if="showStaffBoard">
+          <b-link :to="{name: 'donations'}" router-tag="li">Pobrania</b-link>
+        </b-nav-item>
+
         <b-nav-item v-if="showNormalUserBoard">
           <b-link v-if="currentUser" router-tag="li" to="/user">User</b-link>
         </b-nav-item>

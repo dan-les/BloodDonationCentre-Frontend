@@ -2,7 +2,7 @@
 
   <b-container class="bv-example-row">
     <b-jumbotron
-        header="Edycja danych dawcy" header-tag="h4" header-level="5" style="padding: 0.9rem">
+        header="Edycja danych dawcy" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
     <b-row>
       <b-col md="6">

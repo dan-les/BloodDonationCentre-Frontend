@@ -22,7 +22,7 @@
             Na początku wymagane jest wypełnienia formularza wstępnego.
             Dodatkowo przeprowadzane jest wstepne badanie.
             Samo pobranie krwi zajmuje około 10 minut. Oddanie osocza metodą plazmaferezy automatycznej lub płytek krwi
-            metodą automatycznej trombaferezy może potrwać dłużej - około 2 godziny.
+            metodą automatycznej trombaferezy może potrwać dłużej - około dwie godziny.
           </b-card-text>
         </b-card>
 

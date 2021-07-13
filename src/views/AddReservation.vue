@@ -1,50 +1,59 @@
 <template>
   <b-container>
-      <b-jumbotron
-          header="Rezerwacja terminu na pobranie krwi" header-tag="h4" header-level="5" style="padding: 0.9rem">
-      </b-jumbotron>
+    <b-jumbotron
+        header="Rezerwacja terminu na pobranie krwi" header-level="5" header-tag="h4" style="padding: 0.9rem">
+      Wybrany dawca:
+      <b-table
+          :fields="fields" :items="donor" responsive="sm" small>
+      </b-table>
+    </b-jumbotron>
 
-    <b>Wybrany dawca:</b>
-    <b-table
-        small :fields="fields" :items="donor" responsive="sm">
-    </b-table>
 
-
-    <b-form-group label="Wybór typu pobrania:" v-slot="{ ariaDescribedby }">
+    <b-form-group v-slot="{ ariaDescribedby }" label="Wybór typu pobrania:">
       <b-form-radio-group
-          v-model="selectedCollectionType"
-          :options="options"
+          v-model="selectedDonationType"
           :aria-describedby="ariaDescribedby"
+          :options="options"
           name="radios-stacked"
           stacked
       ></b-form-radio-group>
     </b-form-group>
-<!--    <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
+    <!--    <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
 
-    Wybierz termin:
-    <b-form-datepicker  v-model="value" :min="min" :max="max" locale="pl" v-bind="labelsLanguagePL['pl']"></b-form-datepicker>
+    <div v-if="selectedDonationType !== ''">
+      Wybierz termin:
+      <b-form-datepicker
+          v-model="dateValue" v-bind="labelsLanguagePL['pl']" :date-disabled-fn="dateDisabled" :min="min" locale="pl"
+          start-weekday="1">
 
+      </b-form-datepicker>
+    </div>
 
-    <b-form-group style="margin-top: 1.3rem"
-        label="Wybierz godzinę:"
-        v-slot="{ ariaDescribedby }"
-    >
-      <b-form-radio-group
-          id="btn-radios-2"
-          v-model="selectedTime"
-          :options="optionsTime"
-          :aria-describedby="ariaDescribedby"
-          button-variant="outline-primary"
-          name="radio-btn-outline"
-          buttons
+    <div v-if="dateValue !== ''">
+      <b-form-group v-slot="{ ariaDescribedby }"
+                    label="Wybierz godzinę:"
+                    style="margin-top: 1.3rem"
+      >
+        <b-form-radio-group
+            id="btn-radios-2"
+            v-model="selectedTime"
+            :aria-describedby="ariaDescribedby"
+            :options="optionsTime"
+            button-variant="outline-primary"
+            buttons
+            name="radio-btn-outline"
+        ></b-form-radio-group>
+      </b-form-group>
 
-      ></b-form-radio-group>
-    </b-form-group>
+    </div>
 
+    <div v-if="selectedTime !== null && dateValue !== '' &&  selectedDonationType !== ''">
+      <b-button block variant="primary">Zarezerwuj termin na pobranie materiału biologicznego</b-button>
+    </div>
 
     <b-card class="mt-3" header="JSON - POST">
       <pre class="m-0">{{ donor }}</pre>
-      {{max}}
+      {{ max }}
     </b-card>
   </b-container>
 
@@ -52,22 +61,24 @@
 
 <script>
 import DonorService from '../services/donor.service';
+import DonationService from '../services/donation.service';
+import ReservationService from '../services/reservation.service'
 
 export default {
   mounted() {
     DonorService.getDonorById(this.$route.params.id).then(
         response => {
           const results_tmp = [];
-            results_tmp.push({
-              id: response.data.id,
-              username: response.data.username,
-              email: response.data.email,
-              firstName: response.data.firstName,
-              lastName: response.data.lastName,
-              pesel: response.data.pesel,
-              bloodGroupWithRh: response.data.bloodGroupWithRh,
-              gender: response.data.gender
-            });
+          results_tmp.push({
+            id: response.data.id,
+            username: response.data.username,
+            email: response.data.email,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            pesel: response.data.pesel,
+            bloodGroupWithRh: response.data.bloodGroupWithRh,
+            gender: response.data.gender
+          });
 
           this.donor = results_tmp;
         },
@@ -94,7 +105,7 @@ export default {
     // maxDate.setFullYear(2022);
 
     return {
-      value: '',
+      dateValue: '',
       min: minDate,
       max: maxDate,
       labelsLanguagePL: {
@@ -113,27 +124,16 @@ export default {
           labelNav: "Nawigacja kalendarza",
           labelHelp: "Poruszaj się po kalendarzu za pomocą klawiszy strzałek"
 
-        }},
-      selectedCollectionType: 'blood',
+        }
+      },
+      selectedDonationType: '',
       options: [
-        { text: 'Pobranie krwi pełnej', value: 'blood' },
-        { text: 'Donacja osocza', value: 'plasma' },
+        {text: 'Pobranie krwi pełnej', value: 'blood'},
+        {text: 'Donacja osocza', value: 'plasma'},
         // { text: 'Third radio', value: 'third' }
       ],
       selectedTime: null,
-      optionsTime: [
-        { text: '8:00', value: 'radio1' },
-        { text: '9:00', value: 'radio2' },
-        { text: '10:00', value: 'radio3', disabled: true },
-        { text: '11:00', value: 'radio4' },
-        { text: '12:00', value: 'radio5' },
-        { text: '13:00', value: 'radio6' },
-        { text: '14:00', value: 'radio7', disabled: true },
-        { text: '15:00', value: 'radio8' },
-        { text: '16:00', value: 'radio9' },
-        { text: '17:00', value: 'radio10' },
-        { text: '18:00', value: 'radio11', disabled: true },
-        { text: '19:00', value: 'radio12' }],
+      optionsTime: [],
       donor: [{
         // email: '',
         username: '',
@@ -146,14 +146,14 @@ export default {
         // checked: []
       }],
       fields: [
-        {key: 'id', label: 'ID' },
-        {key: 'username', label: 'Login' },
-        {key: 'email', label: 'Email' },
-        {key: 'firstName', label: 'Imię' },
-        {key: 'lastName', label: 'Nazwisko' },
-        {key: 'pesel', label: 'PESEL' },
-        {key: 'bloodGroupWithRh', label: 'Krew' },
-        {key: 'gender', label: 'Płeć' },
+        {key: 'id', label: 'ID'},
+        {key: 'username', label: 'Login'},
+        {key: 'email', label: 'Email'},
+        {key: 'firstName', label: 'Imię'},
+        {key: 'lastName', label: 'Nazwisko'},
+        {key: 'pesel', label: 'PESEL'},
+        {key: 'bloodGroupWithRh', label: 'Krew'},
+        {key: 'gender', label: 'Płeć'},
       ],
 
       bloods: [{text: 'wybierz grupę krwi', value: null},
@@ -163,7 +163,66 @@ export default {
 
     }
   },
+  watch: {
+    selectedDonationType: function () {
+      this.getDateForDonation();
+    },
+    dateValue: function () {
+
+      this.getHours();
+    },
+    selectedTime: function () {
+      console.log(this.selectedTime)
+
+    }
+
+  },
   methods: {
+    getHours() {
+      ReservationService.getHours(this.dateValue).then(
+          response => {
+            console.log(response);
+            const results_tmp = [];
+            for (const idx in response.data) {
+
+              results_tmp.push({
+                text: response.data[idx].hour,
+                value: response.data[idx].hour,
+                disabled: response.data[idx].disabled,
+              });
+            }
+            this.optionsTime = results_tmp;
+
+          },
+          error => {
+            this.content =
+                (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
+          }
+      )
+    },
+
+
+    getDateForDonation() {
+      DonationService.getSoonestPossibleDateForNextDonation(this.selectedDonationType, this.$route.params.id)
+          .then(
+              response => {
+                this.min = response.data.date;
+                console.log(this.min);
+              }
+          )
+
+    },
+    dateDisabled(ymd, date) {
+      // Disable weekends (Sunday = `0`, Saturday = `6`) and
+      // disable days that fall on the 13th of the month
+      const weekday = date.getDay()
+      // const day = date.getDate()
+      // Return `true` if the date should be disabled
+      // return weekday === 0 || weekday === 6 || day === 13
+      return weekday === 0
+    }
     // onSubmit(event) {
     //   console.log(this.form);
     //
