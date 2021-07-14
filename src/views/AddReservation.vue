@@ -47,14 +47,19 @@
 
     </div>
 
-    <div v-if="selectedTime !== null && dateValue !== '' &&  selectedDonationType !== ''">
+    <div v-if="selectedTime !== null && dateValue !== '' &&  selectedDonationType !== ''" @click="addNewReservation">
       <b-button block variant="primary">Zarezerwuj termin na pobranie materiału biologicznego</b-button>
     </div>
 
-    <b-card class="mt-3" header="JSON - POST">
-      <pre class="m-0">{{ donor }}</pre>
-      {{ max }}
-    </b-card>
+    <!--    <b-card class="mt-3" header="JSON - POST">-->
+    <!--      <pre class="m-0">{{ donor }}</pre>-->
+    <!--      {{ max }}-->
+    <!--    </b-card>-->
+    <b-link :to="'/donors'">
+      <b-button style="margin: 1rem">
+        Powrót na stronę z dawcami
+      </b-button>
+    </b-link>
   </b-container>
 
 </template>
@@ -91,23 +96,10 @@ export default {
     )
   },
   data() {
-
-    const now = new Date()
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
-    // 15th two months prior
-    const minDate = new Date(today)
-    minDate.setMonth(minDate.getMonth() - 2)
-    minDate.setDate(15)
-    // 15th in two months
-    const maxDate = new Date(today)
-    maxDate.setMonth(maxDate.getMonth() + 2)
-    maxDate.setDate(15)
-    // maxDate.setFullYear(2022);
-
     return {
       dateValue: '',
-      min: minDate,
-      max: maxDate,
+      min: null,
+
       labelsLanguagePL: {
         pl: {
           labelPrevDecade: "Poprzednia dekada",
@@ -134,17 +126,7 @@ export default {
       ],
       selectedTime: null,
       optionsTime: [],
-      donor: [{
-        // email: '',
-        username: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        pesel: '',
-        bloodGroupWithRh: null,
-        gender: null
-        // checked: []
-      }],
+      donor: [{}],
       fields: [
         {key: 'id', label: 'ID'},
         {key: 'username', label: 'Login'},
@@ -172,16 +154,36 @@ export default {
       this.getHours();
     },
     selectedTime: function () {
-      console.log(this.selectedTime)
+      // console.log(this.selectedTime)
 
     }
 
   },
   methods: {
+    addNewReservation() {
+      console.log(this.donor);
+      ReservationService.addNewReservation({
+        donorId: this.donor[0].id,
+        date: this.dateValue,
+        time: this.selectedTime,
+        donationType: this.selectedDonationType
+      })
+          .then(response => {
+            this.makeToastSuccess('Rezerwacja została dodana!');
+            this.selectedTime = null;
+            this.dateValue = '';
+            this.selectedDonationType = '';
+          })
+          .catch(e => {
+            this.makeToastError();
+            console.log(e);
+          })
+    },
+
     getHours() {
       ReservationService.getHours(this.dateValue).then(
           response => {
-            console.log(response);
+            // console.log(response);
             const results_tmp = [];
             for (const idx in response.data) {
 
@@ -202,8 +204,6 @@ export default {
           }
       )
     },
-
-
     getDateForDonation() {
       DonationService.getSoonestPossibleDateForNextDonation(this.selectedDonationType, this.$route.params.id)
           .then(
@@ -222,7 +222,7 @@ export default {
       // Return `true` if the date should be disabled
       // return weekday === 0 || weekday === 6 || day === 13
       return weekday === 0
-    }
+    },
     // onSubmit(event) {
     //   console.log(this.form);
     //
@@ -258,23 +258,23 @@ export default {
     //   })
     // },
     //
-    // makeToastSuccess: function (message) {
-    //   this.$bvToast.toast(message, {
-    //     title: `Sukces`,
-    //     variant: 'info',
-    //     autoHideDelay: 2000,
-    //     solid: true
-    //   })
-    //
-    // },
-    // makeToastError() {
-    //   this.$bvToast.toast('Coś poszło nie tak...', {
-    //     title: `Błąd`,
-    //     variant: 'danger',
-    //     autoHideDelay: 2000,
-    //     solid: true
-    //   })
-    // },
+    makeToastSuccess: function (message) {
+      this.$bvToast.toast(message, {
+        title: `Sukces`,
+        variant: 'info',
+        autoHideDelay: 2000,
+        solid: true
+      })
+
+    },
+    makeToastError() {
+      this.$bvToast.toast('Coś poszło nie tak...', {
+        title: `Błąd`,
+        variant: 'danger',
+        autoHideDelay: 2000,
+        solid: true
+      })
+    },
     // deleteDonor() {
     //   DonorService.deleteDonor(this.$route.params.id)
     //       .then(response => {

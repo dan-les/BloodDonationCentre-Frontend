@@ -88,7 +88,6 @@
             <b-button style="margin: 1rem">
               Powrót na stronę z dawcami
             </b-button>
-
           </b-link>
           <b-button style="margin: 1rem" variant="danger" @click="deleteDonor">
             Usuń dawcę

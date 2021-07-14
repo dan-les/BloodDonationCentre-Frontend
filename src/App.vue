@@ -36,9 +36,22 @@
         </b-nav-item-dropdown>
         <!---->
 
-        <b-nav-item v-if="showStaffBoard">
-          <b-link :to="{name: 'reservations'}" router-tag="li">Rezerwacje</b-link>
-        </b-nav-item>
+        <b-nav-item-dropdown v-if="showStaffBoard" right text="Rezerwacje">
+          <b-dropdown-item>
+            <b-link :to="{name: 'reservations', query: {date: false} }" router-tag="li">Wszystkie zarezerwowane
+              terminy
+            </b-link>
+            <!--            <router-link to="/donors" id="thisLink" class="nav-item">Wyświetl dawców</router-link>-->
+          </b-dropdown-item>
+          <b-dropdown-item>
+            <b-link :to="{name: 'reservations', query: {date: true} }" router-tag="li">Rezerwacje według daty</b-link>
+            <!--            <router-link to="/donors">Dodaj dawcę</router-link>-->
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+
+        <!--        <b-nav-item v-if="showStaffBoard">-->
+        <!--          <b-link :to="{name: 'reservations'}" router-tag="li">Rezerwacje</b-link>-->
+        <!--        </b-nav-item>-->
 
         <b-nav-item v-if="showStaffBoard">
           <b-link :to="{name: 'donations'}" router-tag="li">Pobrania</b-link>

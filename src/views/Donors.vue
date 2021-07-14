@@ -311,6 +311,14 @@ export default {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
+    },
+    makeToastSuccess(message) {
+      this.$bvToast.toast(message, {
+        title: `Sukces`,
+        variant: 'info',
+        autoHideDelay: 2000,
+        solid: true
+      })
     }
   }
 }

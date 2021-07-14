@@ -14,6 +14,24 @@ class ReservationService {
                 headers: authHeader()
             });
     }
+
+    addNewReservation(data) {
+        return axios.post(API_URL, data, {headers: authHeader()});
+    }
+
+    getAllReservations() {
+        return axios.get(API_URL + '/list', {headers: authHeader()});
+    }
+
+    getAllReservationsByDate(date) {
+        return axios.get(API_URL + '/list',
+            {
+                params: {
+                    date: date,
+                },
+                headers: authHeader()
+            });
+    }
 }
 
 export default new ReservationService();

@@ -8,7 +8,6 @@ Vue.use(Router);
 
 export const router = new Router({
     mode: 'history',
-    hidden: true,
     routes: [
         {
             path: '/',
