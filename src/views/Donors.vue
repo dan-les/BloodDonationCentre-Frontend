@@ -197,9 +197,9 @@
       </b-table>
 
       <!-- Info modal -->
-      <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
-        <pre>{{ infoModal.content }}</pre>
-      </b-modal>
+      <!--      <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">-->
+      <!--        <pre>{{ infoModal.content }}</pre>-->
+      <!--      </b-modal>-->
     </b-row>
   </b-container>
 
@@ -213,7 +213,6 @@ export default {
   data() {
     return {
       items: [],
-
       fields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
@@ -265,7 +264,6 @@ export default {
     }
   },
   mounted() {
-
     DonorService.getAllDonors().then(
         response => {
           // console.log(response);
@@ -319,7 +317,15 @@ export default {
         autoHideDelay: 2000,
         solid: true
       })
-    }
+    },
+    makeToastError() {
+      this.$bvToast.toast('Coś poszło nie tak...', {
+        title: `Błąd`,
+        variant: 'danger',
+        autoHideDelay: 2000,
+        solid: true
+      })
+    },
   }
 }
 </script>

@@ -175,23 +175,27 @@
         <!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
         <!--        </template>-->
 
-        <!--        <template #cell(actions)="row">-->
-        <!--          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">-->
-        <!--            Info modal - JSON-->
-        <!--          </b-button>-->
-        <!--          <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
-        <!--            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
-        <!--          </b-button>-->
+        <template #cell(actions)="row">
+          <!--          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">-->
+          <!--            Info modal - JSON-->
+          <!--          </b-button>-->
+          <!--          <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
+          <!--            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
+          <!--          </b-button>-->
 
-        <!--          <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">-->
-        <!--            <b-button class="mr-1" size="sm" variant="primary">Umów wizytę</b-button>-->
-        <!--          </b-link>-->
 
-        <!--          <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">-->
-        <!--            <b-button class="mr-1" size="sm" style="margin-left: 0.6rem">Edytuj</b-button>-->
-        <!--          </b-link>-->
+          <b-link :to="{ name: 'addDonation', params: { id: row.item.id}  }">
+            <b-button class="mr-1" size="sm" variant="primary">Dodaj pobranie</b-button>
+          </b-link>
+          <!--                  <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">-->
+          <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
+          <!--                  </b-link>-->
 
-        <!--        </template>-->
+          <!--          <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">-->
+          <!--            <b-button class="mr-1" size="sm" style="margin-left: 0.6rem">Edytuj</b-button>-->
+          <!--          </b-link>-->
+
+        </template>
 
         <template #row-details="row">
           <b-card>
@@ -226,6 +230,7 @@ import ReservationService from '../services/reservation.service';
 export default {
   data() {
     const todayDate = new Date().toISOString().slice(0, 10);
+
     return {
 
       labelsLanguagePL: {
@@ -248,7 +253,6 @@ export default {
       },
       isDatePickerEnabled: '',
       dateValue: todayDate,
-
       items: [],
       fields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
@@ -264,7 +268,7 @@ export default {
       currentPage: 1,
       perPage: 10,
       pageOptions: [5, 10, 20, {value: 100, text: "Pokaż wszystko (max: 100)"}],
-      sortBy: 'lastName',
+      sortBy: 'time',
       sortDesc: false,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
       emptyText: 'Brak rezerwacji.',
@@ -295,9 +299,11 @@ export default {
     },
     dateValue() {
       this.getProperReservations();
+
     },
     isDatePickerEnabled() {
       this.getProperReservations();
+
     }
 
   },
@@ -308,6 +314,18 @@ export default {
 
   },
   methods: {
+    deleteReservation(id) {
+      ReservationService.deleteReservation(id)
+          .then(response => {
+            this.getProperReservations();
+            this.makeToastSuccess('Pomyślnie usunięto rezerwację');
+          })
+          .catch(e => {
+            this.makeToastError();
+            console.log(e);
+          });
+
+    },
     getProperReservations() {
       if (this.isDatePickerEnabled === 'true') {
         ReservationService.getAllReservationsByDate(this.dateValue).then(
@@ -383,6 +401,22 @@ export default {
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+    makeToastSuccess(message) {
+      this.$bvToast.toast(message, {
+        title: `Sukces`,
+        variant: 'info',
+        autoHideDelay: 2000,
+        solid: true
+      })
+    },
+    makeToastError() {
+      this.$bvToast.toast('Coś poszło nie tak...', {
+        title: `Błąd`,
+        variant: 'danger',
+        autoHideDelay: 2000,
+        solid: true
+      })
+    }
   }
 }
 </script>

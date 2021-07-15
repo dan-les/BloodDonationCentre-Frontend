@@ -15,6 +15,11 @@ class DonationService {
                 headers: authHeader()
             });
     }
+
+    addNewDonation(data) {
+        return axios.post(API_URL, data, {headers: authHeader()});
+    }
+
 }
 
 export default new DonationService();
