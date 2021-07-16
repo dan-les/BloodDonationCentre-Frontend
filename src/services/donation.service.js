@@ -21,9 +21,18 @@ class DonationService {
     }
 
     getAllDonations() {
-        return axios.get(API_URL + 'list', {headers: authHeader()});
+        return axios.get(API_URL + '/list', {headers: authHeader()});
     }
 
+    getAllDonationsByDonorId(donorId) {
+        return axios.get(API_URL + '/list',
+            {
+                params: {
+                    donorId: donorId,
+                },
+                headers: authHeader()
+            });
+    }
 }
 
 export default new DonationService();

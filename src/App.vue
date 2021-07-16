@@ -54,6 +54,7 @@
         <!--        </b-nav-item>-->
 
         <b-nav-item v-if="showStaffBoard">
+          <!--          TODO      -->
           <b-link :to="{name: 'donations'}" router-tag="li">Pobrania</b-link>
         </b-nav-item>
 

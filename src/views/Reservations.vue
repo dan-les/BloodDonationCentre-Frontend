@@ -4,6 +4,7 @@
         header="Przegląd wszystkich rezerwacji" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
     <b-row>
+      <!--       TODO - dodawanie rozerwacji bez wcześniej wybranego dawncy-->
       <!--      <b-col md="2" offset-md="10">-->
       <!--        &lt;!&ndash;        <b-link :to="{ name: 'editDonor', param:  12}">&ndash;&gt;-->
       <!--        <b-button block variant="primary">Dodaj dawcę!</b-button>-->
@@ -113,7 +114,7 @@
               <b-form-checkbox value="donorFirstName">Imię</b-form-checkbox>
               <b-form-checkbox value="donorLastName">Nazwisko</b-form-checkbox>
               <b-form-checkbox value="pesel">Pesel</b-form-checkbox>
-              <!--              <b-form-checkbox value="pesel">Pesel</b-form-checkbox>-->
+              <b-form-checkbox value="donationType">Typ pobrania</b-form-checkbox>
 
             </b-form-checkbox-group>
           </b-form-group>
@@ -151,8 +152,6 @@
         </b-col>
       </b-row>
 
-
-      <!-- Main table element -->
       <b-table
           :current-page="currentPage"
           :empty-filtered-text="emptyFilteredText"
@@ -171,30 +170,11 @@
           stacked="md"
           @filtered="onFiltered"
       >
-        <!--        <template #cell(name)="row">-->
-        <!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
-        <!--        </template>-->
-
         <template #cell(actions)="row">
-          <!--          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">-->
-          <!--            Info modal - JSON-->
-          <!--          </b-button>-->
-          <!--          <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
-          <!--            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
-          <!--          </b-button>-->
-
-
           <b-link :to="{ name: 'addDonation', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Dodaj pobranie</b-button>
           </b-link>
-          <!--                  <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">-->
           <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
-          <!--                  </b-link>-->
-
-          <!--          <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">-->
-          <!--            <b-button class="mr-1" size="sm" style="margin-left: 0.6rem">Edytuj</b-button>-->
-          <!--          </b-link>-->
-
         </template>
 
         <template #row-details="row">
@@ -202,19 +182,10 @@
             <ul>
               <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
             </ul>
-
           </b-card>
-
         </template>
-        <!--        <template #cell(actions)="row">-->
-        <!--        <b-link :to="{ name: 'addDonor' }">-->
-        <!--          <b-button block variant="primary">Dodaj dawcę!</b-button>-->
-        <!--        </b-link>-->
-        <!--        </template>-->
-
       </b-table>
 
-      <!-- Info modal -->
       <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">
         <pre>{{ infoModal.content }}</pre>
       </b-modal>
@@ -230,9 +201,7 @@ import ReservationService from '../services/reservation.service';
 export default {
   data() {
     const todayDate = new Date().toISOString().slice(0, 10);
-
     return {
-
       labelsLanguagePL: {
         pl: {
           labelPrevDecade: "Poprzednia dekada",
@@ -248,7 +217,6 @@ export default {
           labelCalendar: "Kalendarz",
           labelNav: "Nawigacja kalendarza",
           labelHelp: "Poruszaj się po kalendarzu za pomocą klawiszy strzałek"
-
         }
       },
       isDatePickerEnabled: '',
@@ -274,7 +242,6 @@ export default {
       emptyText: 'Brak rezerwacji.',
       sortDirection: ' ',
       filter: null,
-
       filterOn: [],
       infoModal: {
         id: 'info-modal',
@@ -330,7 +297,6 @@ export default {
       if (this.isDatePickerEnabled === 'true') {
         ReservationService.getAllReservationsByDate(this.dateValue).then(
             response => {
-              // console.log(response);
               const results_tmp = [];
               for (const idx in response.data) {
 
@@ -358,7 +324,6 @@ export default {
       } else {
         ReservationService.getAllReservations().then(
             response => {
-              // console.log(response);
               const results_tmp = [];
               for (const idx in response.data) {
 
@@ -386,7 +351,6 @@ export default {
       }
     },
 
-
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`
       this.infoModal.content = JSON.stringify(item, null, 2)
@@ -397,7 +361,6 @@ export default {
       this.infoModal.content = ''
     },
     onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },

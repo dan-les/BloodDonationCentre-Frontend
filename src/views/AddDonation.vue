@@ -19,7 +19,6 @@
             stacked
         ></b-form-radio-group>
       </b-form-group>
-      <!--    <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
 
       <label>Ilość pobranego materiału biologicznego: <b>{{ amount }}</b> [ml]:</label><br>
       <b-row>
@@ -33,11 +32,6 @@
       </div>
     </div>
 
-
-    <!--        <b-card class="mt-3" header="JSON - POST">-->
-    <!--          <pre class="m-0">{{ donor }}</pre>-->
-    <!--          {{ max }}-->
-    <!--        </b-card>-->
     <b-link :to="'/reservation?date=false'">
       <b-button style="margin: 1rem">
         Powrót na stronę z rezerwacjami

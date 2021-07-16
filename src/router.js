@@ -57,10 +57,10 @@ export const router = new Router({
             component: () => import('./views/Reservations.vue')
         },
         {
-            path: '/donations',
-            name: 'donations',
+            path: '/donations/user/:id',
+            name: 'donationsSelectedDonor',
             // lazy-loaded
-            component: () => import('./views/Donations.vue')
+            component: () => import('./views/DonationsSelectedDonor.vue')
         },
         {
             path: '/donations/add/:id',

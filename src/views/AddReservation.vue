@@ -18,7 +18,6 @@
           stacked
       ></b-form-radio-group>
     </b-form-group>
-    <!--    <div class="mt-3">Selected: <strong>{{ selected }}</strong></div>-->
 
     <div v-if="selectedDonationType !== ''">
       Wybierz termin:
@@ -152,16 +151,10 @@ export default {
     dateValue: function () {
 
       this.getHours();
-    },
-    selectedTime: function () {
-      // console.log(this.selectedTime)
-
     }
-
   },
   methods: {
     addNewReservation() {
-      console.log(this.donor);
       ReservationService.addNewReservation({
         donorId: this.donor[0].id,
         date: this.dateValue,
@@ -183,7 +176,6 @@ export default {
     getHours() {
       ReservationService.getHours(this.dateValue).then(
           response => {
-            // console.log(response);
             const results_tmp = [];
             for (const idx in response.data) {
 
@@ -209,7 +201,6 @@ export default {
           .then(
               response => {
                 this.min = response.data.date;
-                console.log(this.min);
               }
           )
 
@@ -223,41 +214,6 @@ export default {
       // return weekday === 0 || weekday === 6 || day === 13
       return weekday === 0
     },
-    // onSubmit(event) {
-    //   console.log(this.form);
-    //
-    //   event.preventDefault()
-    //   // alert(JSON.stringify(this.form))
-    //
-    //   DonorService.putDonor(this.$route.params.id, this.form)
-    //       .then(response => {
-    //         this.makeToastSuccess('Dane dawcy zostały pomyślnie zmienione');
-    //       })
-    //       .catch(e => {
-    //         this.makeToastError();
-    //         console.log(e);
-    //       });
-    //
-    // }
-    // ,
-    // onReset(event) {
-    //   event.preventDefault()
-    //   // Reset our form values
-    //   this.form.username = '',
-    //       this.form.email = '',
-    //       this.form.firstName = '',
-    //       this.form.lastName = '',
-    //       this.form.pesel = '',
-    //       this.form.bloodGroupWithRh = null
-    //   this.form.gender = null
-    //
-    //   // Trick to reset/clear native browser form validation state
-    //   this.show = false
-    //   this.$nextTick(() => {
-    //     this.show = true
-    //   })
-    // },
-    //
     makeToastSuccess: function (message) {
       this.$bvToast.toast(message, {
         title: `Sukces`,
@@ -274,25 +230,7 @@ export default {
         autoHideDelay: 2000,
         solid: true
       })
-    },
-    // deleteDonor() {
-    //   DonorService.deleteDonor(this.$route.params.id)
-    //       .then(response => {
-    //         this.form.username = '',
-    //             this.form.email = '',
-    //             this.form.firstName = '',
-    //             this.form.lastName = '',
-    //             this.form.pesel = '',
-    //             this.form.bloodGroupWithRh = null
-    //         this.form.gender = null
-    //
-    //         this.makeToastSuccess('Pomyślnie usunięto dawcę');
-    //       })
-    //       .catch(e => {
-    //         this.makeToastError();
-    //         console.log(e);
-    //       });
-    // }
+    }
   }
 }
 </script>

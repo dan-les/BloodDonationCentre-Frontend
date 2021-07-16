@@ -165,12 +165,12 @@
           <!--          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">-->
           <!--            Info modal - JSON-->
           <!--          </b-button>-->
-<!--                    <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
-<!--                      {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
-<!--                    </b-button>-->
+          <!--                    <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
+          <!--                      {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
+          <!--                    </b-button>-->
 
 
-          <b-link :to="{ name: 'donations', params: { id: row.item.id}  }">
+          <b-link :to="{ name: 'donationsSelectedDonor', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Pobrania</b-button>
           </b-link>
 
@@ -189,22 +189,9 @@
             <ul>
               <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
             </ul>
-
           </b-card>
-
         </template>
-        <!--        <template #cell(actions)="row">-->
-        <!--        <b-link :to="{ name: 'addDonor' }">-->
-        <!--          <b-button block variant="primary">Dodaj dawcę!</b-button>-->
-        <!--        </b-link>-->
-        <!--        </template>-->
-
       </b-table>
-
-      <!-- Info modal -->
-      <!--      <b-modal :id="infoModal.id" :title="infoModal.title" ok-only @hide="resetInfoModal">-->
-      <!--        <pre>{{ infoModal.content }}</pre>-->
-      <!--      </b-modal>-->
     </b-row>
   </b-container>
 
@@ -227,16 +214,6 @@ export default {
         {key: 'pesel', label: 'PESEL', sortable: true, class: 'text-center'},
         {key: 'bloodGroupWithRh', label: 'Krew', sortable: true,},
         {key: 'gender', label: 'Płeć', sortable: true,},
-        // {
-        //   key: 'blood',
-        //   label: 'Czy aktywny?',
-        //   formatter: (value, key, item) => {
-        //     return value ? 'Yes' : 'No'
-        //   },
-        //   sortable: true,
-        //   sortByFormatted: true,
-        //   filterByFormatted: true
-        // },
         {key: 'actions', label: 'Akcje'}
       ],
       totalRows: 1,
@@ -297,8 +274,6 @@ export default {
               error.toString();
         }
     )
-
-
   },
   methods: {
     info(item, index, button) {
@@ -311,7 +286,6 @@ export default {
       this.infoModal.content = ''
     },
     onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
