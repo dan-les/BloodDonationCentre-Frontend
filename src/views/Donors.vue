@@ -165,9 +165,14 @@
           <!--          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">-->
           <!--            Info modal - JSON-->
           <!--          </b-button>-->
-          <!--          <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
-          <!--            {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
-          <!--          </b-button>-->
+<!--                    <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
+<!--                      {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
+<!--                    </b-button>-->
+
+
+          <b-link :to="{ name: 'donations', params: { id: row.item.id}  }">
+            <b-button class="mr-1" size="sm" variant="primary">Pobrania</b-button>
+          </b-link>
 
           <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Umów wizytę</b-button>

@@ -20,6 +20,10 @@ class DonationService {
         return axios.post(API_URL, data, {headers: authHeader()});
     }
 
+    getAllDonations() {
+        return axios.get(API_URL + 'list', {headers: authHeader()});
+    }
+
 }
 
 export default new DonationService();
