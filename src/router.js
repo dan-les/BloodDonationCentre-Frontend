@@ -57,6 +57,12 @@ export const router = new Router({
             component: () => import('./views/Reservations.vue')
         },
         {
+            path: '/donations/all',
+            name: 'donationsAllDonors',
+            // lazy-loaded
+            component: () => import('./views/DonationsAllDonors.vue')
+        },
+        {
             path: '/donations/user/:id',
             name: 'donationsSelectedDonor',
             // lazy-loaded

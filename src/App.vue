@@ -1,7 +1,5 @@
 <template>
   <div id="app">
-
-
     <b-navbar style="margin-bottom: 1.5rem;" toggleable="lg" type="dark" variant="primary">
       <b-navbar-brand @click.prevent>Centrum Krwiodwstwa</b-navbar-brand>
 
@@ -49,13 +47,9 @@
           </b-dropdown-item>
         </b-nav-item-dropdown>
 
-        <!--        <b-nav-item v-if="showStaffBoard">-->
-        <!--          <b-link :to="{name: 'reservations'}" router-tag="li">Rezerwacje</b-link>-->
-        <!--        </b-nav-item>-->
-
         <b-nav-item v-if="showStaffBoard">
           <!--          TODO      -->
-          <b-link :to="{name: 'donations'}" router-tag="li">Pobrania</b-link>
+          <b-link :to="{name: 'donationsAllDonors'}" router-tag="li">Pobrania</b-link>
         </b-nav-item>
 
         <b-nav-item v-if="showNormalUserBoard">

@@ -166,7 +166,6 @@
           :sort-direction="sortDirection"
           show-empty
           small
-
           stacked="md"
           @filtered="onFiltered"
       >

@@ -38,10 +38,6 @@
       </b-button>
     </b-link>
 
-    <b-card class="mt-3" header="JSON - POST">
-      <pre class="m-0">{{ this.donor }}</pre>
-      {{ max }}
-    </b-card>
   </b-container>
 
 </template>

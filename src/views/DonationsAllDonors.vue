@@ -2,11 +2,51 @@
   <b-container>
     <b-jumbotron
         header="Spis wszystkich donacji" header-level="5" header-tag="h4" style="padding: 0.9rem">
-      Dla dawcy:
-      <b-table
-          :fields="fields" :items="donor" responsive="sm" small>
-      </b-table>
     </b-jumbotron>
+
+    <b-row>
+
+      <b-col>
+        <b-form-group v-slot="{ ariaDescribedby }" label="Dostępność dawek z materiałem biologicznym:">
+          <b-form-radio
+              v-model="selectedIsReleased" :aria-describedby="ariaDescribedby" value=null>Wszystkie rodzaje dostępności
+          </b-form-radio>
+          <b-form-radio
+              v-model="selectedIsReleased" :aria-describedby="ariaDescribedby" value="false">Dostępne
+          </b-form-radio>
+          <b-form-radio
+              v-model="selectedIsReleased" :aria-describedby="ariaDescribedby" value="true">Wydane innym
+            podmiotom
+          </b-form-radio>
+        </b-form-group>
+      </b-col>
+      <b-col>
+        <b-form-group v-slot="{ ariaDescribedby }" label="Filtruj według typu pobrania:">
+          <b-form-radio
+              v-model="selectedDonationType" :aria-describedby="ariaDescribedby" value=null>Wszystkie rodzaje pobrań
+          </b-form-radio>
+          <b-form-radio
+              v-model="selectedDonationType" :aria-describedby="ariaDescribedby" value="blood">Pobranie krwi
+          </b-form-radio>
+          <b-form-radio
+              v-model="selectedDonationType" :aria-describedby="ariaDescribedby" value="plasma">Pobranie osocza
+          </b-form-radio>
+        </b-form-group>
+      </b-col>
+      <b-col>
+        <b-form-group id="input-group-3" label="Filtruj według grupy krwi:">
+          <b-form-select
+              id="blood"
+              v-model="selectedBloodGroupWithRh"
+              :options="bloods"
+              required
+          ></b-form-select>
+        </b-form-group>
+      </b-col>
+    </b-row>
+
+
+    <!--    <div class="mt-3">Selected: <strong>{{ selectedDonationType }}</strong></div>-->
 
 
     <b-row style="margin-top: 1rem;">
@@ -51,53 +91,6 @@
         <b-col class="my-1" lg="6">
         </b-col>
 
-        <b-col class="my-1" lg="6">
-          <b-form-group
-              class="mb-0"
-              label="Filtrowanie danych"
-              label-align-sm="right"
-              label-cols-sm="3"
-              label-for="filter-input"
-              label-size="sm"
-          >
-            <b-input-group size="sm">
-              <b-form-input
-                  id="filter-input"
-                  v-model="filter"
-                  placeholder="Wpisz, aby wyszukać"
-                  type="search"
-              ></b-form-input>
-
-              <b-input-group-append>
-                <b-button :disabled="!filter" @click="filter = ''">Wyczyść pole</b-button>
-              </b-input-group-append>
-            </b-input-group>
-          </b-form-group>
-        </b-col>
-
-        <b-col class="my-1" lg="6">
-          <b-form-group
-              v-slot="{ ariaDescribedby }"
-              v-model="sortDirection"
-              class="mb-0"
-              description="Aby filtrować po wszystkich danych odznacz wszystko"
-              label="Filtruj według"
-              label-align-sm="right"
-              label-cols-sm="3"
-              label-size="sm"
-          >
-            <b-form-checkbox-group
-                v-model="filterOn"
-                :aria-describedby="ariaDescribedby"
-                class="mt-1"
-            >
-              <b-form-checkbox value="date">Data pobrania</b-form-checkbox>
-              <b-form-checkbox value="donationType">Rodzaj pobrania</b-form-checkbox>
-
-
-            </b-form-checkbox-group>
-          </b-form-group>
-        </b-col>
 
         <b-col class="my-1" md="6" sm="5">
           <b-form-group
@@ -161,7 +154,6 @@
 </template>
 
 <script>
-import DonorService from '../services/donor.service';
 import DonationService from '../services/donation.service';
 
 export default {
@@ -172,67 +164,66 @@ export default {
           .map(f => {
             return {text: f.label, value: f.key}
           })
-    }
+    },
+
+    propertiesChangeChecker() {
+      return `${this.selectedDonationType}|${this.selectedIsReleased}|${this.selectedBloodGroupWithRh}`;
+    },
+  },
+  watch:{
+    propertiesChangeChecker(newVal) {
+      // sprawdzanie czy zmieniła się wartość którejś z trzech zmiennych
+      const [newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh] = newVal.split('|');
+      newSelectedDonationType = newSelectedDonationType === 'null' ? null : newSelectedDonationType;
+
+
+      if(newSelectedDonationType === 'null' && newSelectedIsReleased === 'null' && newSelectedBloodGroupWithRh === 'null'){
+        this.getAllDonations();
+      }
+
+    },
   },
   mounted() {
-    DonorService.getDonorById(this.$route.params.id).then(
-        response => {
-          const results_tmp = [];
-          results_tmp.push({
-            id: response.data.id,
-            username: response.data.username,
-            email: response.data.email,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            pesel: response.data.pesel,
-            bloodGroupWithRh: response.data.bloodGroupWithRh,
-            gender: response.data.gender
-          });
-
-          this.donor = results_tmp;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
-        }
-    )
-
-    DonationService.getAllDonationsByDonorId(this.$route.params.id).then(
-        response => {
-          const results_tmp = [];
-          for (const idx in response.data) {
-            results_tmp.push({
-              id: response.data[idx].id,
-              date: response.data[idx].date,
-              amount: response.data[idx].amount,
-              donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
-            });
-          }
-          this.donations = results_tmp;
-          // Set the initial number of items
-          this.totalRows = this.donations.length;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
-        }
-    )
-
-
+    // this.getAllDonations();
   },
   methods: {
+    getAllDonations(){
+      DonationService.getAllDonations().then(
+          response => {
+            const results_tmp = [];
+            for (const idx in response.data) {
+              results_tmp.push({
+                id: response.data[idx].id,
+                date: response.data[idx].date,
+                amount: response.data[idx].amount,
+                donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
+              });
+            }
+            this.donations = results_tmp;
+            // Set the initial number of items
+            this.totalRows = this.donations.length;
+          },
+          error => {
+            this.content =
+                (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
+          }
+      )
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
+
   },
   data() {
     return {
+      selectedDonationType: null,
+      selectedIsReleased: null,
+      selectedBloodGroupWithRh: null,
+
       totalRows: 1,
       currentPage: 1,
       perPage: 10,
@@ -244,17 +235,8 @@ export default {
       sortDirection: '',
       filter: null,
       filterOn: [],
-      fields: [
-        {key: 'id', label: 'ID'},
-        {key: 'username', label: 'Login'},
-        {key: 'email', label: 'Email'},
-        {key: 'firstName', label: 'Imię'},
-        {key: 'lastName', label: 'Nazwisko'},
-        {key: 'pesel', label: 'PESEL'},
-        {key: 'bloodGroupWithRh', label: 'Krew'},
-        {key: 'gender', label: 'Płeć'},
-      ],
-      donor: [],
+      bloods: [{text: 'Wszystkie rodzaje', value: null},
+        'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
       fieldsDonations: [
         {key: 'id', label: 'ID', sortable: true, class: 'text-center'},
         {key: 'date', label: 'Data pobrania', sortable: true, class: 'text-center'},
