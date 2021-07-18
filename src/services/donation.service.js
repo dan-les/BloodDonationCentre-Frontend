@@ -22,12 +22,13 @@ class DonationService {
 
     getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
         return axios.get(API_URL + '/list', {
-            params:{
+            params: {
                 donationType: selectedDonationType,
                 isReleased: selectedIsReleased,
                 bloodGroupWithRh: selectedBloodGroupWithRh
             },
-            headers: authHeader()});
+            headers: authHeader()
+        });
     }
 
     getAllDonationsByDonorId(donorId) {
@@ -38,6 +39,10 @@ class DonationService {
                 },
                 headers: authHeader()
             });
+    }
+
+    patchDonationRecipient(data) {
+        return axios.patch(API_URL, data, {headers: authHeader()});
     }
 }
 

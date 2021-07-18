@@ -146,7 +146,7 @@
         </template>
 
         <template #cell(actions)="row">
-          <b-button variant="primary" class="mr-1" size="sm" @click="info(row.item, row.item.id, $event.target)">
+          <b-button class="mr-1" size="sm" variant="primary" @click="info(row.item, row.item.id, $event.target)">
             Wydaj
           </b-button>
         </template>
@@ -160,10 +160,22 @@
         </template>
       </b-table>
 
-      <b-modal :id="infoModal.id" :title="infoModal.title" ok-only   @hide="resetInfoModal">
-
-        <!--        TODO    -->
-        dodać treść kontentu
+      <b-modal :id="infoModal.id"
+               :title="infoModal.title"
+               cancel-title="Rezygnuj"
+               ok-title="Potwierdź zmianę"
+               @hide="resetInfoModal"
+               @ok="changeRecipient(infoModal.content)">
+        <b-form-group label="Wybierz podmiot, do którego wydana będzie dawka materiału biologicznego:">
+          <b-form-select
+              v-model="selectedRecipient"
+              :options="recipients"
+              class="mb-3"
+              text-field="name"
+              value-field="id"
+          ></b-form-select>
+        </b-form-group>
+        <!--        <div class="mt-3">Selected: <strong>{{ selectedRecipient }}</strong></div>-->
       </b-modal>
     </b-row>
 
@@ -178,6 +190,7 @@
 
 <script>
 import DonationService from '../services/donation.service';
+import RecipientService from '../services/recipient.service';
 
 export default {
   computed: {
@@ -206,11 +219,21 @@ export default {
   },
   mounted() {
     this.getAllDonations(this.selectedDonationType, this.selectedIsReleased, this.selectedBloodGroupWithRh);
+    this.getAllRecipients();
   },
   methods: {
+    changeRecipient(id) {
+      DonationService.patchDonationRecipient({
+        id: id,
+        isReleased: true,
+        recipientId: this.selectedRecipient
+      })
+      console.log(this.selectedRecipient)
+    },
     info(item, index, button) {
-      this.infoModal.title = `Wydanie dawki numer: ${index}`
-      this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+      this.infoModal.title = `Wydanie dawki numer ${index}`
+      this.infoModal.content = `${index}`
+          this.$root.$emit('bv::show::modal', this.infoModal.id, button)
     },
     resetInfoModal() {
       this.infoModal.title = ''
@@ -246,6 +269,27 @@ export default {
           }
       )
     },
+    getAllRecipients() {
+      RecipientService.getAllRecipients().then(
+          response => {
+            const results_tmp = [];
+            for (const idx in response.data) {
+              results_tmp.push({
+                id: response.data[idx].id,
+                name: response.data[idx].name
+              });
+            }
+            this.recipients = results_tmp;
+
+          },
+          error => {
+            this.content =
+                (error.response && error.response.data && error.response.data.message) ||
+                error.message ||
+                error.toString();
+          }
+      )
+    },
     onFiltered(filteredItems) {
       // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
@@ -258,6 +302,7 @@ export default {
       selectedDonationType: null,
       selectedIsReleased: null,
       selectedBloodGroupWithRh: null,
+      selectedRecipient: null,
 
       totalRows: 1,
       currentPage: 1,
@@ -286,6 +331,8 @@ export default {
         {key: 'actions', label: 'Akcje'}
 
       ],
+
+      recipients: [],
       donations: [],
       infoModal: {
         id: 'info-modal',
