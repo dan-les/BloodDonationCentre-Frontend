@@ -20,8 +20,14 @@ class DonationService {
         return axios.post(API_URL, data, {headers: authHeader()});
     }
 
-    getAllDonations() {
-        return axios.get(API_URL + '/list', {headers: authHeader()});
+    getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
+        return axios.get(API_URL + '/list', {
+            params:{
+                donationType: selectedDonationType,
+                isReleased: selectedIsReleased,
+                bloodGroupWithRh: selectedBloodGroupWithRh
+            },
+            headers: authHeader()});
     }
 
     getAllDonationsByDonorId(donorId) {

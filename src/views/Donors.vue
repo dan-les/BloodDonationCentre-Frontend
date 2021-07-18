@@ -157,40 +157,29 @@
           stacked="md"
           @filtered="onFiltered"
       >
-        <template #cell(name)="row">
-          {{ row.value.firstName }} {{ row.value.lastName }}
-        </template>
+<!--        <template #cell(name)="row">-->
+<!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
+<!--        </template>-->
 
         <template #cell(actions)="row">
-          <!--          <b-button class="mr-1" size="sm" @click="info(row.item, row.index, $event.target)">-->
-          <!--            Info modal - JSON-->
-          <!--          </b-button>-->
-          <!--                    <b-button size="sm" style="margin-right: 0.8rem;" @click="row.toggleDetails">-->
-          <!--                      {{ row.detailsShowing ? 'Hide' : 'Show' }} Details - JSON-->
-          <!--                    </b-button>-->
-
-
           <b-link :to="{ name: 'donationsSelectedDonor', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Pobrania</b-button>
           </b-link>
-
           <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Umów wizytę</b-button>
           </b-link>
-
           <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" style="margin-left: 0.6rem">Edytuj</b-button>
           </b-link>
-
         </template>
 
-        <template #row-details="row">
-          <b-card>
-            <ul>
-              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-            </ul>
-          </b-card>
-        </template>
+<!--        <template #row-details="row">-->
+<!--          <b-card>-->
+<!--            <ul>-->
+<!--              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>-->
+<!--            </ul>-->
+<!--          </b-card>-->
+<!--        </template>-->
       </b-table>
     </b-row>
   </b-container>
@@ -276,15 +265,6 @@ export default {
     )
   },
   methods: {
-    info(item, index, button) {
-      this.infoModal.title = `Row index: ${index}`
-      this.infoModal.content = JSON.stringify(item, null, 2)
-      this.$root.$emit('bv::show::modal', this.infoModal.id, button)
-    },
-    resetInfoModal() {
-      this.infoModal.title = ''
-      this.infoModal.content = ''
-    },
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1

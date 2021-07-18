@@ -141,7 +141,30 @@
           stacked="md"
           @filtered="onFiltered"
       >
+        <template #cell(name)="row">
+          {{ row.value.first }} {{ row.value.last }}
+        </template>
+
+        <template #cell(actions)="row">
+          <b-button variant="primary" class="mr-1" size="sm" @click="info(row.item, row.item.id, $event.target)">
+            Wydaj
+          </b-button>
+        </template>
+
+        <template #row-details="row">
+          <b-card>
+            <ul>
+              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
+            </ul>
+          </b-card>
+        </template>
       </b-table>
+
+      <b-modal :id="infoModal.id" :title="infoModal.title" ok-only   @hide="resetInfoModal">
+
+        <!--        TODO    -->
+        dodać treść kontentu
+      </b-modal>
     </b-row>
 
     <b-link :to="'/donors'">
@@ -170,25 +193,31 @@ export default {
       return `${this.selectedDonationType}|${this.selectedIsReleased}|${this.selectedBloodGroupWithRh}`;
     },
   },
-  watch:{
+  watch: {
     propertiesChangeChecker(newVal) {
       // sprawdzanie czy zmieniła się wartość którejś z trzech zmiennych
-      const [newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh] = newVal.split('|');
+      let [newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh] = newVal.split('|');
       newSelectedDonationType = newSelectedDonationType === 'null' ? null : newSelectedDonationType;
+      newSelectedIsReleased = newSelectedIsReleased === 'null' ? null : newSelectedIsReleased;
+      newSelectedBloodGroupWithRh = newSelectedBloodGroupWithRh === 'null' ? null : newSelectedBloodGroupWithRh;
 
-
-      if(newSelectedDonationType === 'null' && newSelectedIsReleased === 'null' && newSelectedBloodGroupWithRh === 'null'){
-        this.getAllDonations();
-      }
-
+      this.getAllDonations(newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh);
     },
   },
   mounted() {
-    // this.getAllDonations();
+    this.getAllDonations(this.selectedDonationType, this.selectedIsReleased, this.selectedBloodGroupWithRh);
   },
   methods: {
-    getAllDonations(){
-      DonationService.getAllDonations().then(
+    info(item, index, button) {
+      this.infoModal.title = `Wydanie dawki numer: ${index}`
+      this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+    },
+    resetInfoModal() {
+      this.infoModal.title = ''
+      this.infoModal.content = ''
+    },
+    getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
+      DonationService.getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh).then(
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
@@ -197,6 +226,12 @@ export default {
                 date: response.data[idx].date,
                 amount: response.data[idx].amount,
                 donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
+                donorFirstName: response.data[idx].donorFirstName,
+                donorLastName: response.data[idx].donorLastName,
+                bloodGroupWithRh: response.data[idx].bloodGroupWithRh,
+                isReleased: response.data[idx].isReleased,
+                recipientId: response.data[idx].isReleased,
+                recipientName: response.data[idx].recipientName,
               });
             }
             this.donations = results_tmp;
@@ -240,13 +275,26 @@ export default {
       fieldsDonations: [
         {key: 'id', label: 'ID', sortable: true, class: 'text-center'},
         {key: 'date', label: 'Data pobrania', sortable: true, class: 'text-center'},
-        {key: 'amount', label: 'Ilość pobranego materiału biolgicznego [ml]', sortable: true, class: 'text-center'},
-        {key: 'donationType', label: 'Typ pobrania', sortable: true, class: 'text-center'}
+        {key: 'amount', label: 'Ilość [ml]', sortable: true, class: 'text-center'},
+        {key: 'donationType', label: 'Typ pobrania', sortable: true, class: 'text-center'},
+        {key: 'donorFirstName', label: 'Imię dawcy', sortable: true, class: 'text-center'},
+        {key: 'donorLastName', label: 'Nazwisko dawcy', sortable: true, class: 'text-center'},
+        {key: 'bloodGroupWithRh', label: 'Krew', sortable: true, class: 'text-center'},
+        {key: 'isReleased', label: 'Czy wydano', sortable: true, class: 'text-center'},
+        // {key: 'recipientId', label: 'Id odbiorcy', sortable: true, class: 'text-center'}
+        {key: 'recipientName', label: 'Nazwa odbiorcy', sortable: true, class: 'text-center'},
+        {key: 'actions', label: 'Akcje'}
+
       ],
       donations: [],
+      infoModal: {
+        id: 'info-modal',
+        title: '',
+        content: ''
+      }
+
     }
   },
-
 
 }
 </script>
