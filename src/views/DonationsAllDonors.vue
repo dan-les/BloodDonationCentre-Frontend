@@ -229,7 +229,7 @@ export default {
                 donorFirstName: response.data[idx].donorFirstName,
                 donorLastName: response.data[idx].donorLastName,
                 bloodGroupWithRh: response.data[idx].bloodGroupWithRh,
-                isReleased: response.data[idx].isReleased,
+                isReleased: response.data[idx].isReleased === true ? 'tak' : 'nie',
                 recipientId: response.data[idx].isReleased,
                 recipientName: response.data[idx].recipientName,
               });
@@ -264,7 +264,7 @@ export default {
       perPage: 10,
       pageOptions: [5, 10, 20, {value: 100, text: "Pokaż wszystko (max: 100)"}],
       sortBy: 'date',
-      sortDesc: true,
+      sortDesc: false,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
       emptyText: 'Brak dostępnych pobrań.',
       sortDirection: '',
@@ -274,13 +274,13 @@ export default {
         'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
       fieldsDonations: [
         {key: 'id', label: 'ID', sortable: true, class: 'text-center'},
-        {key: 'date', label: 'Data pobrania', sortable: true, class: 'text-center'},
+        {key: 'date', label: 'Data', sortable: true, class: 'text-center'},
         {key: 'amount', label: 'Ilość [ml]', sortable: true, class: 'text-center'},
-        {key: 'donationType', label: 'Typ pobrania', sortable: true, class: 'text-center'},
+        {key: 'donationType', label: 'Typ', sortable: true, class: 'text-center'},
         {key: 'donorFirstName', label: 'Imię dawcy', sortable: true, class: 'text-center'},
         {key: 'donorLastName', label: 'Nazwisko dawcy', sortable: true, class: 'text-center'},
         {key: 'bloodGroupWithRh', label: 'Krew', sortable: true, class: 'text-center'},
-        {key: 'isReleased', label: 'Czy wydano', sortable: true, class: 'text-center'},
+        {key: 'isReleased', label: 'Wydano?', sortable: true, class: 'text-center'},
         // {key: 'recipientId', label: 'Id odbiorcy', sortable: true, class: 'text-center'}
         {key: 'recipientName', label: 'Nazwa odbiorcy', sortable: true, class: 'text-center'},
         {key: 'actions', label: 'Akcje'}
