@@ -1,7 +1,7 @@
 <template>
   <b-container fluid>
     <b-jumbotron
-        header="Przegląd wszystkich rezerwacji" header-level="5" header-tag="h4" style="padding: 0.9rem">
+        header="Przegląd wszystkich zarezerwowanych terminów" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
     <b-row>
       <!--       TODO - dodawanie rozerwacji bez wcześniej wybranego dawncy-->

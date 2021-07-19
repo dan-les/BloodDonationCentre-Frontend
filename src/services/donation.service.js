@@ -16,6 +16,10 @@ class DonationService {
             });
     }
 
+    getDonationsStatistics() {
+        return axios.get(API_URL + '/statistics', {headers: authHeader()});
+    }
+
     addNewDonation(data) {
         return axios.post(API_URL, data, {headers: authHeader()});
     }

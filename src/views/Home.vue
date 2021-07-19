@@ -3,9 +3,9 @@
     <div>
       <b-jumbotron border-variant="dark" header-level="4">
         <template #header> Witaj na stronie Centrum Krwiodawstwa</template>
-        <template #lead>
-          Aplikacja została wykonana jako praca inżynierska przez Daniela Leśniewicza.
-        </template>
+        <!--        <template #lead>-->
+        <!--          Aplikacja została wykonana jako praca inżynierska przez Daniela Leśniewicza.-->
+        <!--        </template>-->
       </b-jumbotron>
     </div>
 
@@ -26,8 +26,33 @@
           </b-card-text>
         </b-card>
 
+        <b-card
+            img-alt="Image"
+            img-src="https://bi.im-g.pl/im/77/39/16/z23303543Q,Warto-znac-swoja-grupe-krwi--oznaczenie-grupy-krwi.jpg"
+            overlay>
+        </b-card>
+
+        <b-card img-alt="Image" img-src="https://www.eastcottvets.co.uk/uploads/Blogs/blooddonation.jpg" img-top
+                title="Jakie skutki ma pobranie krwi?">
+          <b-card-text>
+            Sam zabieg pobrania krwi jest bezbolesny. Są jednak osoby, które odczuwają dyskomfort związany z
+            wprowadzeniem igły.
+          </b-card-text>
+        </b-card>
+
+        <b-card
+            img-alt="Image"
+            img-src="https://1.bp.blogspot.com/-jCNEDiu1kJc/XPfZ9DdVgKI/AAAAAAAAAVU/vPLjciZhyQ08N3qvXhqVQcXqG8R5iLvrACEwYBhgL/s1600/Zrzut%2Bekranu%2B%25287%2529.png"
+            img-top>
+
+          <template #footer>
+            <small class="text-muted">Jaka krew przeważa?</small>
+          </template>
+        </b-card>
+
+
         <b-card>
-          <b-card-title>Jakie są zalecenia?</b-card-title>
+          <b-card-title>Jakie są zalecenia przed pobraniem?</b-card-title>
           <b-card-text>
             <b-ol>
               <li>bądź wyspanym</li>
@@ -39,14 +64,6 @@
           </b-card-text>
         </b-card>
 
-        <b-card img-alt="Image" img-src="https://www.eastcottvets.co.uk/uploads/Blogs/blooddonation.jpg" img-top
-                title="Jakie skutki ma pobranie krwi?">
-          <b-card-text>
-            Sam zabieg pobrania krwi jest bezbolesny. Są jednak osoby, które odczuwają dyskomfort związany z
-            wprowadzeniem igły.
-          </b-card-text>
-
-        </b-card>
 
         <b-card img-alt="Image"
                 img-src="https://img.grouponcdn.com/seocms/aNG4Rq8286RemrggcnyzFR/las_vegas_restaurants-1243x746"
@@ -56,29 +73,9 @@
             Przed pobraniem krwi należy zjeść lekkostrawny posiłek, ponieważ krew przetłuszczona jest niezdatna do celów
             medycznych. Należy zatem w dniu pobrania oraz dniu poprzedzającym nie spożywać tłustych posików.
           </b-card-text>
-
-        </b-card>
-        <b-card>
-          <b-card-title>Nie pij przed!</b-card-title>
-          <b-card-text>
-            Będąc pod wpływem alkoholu, narkotyków lub w stanie pobudzenia nerwowego nie można oddać krwi.
-          </b-card-text>
         </b-card>
 
-        <b-card
-            img-alt="Image"
-            img-src="https://bi.im-g.pl/im/77/39/16/z23303543Q,Warto-znac-swoja-grupe-krwi--oznaczenie-grupy-krwi.jpg"
-            overlay></b-card>
 
-        <b-card
-            img-alt="Image"
-            img-src="https://1.bp.blogspot.com/-jCNEDiu1kJc/XPfZ9DdVgKI/AAAAAAAAAVU/vPLjciZhyQ08N3qvXhqVQcXqG8R5iLvrACEwYBhgL/s1600/Zrzut%2Bekranu%2B%25287%2529.png"
-            img-top>
-
-          <template #footer>
-            <small class="text-muted">Jaka krew przeważa?</small>
-          </template>
-        </b-card>
       </b-card-group>
     </div>
 

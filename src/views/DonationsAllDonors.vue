@@ -12,7 +12,7 @@
               v-model="selectedIsReleased" :aria-describedby="ariaDescribedby" value=null>Wszystkie rodzaje dostępności
           </b-form-radio>
           <b-form-radio
-              v-model="selectedIsReleased" :aria-describedby="ariaDescribedby" value="false">Dostępne
+              v-model="selectedIsReleased" :aria-describedby="ariaDescribedby" value="false">Dostępne w magazynie
           </b-form-radio>
           <b-form-radio
               v-model="selectedIsReleased" :aria-describedby="ariaDescribedby" value="true">Wydane innym
@@ -141,23 +141,15 @@
           stacked="md"
           @filtered="onFiltered"
       >
-        <template #cell(name)="row">
-          {{ row.value.first }} {{ row.value.last }}
-        </template>
 
         <template #cell(actions)="row">
-          <b-button class="mr-1" size="sm" variant="primary" @click="info(row.item, row.item.id, $event.target)">
+          <b-button v-if="row.item.isReleased === 'nie'" class="mr-1" size="sm" variant="primary"
+                    @click="info(row.item, row.item.id, $event.target)">
             Wydaj
           </b-button>
         </template>
 
-        <template #row-details="row">
-          <b-card>
-            <ul>
-              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>
-            </ul>
-          </b-card>
-        </template>
+
       </b-table>
 
       <b-modal :id="infoModal.id"
@@ -165,6 +157,7 @@
                cancel-title="Rezygnuj"
                ok-title="Potwierdź zmianę"
                @hide="resetInfoModal"
+               @close="resetInfoModal"
                @ok="changeRecipient(infoModal.content)">
         <b-form-group label="Wybierz podmiot, do którego wydana będzie dawka materiału biologicznego:">
           <b-form-select
@@ -201,7 +194,6 @@ export default {
             return {text: f.label, value: f.key}
           })
     },
-
     propertiesChangeChecker() {
       return `${this.selectedDonationType}|${this.selectedIsReleased}|${this.selectedBloodGroupWithRh}`;
     },
@@ -216,6 +208,20 @@ export default {
 
       this.getAllDonations(newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh);
     },
+    selectedRecipient() {
+      if (this.selectedRecipient === null) {
+        this.getAllDonations(this.selectedDonationType, this.selectedIsReleased, this.selectedBloodGroupWithRh);
+      }
+    },
+    selectedIsReleased() {
+      // ukrywanie kolumny "Akcje" gdy przeglądamy dawki już wydane
+      if (this.selectedIsReleased === 'true') {
+        this.fieldsDonations.pop();
+      } else {
+        this.fieldsDonations.push({key: 'actions', label: 'Akcje', active: false});
+      }
+
+    }
   },
   mounted() {
     this.getAllDonations(this.selectedDonationType, this.selectedIsReleased, this.selectedBloodGroupWithRh);
@@ -223,21 +229,25 @@ export default {
   },
   methods: {
     changeRecipient(id) {
-      DonationService.patchDonationRecipient({
-        id: id,
-        isReleased: true,
-        recipientId: this.selectedRecipient
-      })
-      console.log(this.selectedRecipient)
+      if (this.selectedRecipient !== null) {
+        DonationService.patchDonationRecipient({
+          id: id,
+          isReleased: true,
+          recipientId: this.selectedRecipient
+        }).then(this.selectedRecipient = null)
+      }
+
+
     },
     info(item, index, button) {
       this.infoModal.title = `Wydanie dawki numer ${index}`
       this.infoModal.content = `${index}`
-          this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+      this.$root.$emit('bv::show::modal', this.infoModal.id, button)
     },
     resetInfoModal() {
       this.infoModal.title = ''
       this.infoModal.content = ''
+      this.selectedRecipient = null
     },
     getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
       DonationService.getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh).then(
@@ -300,13 +310,13 @@ export default {
   data() {
     return {
       selectedDonationType: null,
-      selectedIsReleased: null,
+      selectedIsReleased: false,
       selectedBloodGroupWithRh: null,
       selectedRecipient: null,
 
       totalRows: 1,
       currentPage: 1,
-      perPage: 10,
+      perPage: 20,
       pageOptions: [5, 10, 20, {value: 100, text: "Pokaż wszystko (max: 100)"}],
       sortBy: 'date',
       sortDesc: false,
@@ -328,10 +338,9 @@ export default {
         {key: 'isReleased', label: 'Wydano?', sortable: true, class: 'text-center'},
         // {key: 'recipientId', label: 'Id odbiorcy', sortable: true, class: 'text-center'}
         {key: 'recipientName', label: 'Nazwa odbiorcy', sortable: true, class: 'text-center'},
-        {key: 'actions', label: 'Akcje'}
+        {key: 'actions', label: 'Akcje', active: false}
 
       ],
-
       recipients: [],
       donations: [],
       infoModal: {
@@ -339,9 +348,7 @@ export default {
         title: '',
         content: ''
       }
-
     }
   },
-
 }
 </script>
