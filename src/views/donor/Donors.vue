@@ -3,13 +3,13 @@
     <b-jumbotron
         header="Przegląd dawców" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
-    <b-row>
-      <b-col md="2" offset-md="10">
-        <!--        <b-link :to="{ name: 'editDonor', param:  12}">-->
-        <b-button block variant="primary">Dodaj dawcę!</b-button>
-        <!--        </b-link>-->
-      </b-col>
-    </b-row>
+    <!--    <b-row>-->
+    <!--      <b-col md="2" offset-md="10">-->
+    <!--        &lt;!&ndash;        <b-link :to="{ name: 'editDonor', param:  12}">&ndash;&gt;-->
+    <!--        <b-button block variant="primary">Dodaj dawcę!</b-button>-->
+    <!--        &lt;!&ndash;        </b-link>&ndash;&gt;-->
+    <!--      </b-col>-->
+    <!--    </b-row>-->
 
     <b-row style="margin-top: 1rem;">
       <!-- User Interface controls -->
@@ -157,29 +157,43 @@
           stacked="md"
           @filtered="onFiltered"
       >
-<!--        <template #cell(name)="row">-->
-<!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
-<!--        </template>-->
+        <!--        <template #cell(name)="row">-->
+        <!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
+        <!--        </template>-->
 
         <template #cell(actions)="row">
           <b-link :to="{ name: 'donationsSelectedDonor', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Pobrania</b-button>
           </b-link>
-          <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">
-            <b-button class="mr-1" size="sm" variant="primary">Umów wizytę</b-button>
-          </b-link>
+          <!--          <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">-->
+          <!--            <b-button class="mr-1" size="sm" variant="primary">Umów termin</b-button>-->
+          <!--          </b-link>-->
+
+          <b-dropdown class="mx-1" size="sm" text="Rezerwacje" variant="primary">
+            <b-dropdown-item>
+              <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">
+                <b-button class="mr-1" size="sm" variant="primary">Zarezerwuj termin na pobranie</b-button>
+              </b-link>
+            </b-dropdown-item>
+            <b-dropdown-item>
+              <b-link :to="{ name: 'DonorReservations', params: { id: row.item.id}  }">
+                <b-button class="mr-1" size="sm" variant="primary">Historia wizyt</b-button>
+              </b-link>
+            </b-dropdown-item>
+          </b-dropdown>
+
           <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" style="margin-left: 0.6rem">Edytuj</b-button>
           </b-link>
         </template>
 
-<!--        <template #row-details="row">-->
-<!--          <b-card>-->
-<!--            <ul>-->
-<!--              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>-->
-<!--            </ul>-->
-<!--          </b-card>-->
-<!--        </template>-->
+        <!--        <template #row-details="row">-->
+        <!--          <b-card>-->
+        <!--            <ul>-->
+        <!--              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>-->
+        <!--            </ul>-->
+        <!--          </b-card>-->
+        <!--        </template>-->
       </b-table>
     </b-row>
   </b-container>
@@ -188,7 +202,7 @@
 </template>
 
 <script>
-import DonorService from '../services/donor.service';
+import DonorService from '../../services/donor.service';
 
 export default {
   data() {
@@ -235,6 +249,10 @@ export default {
     }
   },
   mounted() {
+    if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
+      this.$router.push('/login');
+    }
+
     DonorService.getAllDonors().then(
         response => {
           // console.log(response);

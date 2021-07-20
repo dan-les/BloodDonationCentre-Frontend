@@ -104,10 +104,14 @@
 </template>
 
 <script>
-import DonorService from '../services/donor.service';
+import DonorService from '../../services/donor.service';
 
 export default {
   mounted() {
+    if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
+      this.$router.push('/login');
+    }
+
     DonorService.getDonorById(this.$route.params.id).then(
         response => {
           // console.log(response);

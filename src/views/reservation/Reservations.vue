@@ -195,7 +195,7 @@
 </template>
 
 <script>
-import ReservationService from '../services/reservation.service';
+import ReservationService from '../../services/reservation.service';
 
 export default {
   data() {
@@ -274,9 +274,11 @@ export default {
 
   },
   mounted() {
+    if (!this.$store.state.auth.user && !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
+      this.$router.push('/login');
+    }
     // sprawdzenie, czy w ścieżce jest date jako true czy jako false
     this.isDatePickerEnabled = this.$route.query.date;
-    // this.getProperReservations();
 
   },
   methods: {

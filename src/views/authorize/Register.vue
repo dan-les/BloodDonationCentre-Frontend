@@ -1,19 +1,20 @@
 <template>
-  <div class="col-md-12">
+  <b-container>
     <div class="card card-container">
       <img
           id="profile-img"
           class="profile-img-card"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          src="../../assets/user_img.png"
       />
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label>Login</label>
             <input
                 v-model="user.username"
                 v-validate="'required|min:3|max:20'"
                 class="form-control"
+                data-vv-as="'login'"
                 name="username"
                 type="text"
             />
@@ -24,11 +25,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
+            <label>E-mail</label>
             <input
                 v-model="user.email"
                 v-validate="'required|email|max:50'"
                 class="form-control"
+                data-vv-as="'e-mail'"
                 name="email"
                 type="email"
             />
@@ -39,11 +41,12 @@
             </div>
           </div>
           <div class="form-group">
-            <label for="password">Password</label>
+            <label>Hasło</label>
             <input
                 v-model="user.password"
                 v-validate="'required|min:6|max:40'"
                 class="form-control"
+                data-vv-as="'hasło'"
                 name="password"
                 type="password"
             />
@@ -66,11 +69,12 @@
       >{{ message }}
       </div>
     </div>
-  </div>
+
+  </b-container>
 </template>
 
 <script>
-import User from '../models/user';
+import User from '../../models/user';
 
 export default {
   name: 'Register',

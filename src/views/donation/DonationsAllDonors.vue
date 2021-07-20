@@ -156,8 +156,8 @@
                :title="infoModal.title"
                cancel-title="Rezygnuj"
                ok-title="Potwierdź zmianę"
-               @hide="resetInfoModal"
                @close="resetInfoModal"
+               @hide="resetInfoModal"
                @ok="changeRecipient(infoModal.content)">
         <b-form-group label="Wybierz podmiot, do którego wydana będzie dawka materiału biologicznego:">
           <b-form-select
@@ -182,8 +182,8 @@
 </template>
 
 <script>
-import DonationService from '../services/donation.service';
-import RecipientService from '../services/recipient.service';
+import DonationService from '../../services/donation.service';
+import RecipientService from '../../services/recipient.service';
 
 export default {
   computed: {
@@ -224,6 +224,10 @@ export default {
     }
   },
   mounted() {
+    if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
+      this.$router.push('/login');
+    }
+
     this.getAllDonations(this.selectedDonationType, this.selectedIsReleased, this.selectedBloodGroupWithRh);
     this.getAllRecipients();
   },

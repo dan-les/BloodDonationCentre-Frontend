@@ -161,8 +161,8 @@
 </template>
 
 <script>
-import DonorService from '../services/donor.service';
-import DonationService from '../services/donation.service';
+import DonorService from '../../services/donor.service';
+import DonationService from '../../services/donation.service';
 
 export default {
   computed: {
@@ -175,6 +175,10 @@ export default {
     }
   },
   mounted() {
+    if (!this.$store.state.auth.user) {
+      this.$router.push('/login');
+    }
+
     DonorService.getDonorById(this.$route.params.id).then(
         response => {
           const results_tmp = [];

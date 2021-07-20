@@ -20,7 +20,7 @@
 
 <script>
 import {mdbBarChart, mdbContainer} from "mdbvue";
-import DonationService from '../services/donation.service';
+import DonationService from '../../services/donation.service';
 
 export default {
   name: "ChartPage",
@@ -29,6 +29,9 @@ export default {
     mdbContainer
   },
   mounted() {
+    if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
+      this.$router.push('/login');
+    }
     DonationService.getDonationsStatistics().then(
         response => {
           for (const idx in response.data) {

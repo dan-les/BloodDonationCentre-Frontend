@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from './views/Home.vue';
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
+import Home from './views/board/Home.vue';
+import Login from './views/authorize/Login.vue';
+import Register from './views/authorize/Register.vue';
 
 Vue.use(Router);
 
@@ -30,67 +30,73 @@ export const router = new Router({
             path: '/profile',
             name: 'profile',
             // lazy-loaded
-            component: () => import('./views/Profile.vue')
+            component: () => import('./views/board/Profile.vue')
         },
         {
             path: '/admin',
             name: 'admin',
             // lazy-loaded
-            component: () => import('./views/BoardAdmin.vue')
+            component: () => import('./views/board/BoardAdmin.vue')
         },
         {
             path: '/staff',
             name: 'staff',
             // lazy-loaded
-            component: () => import('./views/BoardStaff.vue')
+            component: () => import('./views/board/BoardStaff.vue')
         },
         {
             path: '/donors',
             name: 'donors',
             // lazy-loaded
-            component: () => import('./views/Donors.vue')
+            component: () => import('./views/donor/Donors.vue')
         },
         {
             path: '/reservation',
             name: 'reservations',
             // lazy-loaded
-            component: () => import('./views/Reservations.vue')
+            component: () => import('./views/reservation/Reservations.vue')
+        },
+        {
+            path: '/reservations/user/:id',
+            name: 'DonorReservations',
+            // lazy-loaded
+            component: () => import('./views/reservation/ReservationsSelectedDonor.vue')
         },
         {
             path: '/donations/all',
             name: 'donationsAllDonors',
             // lazy-loaded
-            component: () => import('./views/DonationsAllDonors.vue')
+            component: () => import('./views/donation/DonationsAllDonors.vue')
         },
         {
             path: '/donations/user/:id',
             name: 'donationsSelectedDonor',
             // lazy-loaded
-            component: () => import('./views/DonationsSelectedDonor.vue')
+            component: () => import('./views/donation/DonationsSelectedDonor.vue')
         },
         {
             path: '/donations/add/:id',
             name: 'addDonation',
             // lazy-loaded
-            component: () => import('./views/AddDonation.vue')
+            component: () => import('./views/donation/AddDonation.vue')
         },
         {
             path: '/user',
             name: 'user',
             // lazy-loaded
-            component: () => import('./views/BoardUser.vue')
+            component: () => import('./views/board/BoardUser.vue')
         },
         {
             path: "/donors/edit/:id",
             name: "editDonor",
             // lazy-loaded
-            component: () => import("./views/EditDonor.vue")
+            component: () => import("./views/donor/EditDonor.vue")
         },
         {
             path: "/reservation/add/:id",
             name: "addReservation",
             // lazy-loaded
-            component: () => import("./views/AddReservation.vue")
+            component: () => import("./views/reservation/AddReservation.vue")
         },
         {
             path: '*',

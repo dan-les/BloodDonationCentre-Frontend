@@ -17,22 +17,22 @@
           <b-link router-tag="li" to="/staff">Panel Pracownika</b-link>
         </b-nav-item>
 
-        <!---->
-        <!--        <b-nav-item v-if="showStaffBoard">-->
-        <!--          <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>-->
-        <!--        </b-nav-item>-->
 
-        <b-nav-item-dropdown v-if="showStaffBoard" right text="Dawcy">
-          <b-dropdown-item>
-            <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>
-            <!--            <router-link to="/donors" id="thisLink" class="nav-item">Wyświetl dawców</router-link>-->
-          </b-dropdown-item>
-          <b-dropdown-item>
-            <b-link router-tag="li" to="/donors/add">Dodaj dawcę</b-link>
-            <!--            <router-link to="/donors">Dodaj dawcę</router-link>-->
-          </b-dropdown-item>
-        </b-nav-item-dropdown>
-        <!---->
+        <b-nav-item v-if="showStaffBoard">
+          <b-link router-tag="li" to="/donors">Dawcy</b-link>
+        </b-nav-item>
+
+        <!--        <b-nav-item-dropdown v-if="showStaffBoard" right text="Dawcy">-->
+        <!--          <b-dropdown-item>-->
+        <!--            <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>-->
+        <!--            &lt;!&ndash;            <router-link to="/donors" id="thisLink" class="nav-item">Wyświetl dawców</router-link>&ndash;&gt;-->
+        <!--          </b-dropdown-item>-->
+        <!--          <b-dropdown-item>-->
+        <!--            <b-link router-tag="li" to="/donors/add">Dodaj dawcę</b-link>-->
+        <!--            &lt;!&ndash;            <router-link to="/donors">Dodaj dawcę</router-link>&ndash;&gt;-->
+        <!--          </b-dropdown-item>-->
+        <!--        </b-nav-item-dropdown>-->
+        <!--        &lt;!&ndash;&ndash;&gt;-->
 
         <b-nav-item-dropdown v-if="showStaffBoard" right text="Rezerwacje">
           <b-dropdown-item>

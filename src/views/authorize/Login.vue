@@ -1,18 +1,19 @@
 <template>
-  <div class="col-md-12">
+  <b-container>
     <div class="card card-container">
       <img
           id="profile-img"
           class="profile-img-card"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          height="512" src="../../assets/user_img.png" width="512"
       />
       <form name="form" @submit.prevent="handleLogin">
         <div class="form-group">
-          <label for="username">Username</label>
+          <label>Login</label>
           <input
               v-model="user.username"
               v-validate="'required'"
               class="form-control"
+              data-vv-as="'login'"
               name="username"
               type="text"
           />
@@ -20,15 +21,16 @@
               v-if="errors.has('username')"
               class="alert alert-danger"
               role="alert"
-          >Username is required!
+          >{{ errors.first('username') }}
           </div>
         </div>
         <div class="form-group">
-          <label for="password">Password</label>
+          <label for="password">Hasło</label>
           <input
               v-model="user.password"
               v-validate="'required'"
               class="form-control"
+              data-vv-as="'hasło'"
               name="password"
               type="password"
           />
@@ -36,7 +38,7 @@
               v-if="errors.has('password')"
               class="alert alert-danger"
               role="alert"
-          >Password is required!
+          >{{ errors.first('password') }}
           </div>
         </div>
         <div class="form-group">
@@ -50,11 +52,11 @@
         </div>
       </form>
     </div>
-  </div>
+  </b-container>
 </template>
 
 <script>
-import User from '../models/user';
+import User from '../../models/user';
 
 export default {
   name: 'Login',
@@ -91,10 +93,7 @@ export default {
               },
               error => {
                 this.loading = false;
-                this.message =
-                    (error.response && error.response.data && error.response.data.message) ||
-                    error.message ||
-                    error.toString();
+                this.message = "Błąd logowania!"
               }
           );
         }
