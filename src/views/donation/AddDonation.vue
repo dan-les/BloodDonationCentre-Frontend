@@ -129,7 +129,7 @@ export default {
           })
     },
 
-    makeToastSuccess: function (message) {
+    makeToastSuccess(message) {
       this.$bvToast.toast(message, {
         title: `Sukces`,
         variant: 'info',

@@ -3,14 +3,6 @@
     <b-jumbotron
         header="Przegląd wszystkich zarezerwowanych terminów" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
-    <b-row>
-      <!--       TODO - dodawanie rozerwacji bez wcześniej wybranego dawncy-->
-      <!--      <b-col md="2" offset-md="10">-->
-      <!--        &lt;!&ndash;        <b-link :to="{ name: 'editDonor', param:  12}">&ndash;&gt;-->
-      <!--        <b-button block variant="primary">Dodaj dawcę!</b-button>-->
-      <!--        &lt;!&ndash;        </b-link>&ndash;&gt;-->
-      <!--      </b-col>-->
-    </b-row>
 
     <div v-if="isDatePickerEnabled === 'true' || isDatePickerEnabled === true">
       Ustaw termin:
@@ -300,7 +292,6 @@ export default {
             response => {
               const results_tmp = [];
               for (const idx in response.data) {
-
                 results_tmp.push({
                   id: response.data[idx].id,
                   donorFirstName: response.data[idx].donorFirstName,
@@ -312,7 +303,6 @@ export default {
                 });
               }
               this.items = results_tmp;
-              // Set the initial number of items
               this.totalRows = this.items.length;
             },
             error => {

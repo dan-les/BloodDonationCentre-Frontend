@@ -154,7 +154,6 @@ export default {
       this.getDateForDonation();
     },
     dateValue: function () {
-
       this.getHours();
     }
   },

@@ -23,6 +23,10 @@ class ReservationService {
         return axios.get(API_URL + 'list', {headers: authHeader()});
     }
 
+    getAllReservationsByDonor(donorId) {
+        return axios.get(API_URL + 'donor/list/' + `${donorId}`, {headers: authHeader()});
+    }
+
     getAllReservationsByDate(date) {
         return axios.get(API_URL + 'list',
             {

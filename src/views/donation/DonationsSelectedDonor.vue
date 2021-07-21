@@ -4,7 +4,7 @@
         header="Spis wszystkich donacji" header-level="5" header-tag="h4" style="padding: 0.9rem">
       Dla dawcy:
       <b-table
-          :fields="fields" :items="donor" responsive="sm" small>
+          :fields="fieldsDonor" :items="donor" responsive="sm" small>
       </b-table>
     </b-jumbotron>
 
@@ -248,7 +248,7 @@ export default {
       sortDirection: '',
       filter: null,
       filterOn: [],
-      fields: [
+      fieldsDonor: [
         {key: 'id', label: 'ID'},
         {key: 'username', label: 'Login'},
         {key: 'email', label: 'Email'},

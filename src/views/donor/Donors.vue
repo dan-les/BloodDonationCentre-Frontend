@@ -177,7 +177,7 @@
             </b-dropdown-item>
             <b-dropdown-item>
               <b-link :to="{ name: 'DonorReservations', params: { id: row.item.id}  }">
-                <b-button class="mr-1" size="sm" variant="primary">Historia wizyt</b-button>
+                <b-button class="mr-1" size="sm" variant="primary">Historia rezerwacji terminów</b-button>
               </b-link>
             </b-dropdown-item>
           </b-dropdown>

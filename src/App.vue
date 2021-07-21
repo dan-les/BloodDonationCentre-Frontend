@@ -61,13 +61,13 @@
         <b-nav-item>
           <b-link router-tag="li" to="/register">
             <font-awesome-icon icon="user-plus"/>
-            Sign Up
+            Zarejestruj się!
           </b-link>
         </b-nav-item>
         <b-nav-item>
           <b-link router-tag="li" to="/login">
             <font-awesome-icon icon="sign-in-alt"/>
-            Login
+            Zaloguj się!
           </b-link>
         </b-nav-item>
       </div>
@@ -87,9 +87,14 @@
       </div>
     </b-navbar>
 
-    <div class="container">
-      <router-view/>
-    </div>
+
+    <b-container>
+      <b-card class="p-xl-3 bg-white">
+        <router-view/>
+      </b-card>
+
+    </b-container>
+
   </div>
 </template>
 
@@ -129,6 +134,14 @@ export default {
   }
 };
 </script>
+
+<style>
+#app {
+  background-image: url("../public/bg.png");
+  background-repeat: no-repeat;
+  width: 100%;
+}
+</style>
 
 
 
