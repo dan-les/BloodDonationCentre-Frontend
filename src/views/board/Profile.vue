@@ -1,49 +1,78 @@
 <template>
   <b-container fluid>
-    <b-jumbotron style="padding: 1.9rem">
-      <h4>
-        Zalogowano pomyślnie jako <strong>{{ currentUser.username }}!</strong>
-      </h4>
-    </b-jumbotron>
+    <!--    <b-jumbotron style="padding: 1.9rem">-->
+    <!--      <h4>-->
+    <!--        Zalogowano pomyślnie jako <strong>{{ currentUser.username }}!</strong>-->
+    <!--      </h4>-->
+    <!--    </b-jumbotron>-->
 
 
     <b-jumbotron>
-      <template #lead>
-        Twoje podstawowe dane
-      </template>
-
-
+      <b-jumbotron
+          header="Twoje dane" header-level="5" header-tag="h4" style="padding: 0.9rem">
+      </b-jumbotron>
       <p>
-        <strong>Id:</strong>
-        {{ currentUser.id }}
+        <strong>Imię:</strong> {{ user[0].firstName }}
       </p>
       <p>
-        <strong>Email:</strong>
-        {{ currentUser.email }}
+        <strong>Nazwisko:</strong> {{ user[0].lastName }}
       </p>
-      <strong>Role w systemie:</strong>
-      <ul>
-        <li v-for="(role,index) in currentUser.roles" :key="index">{{ role }}</li>
-      </ul>
-
+      <p>
+        <strong>Login:</strong> {{ user[0].username }}
+      </p>
+      <p>
+        <strong>Email:</strong> {{ user[0].email }}
+      </p>
+      <p>
+        <strong>Pesel:</strong> {{ user[0].pesel }}
+      </p>
+      <p>
+        <strong>Grupa krwi:</strong> {{ user[0].bloodGroupWithRh }}
+      </p>
+      <p>
+        <strong>Płeć:</strong> {{ user[0].gender }}
+      </p>
     </b-jumbotron>
 
   </b-container>
 </template>
 
 <script>
+import DonorService from "../../services/donor.service";
+
 export default {
-  name: 'Profile',
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
+  data() {
+    return {
+      user: [],
     }
   },
+
   mounted() {
-    if (!this.currentUser) {
+    if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-  },
+
+    DonorService.getDonorById(this.$store.state.auth.user.id).then(
+        response => {
+          const results_tmp = [];
+          results_tmp.push({
+            username: response.data.username,
+            email: response.data.email,
+            firstName: response.data.firstName,
+            lastName: response.data.lastName,
+            pesel: response.data.pesel,
+            bloodGroupWithRh: response.data.bloodGroupWithRh,
+            gender: response.data.gender
+          });
+          this.user = results_tmp;
+
+        },
+        error => {
+
+        }
+    )
+  }
+
 
 };
 </script>

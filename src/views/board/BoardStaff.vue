@@ -23,7 +23,6 @@ import {mdbBarChart, mdbContainer} from "mdbvue";
 import DonationService from '../../services/donation.service';
 
 export default {
-  name: "ChartPage",
   components: {
     mdbBarChart,
     mdbContainer

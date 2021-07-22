@@ -53,7 +53,7 @@
         </b-nav-item>
 
         <b-nav-item v-if="showNormalUserBoard">
-          <b-link v-if="currentUser" router-tag="li" to="/user">User</b-link>
+          <b-link v-if="currentUser" router-tag="li" to="/user">Panel użytkownika</b-link>
         </b-nav-item>
       </b-navbar-nav>
 
@@ -86,7 +86,6 @@
         </b-nav-item>
       </div>
     </b-navbar>
-
 
     <b-container>
       <b-card class="p-xl-3 bg-white">
@@ -139,7 +138,7 @@ export default {
 #app {
   background-image: url("../public/bg.png");
   background-repeat: no-repeat;
-  width: 100%;
+  background-size: 100%;
 }
 </style>
 
