@@ -28,8 +28,14 @@ export const auth = {
         register({commit}, user) {
             return AuthService.register(user).then(
                 response => {
+                    console.log(response.data.message)
                     commit('registerSuccess');
-                    return Promise.resolve(response.data);
+                    if (response.data.message === "User succesfully register!") {
+                        response.data.message = 'Użytkownik pomyślnie zarejestrowany!';
+                        return Promise.resolve(response.data);
+                    } else {
+                        Promise.reject("Error during registration");
+                    }
                 },
                 error => {
                     commit('registerFailure');

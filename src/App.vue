@@ -89,9 +89,10 @@
 
     <b-container>
       <b-card class="p-xl-3 bg-white">
-        <router-view/>
+        <transition mode="out-in" name="fade">
+          <router-view/>
+        </transition>
       </b-card>
-
     </b-container>
 
   </div>
@@ -139,6 +140,17 @@ export default {
   background-image: url("../public/bg.png");
   background-repeat: no-repeat;
   background-size: 100%;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
 

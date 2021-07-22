@@ -25,7 +25,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="password">Hasło</label>
+          <label>Hasło</label>
           <input
               v-model="user.password"
               v-validate="'required'"

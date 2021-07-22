@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container style="margin-top: -3rem">
     <div class="card card-container">
       <img
           id="profile-img"
@@ -22,6 +22,38 @@
                 v-if="submitted && errors.has('username')"
                 class="alert-danger"
             >{{ errors.first('username') }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Imię</label>
+            <input
+                v-model="user.firstName"
+                v-validate="'required|min:1|max:40'"
+                class="form-control"
+                data-vv-as="'imię'"
+                name="firstName"
+                type="text"
+            />
+            <div
+                v-if="submitted && errors.has('firstName')"
+                class="alert-danger"
+            >{{ errors.first('firstName') }}
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Nazwisko</label>
+            <input
+                v-model="user.lastName"
+                v-validate="'required|min:1|max:40'"
+                class="form-control"
+                data-vv-as="'Nazwisko'"
+                name="lastName"
+                type="text"
+            />
+            <div
+                v-if="submitted && errors.has('lastName')"
+                class="alert-danger"
+            >{{ errors.first('lastName') }}
             </div>
           </div>
           <div class="form-group">
@@ -80,7 +112,7 @@ export default {
   name: 'Register',
   data() {
     return {
-      user: new User('', '', ''),
+      user: new User('', '', '', '', ''),
       submitted: false,
       successful: false,
       message: ''
