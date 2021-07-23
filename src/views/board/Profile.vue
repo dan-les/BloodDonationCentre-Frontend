@@ -5,12 +5,11 @@
     <!--        Zalogowano pomyślnie jako <strong>{{ currentUser.username }}!</strong>-->
     <!--      </h4>-->
     <!--    </b-jumbotron>-->
+    <b-jumbotron
+        header="Twoje dane" header-level="5" header-tag="h2" style="padding: 1.5rem">
+    </b-jumbotron>
 
-
-    <b-jumbotron>
-      <b-jumbotron
-          header="Twoje dane" header-level="5" header-tag="h4" style="padding: 0.9rem">
-      </b-jumbotron>
+    <b-jumbotron style="padding: 1.5rem">
       <p>
         <strong>Imię:</strong> {{ user[0].firstName }}
       </p>

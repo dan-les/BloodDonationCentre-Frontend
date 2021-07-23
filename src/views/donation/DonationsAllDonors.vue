@@ -240,8 +240,6 @@ export default {
           recipientId: this.selectedRecipient
         }).then(this.selectedRecipient = null)
       }
-
-
     },
     info(item, index, button) {
       this.infoModal.title = `Wydanie dawki numer ${index}`

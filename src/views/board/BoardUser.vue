@@ -23,15 +23,37 @@
         </b-tab>
 
         <b-tab lazy title="Zarezerwowane terminy">
+
+          <b-row class="justify-content-end" style="margin-bottom: 1rem">
+            <b-col col lg="3">
+              <b-button v-b-modal.modal-prevent-closing class="mr-1" size="sm" variant="primary">Zarezerwuj termin na
+                pobranie
+              </b-button>
+            </b-col>
+          </b-row>
           <b-table :fields="fieldsReservations" :items="reservations" hover striped></b-table>
         </b-tab>
-
-        <!--      <b-tab title="Zarezerwowane terminy" lazy>-->
-        <!--        <b-alert show>I'm lazy mounted!</b-alert>-->
-        <!--      </b-tab>-->
-
       </b-tabs>
     </b-card>
+
+    <b-modal
+        id="modal-prevent-closing"
+        ref="modal"
+        ok-only
+        ok-title="Zamknij okno"
+        ok-variant="secondary"
+        size="xl"
+        title="Rezerwacja terminu na pobranie krwi"
+        @ok="reloadeData"
+    >
+      <form ref="form" @submit.stop.prevent="handleSubmit">
+        <add-reservation-model
+            :donorIdx="this.$store.state.auth.user.id"
+        ></add-reservation-model>
+      </form>
+    </b-modal>
+
+
   </b-container>
 
 </template>
@@ -118,33 +140,44 @@ export default {
           this.show = true
         })
 
-    DonationService.getAllDonationsByDonorId(this.$store.state.auth.user.id).then(
-        response => {
-          const results_tmp = [];
-          for (const idx in response.data) {
-            results_tmp.push({
-              date: response.data[idx].date,
-              amount: response.data[idx].amount,
-              donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
-            });
-          }
-          this.donations = results_tmp;
-        }
-    )
+    this.getAllDonationsByDonor()
+    this.getAllReservationsByDonor()
+  },
+  methods: {
+    reloadeData() {
+      this.getAllReservationsByDonor()
+    },
 
-    ReservationService.getAllReservationsByDonor(this.$store.state.auth.user.id).then(
-        response => {
-          const results_tmp = [];
-          for (const idx in response.data) {
-            results_tmp.push({
-              date: response.data[idx].date,
-              time: response.data[idx].time,
-              donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-            });
+    getAllReservationsByDonor() {
+      ReservationService.getAllReservationsByDonor(this.$store.state.auth.user.id).then(
+          response => {
+            const results_tmp = [];
+            for (const idx in response.data) {
+              results_tmp.push({
+                date: response.data[idx].date,
+                time: response.data[idx].time,
+                donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+              });
+            }
+            this.reservations = results_tmp;
           }
-          this.reservations = results_tmp;
+      )
+    },
+    getAllDonationsByDonor() {
+      DonationService.getAllDonationsByDonorId(this.$store.state.auth.user.id).then(
+          response => {
+            const results_tmp = [];
+            for (const idx in response.data) {
+              results_tmp.push({
+                date: response.data[idx].date,
+                amount: response.data[idx].amount,
+                donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
+              });
+            }
+            this.donations = results_tmp;
         }
     )
+  }
   }
 };
 </script>

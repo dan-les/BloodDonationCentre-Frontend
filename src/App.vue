@@ -88,7 +88,7 @@
     </b-navbar>
 
     <b-container>
-      <b-card class="p-xl-3 bg-white">
+      <b-card class="p-xl-2">
         <transition mode="out-in" name="fade">
           <router-view/>
         </transition>
@@ -144,7 +144,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.5s ease;
+  transition: opacity 0.3s ease;
 }
 
 

@@ -1,14 +1,5 @@
 <template>
   <b-container>
-    <b-jumbotron
-        header="Rezerwacja terminu na pobranie krwi" header-level="5" header-tag="h4" style="padding: 0.9rem">
-      Wybrany dawca:
-      <b-table
-          :fields="fields" :items="donor" responsive="sm" small>
-      </b-table>
-    </b-jumbotron>
-
-
     <b-form-group v-slot="{ ariaDescribedby }" label="Wybór typu pobrania:">
       <b-form-radio-group
           v-model="selectedDonationType"
@@ -49,17 +40,12 @@
     <div v-if="selectedTime !== null && dateValue !== '' &&  selectedDonationType !== ''" @click="addNewReservation">
       <b-button block variant="primary">Zarezerwuj termin na pobranie materiału biologicznego</b-button>
     </div>
-    <b-link :to="'/donors'">
-      <b-button style="margin: 1rem">
-        Powrót na stronę z dawcami
-      </b-button>
-    </b-link>
+
   </b-container>
 
 </template>
 
 <script>
-import DonorService from '../../services/donor.service';
 import DonationService from '../../services/donation.service';
 import ReservationService from '../../services/reservation.service'
 
@@ -69,33 +55,16 @@ export default {
       this.$router.push('/login');
     }
 
-    DonorService.getDonorById(this.$route.params.id).then(
-        response => {
-          const results_tmp = [];
-          results_tmp.push({
-            id: response.data.id,
-            username: response.data.username,
-            email: response.data.email,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            pesel: response.data.pesel,
-            bloodGroupWithRh: response.data.bloodGroupWithRh,
-            gender: response.data.gender
-          });
-
-          this.donor = results_tmp;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
-        }
-    )
+  },
+  props: {
+    'donorIdx': {
+      type: Number
+    }
   },
   data() {
     return {
       dateValue: '',
+      donorId: this.donorIdx,
       min: null,
       labelsLanguagePL: {
         pl: {
@@ -115,7 +84,7 @@ export default {
 
         }
       },
-      selectedDonationType: '',
+      selectedDonationType: null,
       options: [
         {text: 'Pobranie krwi pełnej', value: 'blood'},
         {text: 'Donacja osocza', value: 'plasma'},
@@ -123,22 +92,11 @@ export default {
       ],
       selectedTime: null,
       optionsTime: [],
-      donor: [{}],
-      fields: [
-        {key: 'id', label: 'ID'},
-        {key: 'username', label: 'Login'},
-        {key: 'email', label: 'Email'},
-        {key: 'firstName', label: 'Imię'},
-        {key: 'lastName', label: 'Nazwisko'},
-        {key: 'pesel', label: 'PESEL'},
-        {key: 'bloodGroupWithRh', label: 'Krew'},
-        {key: 'gender', label: 'Płeć'},
-      ],
-
       bloods: [{text: 'wybierz grupę krwi', value: null},
         'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
       genders: [{text: 'wybierz płeć', value: null}, {text: 'Kobieta', value: 'K'}, {text: 'Mężczyzna', value: 'M'}],
       show: true
+
     }
   },
 
@@ -153,7 +111,7 @@ export default {
   methods: {
     addNewReservation() {
       ReservationService.addNewReservation({
-        donorId: this.donor[0].id,
+        donorId: this.donorId,
         date: this.dateValue,
         time: this.selectedTime,
         donationType: this.selectedDonationType
@@ -194,7 +152,8 @@ export default {
       )
     },
     getDateForDonation() {
-      DonationService.getSoonestPossibleDateForNextDonation(this.selectedDonationType, this.$route.params.id)
+      console.log(this.donorIdx)
+      DonationService.getSoonestPossibleDateForNextDonation(this.selectedDonationType, this.donorIdx)
           .then(
               response => {
                 this.min = response.data.date;

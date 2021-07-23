@@ -12,6 +12,7 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import {faHome, faSignInAlt, faSignOutAlt, faUser, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
+import AddReservationModel from "./views/reservation/AddReservationModel";
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
@@ -24,6 +25,8 @@ Vue.use(Vuex);
 Vue.config.devtools = true
 Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
+
+Vue.component("add-reservation-model", AddReservationModel);
 
 new Vue({
     router,

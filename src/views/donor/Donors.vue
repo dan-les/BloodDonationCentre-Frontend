@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-container>
     <b-jumbotron
         header="Przegląd dawców" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
@@ -162,6 +162,12 @@
         <!--        </template>-->
 
         <template #cell(actions)="row">
+
+          <b-button class="mr-1" size="sm" variant="info" @click="row.toggleDetails">
+            {{ row.detailsShowing ? 'Ukryj' : 'Szczegóły' }}
+          </b-button>
+
+
           <b-link :to="{ name: 'donationsSelectedDonor', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Pobrania</b-button>
           </b-link>
@@ -169,31 +175,38 @@
           <!--            <b-button class="mr-1" size="sm" variant="primary">Umów termin</b-button>-->
           <!--          </b-link>-->
 
-          <b-dropdown class="mx-1" size="sm" text="Rezerwacje" variant="primary">
+          <b-dropdown class="mr-1" size="sm" text="Rezerwacje" variant="primary">
             <b-dropdown-item>
               <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">
-                <b-button class="mr-1" size="sm" variant="primary">Zarezerwuj termin na pobranie</b-button>
+                <b-button class="mx-1" size="sm" variant="primary">Zarezerwuj termin na pobranie</b-button>
               </b-link>
             </b-dropdown-item>
             <b-dropdown-item>
               <b-link :to="{ name: 'DonorReservations', params: { id: row.item.id}  }">
-                <b-button class="mr-1" size="sm" variant="primary">Historia rezerwacji terminów</b-button>
+                <b-button class="mx-1" size="sm" variant="primary">Historia rezerwacji terminów</b-button>
               </b-link>
             </b-dropdown-item>
           </b-dropdown>
 
           <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
-            <b-button class="mr-1" size="sm" style="margin-left: 0.6rem">Edytuj</b-button>
+            <b-button class="mr-0" size="sm">Edytuj</b-button>
           </b-link>
         </template>
 
-        <!--        <template #row-details="row">-->
-        <!--          <b-card>-->
-        <!--            <ul>-->
-        <!--              <li v-for="(value, key) in row.item" :key="key">{{ key }}: {{ value }}</li>-->
-        <!--            </ul>-->
-        <!--          </b-card>-->
-        <!--        </template>-->
+
+        <template #row-details="row">
+          <b-card>
+            <ul>
+              <span v-for="(value, key) in row.item" :key="key">
+              <li v-if="key !== '_showDetails'">
+                <span>
+                   <strong>{{ key }}</strong>: {{ value }}
+                </span>
+              </li>
+              </span>
+            </ul>
+          </b-card>
+        </template>
       </b-table>
     </b-row>
   </b-container>
@@ -210,14 +223,14 @@ export default {
       items: [],
       fields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
-        {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
-        {key: 'email', label: 'Email', sortable: true, sortDirection: 'desc'},
+        // {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
+        // {key: 'email', label: 'Email', sortable: true, sortDirection: 'desc'},
         {key: 'firstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
         {key: 'lastName', label: 'Nazwisko', sortable: true, sortDirection: 'desc'},
         {key: 'pesel', label: 'PESEL', sortable: true, class: 'text-center'},
         {key: 'bloodGroupWithRh', label: 'Krew', sortable: true,},
-        {key: 'gender', label: 'Płeć', sortable: true,},
-        {key: 'actions', label: 'Akcje'}
+        // {key: 'gender', label: 'Płeć', sortable: true,},
+        {key: 'actions', label: 'Akcje', class: 'text-center'}
       ],
       totalRows: 1,
       currentPage: 1,
