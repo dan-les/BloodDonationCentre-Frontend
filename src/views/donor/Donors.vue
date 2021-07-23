@@ -192,18 +192,17 @@
             <b-button class="mr-0" size="sm">Edytuj</b-button>
           </b-link>
         </template>
-
-
         <template #row-details="row">
           <b-card>
             <ul>
-              <span v-for="(value, key) in row.item" :key="key">
-              <li v-if="key !== '_showDetails'">
-                <span>
-                   <strong>{{ key }}</strong>: {{ value }}
-                </span>
-              </li>
-              </span>
+              <li><strong>Id</strong>: {{ row.item.id }}</li>
+              <li><strong>Login</strong>: {{ row.item.username }}</li>
+              <li><strong>E-mail</strong>: {{ row.item.email }}</li>
+              <li><strong>Imię</strong>: {{ row.item.firstName }}</li>
+              <li><strong>Nazwisko</strong>: {{ row.item.lastName }}</li>
+              <li><strong>PESEL</strong>: {{ row.item.pesel }}</li>
+              <li><strong>Grupa kwri</strong>: {{ row.item.bloodGroupWithRh }}</li>
+              <li><strong>Płeć</strong>: {{ row.item.gender }}</li>
             </ul>
           </b-card>
         </template>
