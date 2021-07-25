@@ -1,12 +1,9 @@
 <template>
   <b-container>
-    <b-jumbotron
-        header="Rezerwacja terminu na pobranie krwi" header-level="5" header-tag="h4" style="padding: 0.9rem">
-      Wybrany dawca:
-      <b-table
-          :fields="fields" :items="donor" responsive="sm" small>
-      </b-table>
-    </b-jumbotron>
+    <donor-details-header
+        :donorIdx="this.$route.params.id"
+        :title="this.headerTitle"
+    ></donor-details-header>
 
 
     <b-form-group v-slot="{ ariaDescribedby }" label="Wybór typu pobrania:">
@@ -59,7 +56,6 @@
 </template>
 
 <script>
-import DonorService from '../../services/donor.service';
 import DonationService from '../../services/donation.service';
 import ReservationService from '../../services/reservation.service'
 
@@ -68,33 +64,10 @@ export default {
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-
-    DonorService.getDonorById(this.$route.params.id).then(
-        response => {
-          const results_tmp = [];
-          results_tmp.push({
-            id: response.data.id,
-            username: response.data.username,
-            email: response.data.email,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            pesel: response.data.pesel,
-            bloodGroupWithRh: response.data.bloodGroupWithRh,
-            gender: response.data.gender
-          });
-
-          this.donor = results_tmp;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
-        }
-    )
   },
   data() {
     return {
+      headerTitle: 'Rezerwacja terminu na pobranie krwi',
       dateValue: '',
       min: null,
       labelsLanguagePL: {
@@ -123,18 +96,6 @@ export default {
       ],
       selectedTime: null,
       optionsTime: [],
-      donor: [{}],
-      fields: [
-        {key: 'id', label: 'ID'},
-        {key: 'username', label: 'Login'},
-        {key: 'email', label: 'Email'},
-        {key: 'firstName', label: 'Imię'},
-        {key: 'lastName', label: 'Nazwisko'},
-        {key: 'pesel', label: 'PESEL'},
-        {key: 'bloodGroupWithRh', label: 'Krew'},
-        {key: 'gender', label: 'Płeć'},
-      ],
-
       bloods: [{text: 'wybierz grupę krwi', value: null},
         'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
       genders: [{text: 'wybierz płeć', value: null}, {text: 'Kobieta', value: 'K'}, {text: 'Mężczyzna', value: 'M'}],

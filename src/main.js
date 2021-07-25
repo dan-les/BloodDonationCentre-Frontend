@@ -12,7 +12,8 @@ import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
 import {faHome, faSignInAlt, faSignOutAlt, faUser, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
-import AddReservationModel from "./views/reservation/AddReservationModel";
+import AddReservationModel from "./components/AddReservationForm";
+import DonorDetailsHeader from "./components/DonorDetailsHeader";
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
@@ -27,6 +28,7 @@ Vue.use(BootstrapVue)
 Vue.use(IconsPlugin)
 
 Vue.component("add-reservation-model", AddReservationModel);
+Vue.component("donor-details-header", DonorDetailsHeader);
 
 new Vue({
     router,

@@ -49,8 +49,8 @@
 </template>
 
 <script>
-import DonationService from '../../services/donation.service';
-import ReservationService from '../../services/reservation.service'
+import DonationService from '../services/donation.service';
+import ReservationService from '../services/reservation.service'
 
 export default {
   mounted() {

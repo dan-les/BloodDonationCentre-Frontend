@@ -1,13 +1,9 @@
 <template>
   <b-container>
-    <b-jumbotron
-        header="Spis wszystkich donacji" header-level="5" header-tag="h4" style="padding: 0.9rem">
-      Dla dawcy:
-      <b-table
-          :fields="fieldsDonor" :items="donor" responsive="sm" small>
-      </b-table>
-    </b-jumbotron>
-
+    <donor-details-header
+        :donorIdx="this.$route.params.id"
+        :title="this.headerTitle"
+    ></donor-details-header>
 
     <b-row style="margin-top: 1rem;">
       <b-row>
@@ -161,7 +157,6 @@
 </template>
 
 <script>
-import DonorService from '../../services/donor.service';
 import DonationService from '../../services/donation.service';
 
 export default {
@@ -178,30 +173,6 @@ export default {
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-
-    DonorService.getDonorById(this.$route.params.id).then(
-        response => {
-          const results_tmp = [];
-          results_tmp.push({
-            id: response.data.id,
-            username: response.data.username,
-            email: response.data.email,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            pesel: response.data.pesel,
-            bloodGroupWithRh: response.data.bloodGroupWithRh,
-            gender: response.data.gender
-          });
-
-          this.donor = results_tmp;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
-        }
-    )
 
     DonationService.getAllDonationsByDonorId(this.$route.params.id).then(
         response => {
@@ -237,6 +208,7 @@ export default {
   },
   data() {
     return {
+      headerTitle: 'Spis wszystkich donacji',
       totalRows: 1,
       currentPage: 1,
       perPage: 10,
@@ -248,17 +220,7 @@ export default {
       sortDirection: '',
       filter: null,
       filterOn: [],
-      fieldsDonor: [
-        {key: 'id', label: 'ID'},
-        {key: 'username', label: 'Login'},
-        {key: 'email', label: 'Email'},
-        {key: 'firstName', label: 'Imię'},
-        {key: 'lastName', label: 'Nazwisko'},
-        {key: 'pesel', label: 'PESEL'},
-        {key: 'bloodGroupWithRh', label: 'Krew'},
-        {key: 'gender', label: 'Płeć'},
-      ],
-      donor: [],
+
       fieldsDonations: [
         {key: 'id', label: 'ID', sortable: true, class: 'text-center'},
         {key: 'date', label: 'Data pobrania', sortable: true, class: 'text-center'},

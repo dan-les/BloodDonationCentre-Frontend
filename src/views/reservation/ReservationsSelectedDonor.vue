@@ -1,14 +1,9 @@
 <template>
   <b-container fluid>
-    <b-jumbotron
-        header="Przegląd rezerwacji terminów dla danego użytkownika" header-level="5" header-tag="h4"
-        style="padding: 0.9rem">
-      Wybrany dawca:
-      <b-table
-          :fields="fieldsDonor" :items="donor" responsive="sm" small>
-      </b-table>
-    </b-jumbotron>
-
+    <donor-details-header
+        :donorIdx="this.$route.params.id"
+        :title="this.headerTitle"
+    ></donor-details-header>
 
     <b-row style="margin-top: 1rem;">
       <!-- User Interface controls -->
@@ -158,9 +153,13 @@
         </template>
 
       </b-table>
-
-
     </b-row>
+
+    <b-link :to="'/donors'">
+      <b-button style="margin: 1rem">
+        Powrót na stronę z dawcami
+      </b-button>
+    </b-link>
   </b-container>
 
 
@@ -173,7 +172,7 @@ import DonorService from "../../services/donor.service";
 export default {
   data() {
     return {
-      donor: null,
+      headerTitle: 'Przegląd rezerwacji terminów dla danego użytkownika',
       reservations: [],
       fieldsReservations: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
@@ -181,16 +180,6 @@ export default {
         {key: 'time', label: 'Godzina', sortable: true,},
         {key: 'donationType', label: 'Typ pobrania', sortable: true,},
         {key: 'actions', label: 'Akcje'}
-      ],
-      fieldsDonor: [
-        {key: 'id', label: 'ID'},
-        {key: 'username', label: 'Login'},
-        {key: 'email', label: 'Email'},
-        {key: 'firstName', label: 'Imię'},
-        {key: 'lastName', label: 'Nazwisko'},
-        {key: 'pesel', label: 'PESEL'},
-        {key: 'bloodGroupWithRh', label: 'Krew'},
-        {key: 'gender', label: 'Płeć'},
       ],
       totalRows: 1,
       currentPage: 1,
