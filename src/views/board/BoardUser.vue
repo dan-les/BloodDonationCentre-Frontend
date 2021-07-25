@@ -43,7 +43,7 @@
         ok-title="Zamknij okno"
         ok-variant="secondary"
         size="xl"
-        title="Rezerwacja terminu na pobranie krwi"
+        title="Rezerwacja terminu na pobranie"
         @ok="reloadeData"
     >
       <form ref="form" @submit.stop.prevent="handleSubmit">

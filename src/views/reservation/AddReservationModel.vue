@@ -10,7 +10,7 @@
       ></b-form-radio-group>
     </b-form-group>
 
-    <div v-if="selectedDonationType !== ''">
+    <div v-if="selectedDonationType !== null">
       Wybierz termin:
       <b-form-datepicker
           v-model="dateValue" v-bind="labelsLanguagePL['pl']" :date-disabled-fn="dateDisabled" :min="min" locale="pl"
