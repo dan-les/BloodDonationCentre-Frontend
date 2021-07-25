@@ -15,8 +15,9 @@ class RecipientService {
     // addDonor(data) {
     //     return axios.post(API_URL, data, {headers: authHeader()});
     // }
-
-
+    addNewRecipient(data) {
+        return axios.post(API_URL, data, {headers: authHeader()});
+    }
 }
 
 export default new RecipientService();

@@ -48,8 +48,11 @@
         </b-nav-item-dropdown>
 
         <b-nav-item v-if="showStaffBoard">
-          <!--          TODO      -->
           <b-link :to="{name: 'donationsAllDonors'}" router-tag="li">Pobrania</b-link>
+        </b-nav-item>
+
+        <b-nav-item v-if="showStaffBoard">
+          <b-link :to="{name: 'recipients'}" router-tag="li">Odbiorcy</b-link>
         </b-nav-item>
 
         <b-nav-item v-if="showNormalUserBoard">
