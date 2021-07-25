@@ -13,9 +13,12 @@
     <div v-if="selectedDonationType !== null">
       Wybierz termin:
       <b-form-datepicker
-          v-model="dateValue" v-bind="labelsLanguagePL['pl']" :date-disabled-fn="dateDisabled" :min="min" locale="pl"
+          v-model="dateValue"
+          v-bind="labelsLanguagePL['pl']"
+          :date-disabled-fn="dateDisabled"
+          :min="min"
+          locale="pl"
           start-weekday="1">
-
       </b-form-datepicker>
     </div>
 
