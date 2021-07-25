@@ -251,17 +251,13 @@ export default {
           })
     }
   },
-  watch: { //rozwiązanie na zmieniające sie linki
-    $route() {
-      this.$router.go(this.$router.currentRoute)
-    },
+
+  watch: {
     dateValue() {
       this.getProperReservations();
-
     },
     isDatePickerEnabled() {
       this.getProperReservations();
-
     }
 
   },

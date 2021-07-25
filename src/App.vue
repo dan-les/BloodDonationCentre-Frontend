@@ -98,7 +98,7 @@
     <b-container>
       <b-card class="p-xl-2">
         <transition mode="out-in" name="fade">
-          <router-view/>
+          <router-view :key="$route.fullPath"/>
         </transition>
       </b-card>
     </b-container>
