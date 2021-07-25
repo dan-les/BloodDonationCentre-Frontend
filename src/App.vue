@@ -79,7 +79,12 @@
         <b-nav-item>
           <b-link router-tag="li" to="/profile">
             <font-awesome-icon icon="user"/>
-            {{ currentUser.username }}
+            <span v-if="currentUser.firstName === null || currentUser.lastName === null">
+              {{ currentUser.username }}
+            </span>
+            <span v-else>
+               {{ currentUser.firstName }} {{ currentUser.lastName }}
+            </span>
           </b-link>
         </b-nav-item>
         <b-nav-item

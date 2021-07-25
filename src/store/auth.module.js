@@ -30,7 +30,7 @@ export const auth = {
                 response => {
                     console.log(response.data.message)
                     commit('registerSuccess');
-                    if (response.data.message === "User succesfully register!") {
+                    if (response.data.message === "User successfully register!") {
                         response.data.message = 'Użytkownik pomyślnie zarejestrowany!';
                         return Promise.resolve(response.data);
                     } else {

@@ -1,8 +1,11 @@
 <template>
   <b-container>
     <b-jumbotron style="padding: 1.9rem">
-      <h4>
-        Witaj ponownie <strong>{{ this.$store.state.auth.user.username }}</strong>!
+      <h4 v-if="this.$store.state.auth.user.firstName === null">
+        Witaj ponownie na naszej stronie!
+      </h4>
+      <h4 v-else>
+        Witaj ponownie <strong>{{ this.$store.state.auth.user.firstName }}</strong>!
       </h4>
     </b-jumbotron>
     <b-card no-body>
