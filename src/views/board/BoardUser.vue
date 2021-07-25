@@ -152,7 +152,7 @@ export default {
     },
 
     getAllReservationsByDonor() {
-      ReservationService.getAllReservationsByDonor(this.$store.state.auth.user.id).then(
+      ReservationService.getAllReservationsByDonorId(this.$store.state.auth.user.id).then(
           response => {
             const results_tmp = [];
             for (const idx in response.data) {

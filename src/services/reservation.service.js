@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8080/api/reservation/';
 class ReservationService {
 
     getHours(date) {
-        return axios.get(API_URL + 'hours/list',
+        return axios.get(API_URL + 'available-hours/list',
             {
                 params: {
                     date: date
@@ -23,8 +23,8 @@ class ReservationService {
         return axios.get(API_URL + 'list', {headers: authHeader()});
     }
 
-    getAllReservationsByDonor(donorId) {
-        return axios.get(API_URL + 'donor/list/' + `${donorId}`, {headers: authHeader()});
+    getAllReservationsByDonorId(donorId) {
+        return axios.get(API_URL + 'list/donor/' + `${donorId}`, {headers: authHeader()});
     }
 
     getAllReservationsByDate(date) {

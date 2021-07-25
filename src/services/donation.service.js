@@ -21,7 +21,7 @@ class DonationService {
     }
 
     getDonationsStatisticsByDonor(donorId) {
-        return axios.get(API_URL + '/user/statistics/' + `${donorId}`, {headers: authHeader()});
+        return axios.get(API_URL + '/donor/' + `${donorId}` + '/statistics', {headers: authHeader()});
     }
 
     addNewDonation(data) {

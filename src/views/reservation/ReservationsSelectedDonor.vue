@@ -275,7 +275,7 @@ export default {
           });
     },
     getAllReservationsByDonorId() {
-      ReservationService.getAllReservationsByDonor(this.$route.params.id).then(
+      ReservationService.getAllReservationsByDonorId(this.$route.params.id).then(
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
