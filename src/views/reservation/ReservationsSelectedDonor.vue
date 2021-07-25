@@ -1,8 +1,8 @@
 <template>
   <b-container fluid>
     <donor-details-header
-        :donorIdx="this.$route.params.id"
-        :title="this.headerTitle"
+        :donorIdx=this.$route.params.id
+        :title=this.headerTitle
     ></donor-details-header>
 
     <b-row style="margin-top: 1rem;">

@@ -1,12 +1,10 @@
 <template>
   <b-container>
-    <b-jumbotron
-        header="Dodawanie donacji" header-level="5" header-tag="h4" style="padding: 0.9rem">
-      Wybrany dawca:
-      <b-table
-          :fields="fields" :items="donor" responsive="sm" small>
-      </b-table>
-    </b-jumbotron>
+    <donor-details-header
+        :key=this.donorIdx
+        :donorIdx=this.donorIdx
+        :title=this.headerTitle
+    ></donor-details-header>
 
     <div v-if="shouldBeUnHide">
       <b-form-group v-slot="{ ariaDescribedby }" label="Typ pobrania:">
@@ -43,7 +41,6 @@
 </template>
 
 <script>
-import DonorService from '../../services/donor.service';
 import DonationService from '../../services/donation.service';
 import ReservationService from '../../services/reservation.service'
 
@@ -68,6 +65,7 @@ export default {
             donationType: response.data.donationType
           });
           this.reservationDetails = results_tmp;
+          this.donorIdx = response.data.donorId;
           this.getDonor(response.data.donorId);
           this.selectedDonationType = response.data.donationType;
         },
@@ -81,6 +79,8 @@ export default {
   },
   data() {
     return {
+      headerTitle: "Dodawanie donacji",
+      donorIdx: null,
       shouldBeUnHide: true,
       isReleased: false,
       amount: '',
@@ -89,19 +89,7 @@ export default {
       options: [
         {text: 'Pobranie krwi pełnej', value: 'blood'},
         {text: 'Donacja osocza', value: 'plasma'},
-      ],
-      donor: [],
-      fields: [
-        {key: 'id', label: 'ID'},
-        {key: 'username', label: 'Login'},
-        {key: 'email', label: 'Email'},
-        {key: 'firstName', label: 'Imię'},
-        {key: 'lastName', label: 'Nazwisko'},
-        {key: 'pesel', label: 'PESEL'},
-        {key: 'bloodGroupWithRh', label: 'Krew'},
-        {key: 'gender', label: 'Płeć'},
-      ],
-
+      ]
     }
   },
   watch: {
@@ -145,31 +133,6 @@ export default {
         autoHideDelay: 2000,
         solid: true
       })
-    },
-    getDonor(id) {
-      DonorService.getDonorById(id).then(
-          response => {
-            const results_tmp = [];
-            results_tmp.push({
-              id: response.data.id,
-              username: response.data.username,
-              email: response.data.email,
-              firstName: response.data.firstName,
-              lastName: response.data.lastName,
-              pesel: response.data.pesel,
-              bloodGroupWithRh: response.data.bloodGroupWithRh,
-              gender: response.data.gender
-            });
-
-            this.donor = results_tmp;
-          },
-          error => {
-            this.content =
-                (error.response && error.response.data && error.response.data.message) ||
-                error.message ||
-                error.toString();
-          }
-      )
     }
   }
 }
