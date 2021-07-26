@@ -34,7 +34,18 @@
               </b-button>
             </b-col>
           </b-row>
-          <b-table :fields="fieldsReservations" :items="reservations" hover striped></b-table>
+          <b-table
+              :fields="fieldsReservations"
+              :items="reservations"
+              hover
+              striped
+          >
+            <template #cell(actions)="row">
+              <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń
+                rezerwację
+              </b-button>
+            </template>
+          </b-table>
         </b-tab>
       </b-tabs>
     </b-card>
@@ -47,7 +58,7 @@
         ok-variant="secondary"
         size="xl"
         title="Rezerwacja terminu na pobranie"
-        @ok="reloadeData"
+        @ok="reloadData"
     >
       <form ref="form" @submit.stop.prevent="handleSubmit">
         <add-reservation-model
@@ -55,12 +66,8 @@
         ></add-reservation-model>
       </form>
     </b-modal>
-
-
   </b-container>
-
 </template>
-
 <script>
 
 
@@ -84,11 +91,11 @@ export default {
       ],
 
       fieldsReservations: [
-        {key: 'date', label: 'Data', sortable: true, sortDirection: 'desc'},
+        {key: 'date', label: 'Data', sortable: true, sortDirection: 'desc', class: 'text-center'},
         {key: 'time', label: 'Godzina', sortable: true, class: 'text-center'},
         {key: 'donationType', label: 'Rodzaj pobrania', sortable: true, class: 'text-center'},
+        {key: 'actions', label: 'Akcje', class: 'text-center'}
       ],
-
       show: false,
       barChartData: {
         labels: ["krew", "osocze"],
@@ -147,7 +154,7 @@ export default {
     this.getAllReservationsByDonor()
   },
   methods: {
-    reloadeData() {
+    reloadData() {
       this.getAllReservationsByDonor()
     },
 
@@ -157,6 +164,7 @@ export default {
             const results_tmp = [];
             for (const idx in response.data) {
               results_tmp.push({
+                id: response.data[idx].id,
                 date: response.data[idx].date,
                 time: response.data[idx].time,
                 donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
@@ -178,9 +186,37 @@ export default {
               });
             }
             this.donations = results_tmp;
-        }
-    )
-  }
+          }
+      )
+    },
+    deleteReservation(id) {
+      ReservationService.deleteReservation(id)
+          .then(response => {
+            this.getAllReservationsByDonor();
+            this.makeToastSuccess('Pomyślnie usunięto rezerwację');
+          })
+          .catch(e => {
+            this.makeToastError();
+            console.log(e);
+          });
+
+    },
+    makeToastSuccess(message) {
+      this.$bvToast.toast(message, {
+        title: `Sukces`,
+        variant: 'info',
+        autoHideDelay: 2000,
+        solid: true
+      })
+    },
+    makeToastError() {
+      this.$bvToast.toast('Coś poszło nie tak...', {
+        title: `Błąd`,
+        variant: 'danger',
+        autoHideDelay: 2000,
+        solid: true
+      })
+    }
   }
 };
 </script>
