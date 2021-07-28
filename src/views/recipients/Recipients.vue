@@ -5,7 +5,9 @@
         style="padding: 0.9rem">
     </b-jumbotron>
 
-    <b-col class="my-1" offset="8" sm="4">
+
+    <b-col md="4" offset-md="8">
+
       <b-button v-b-modal.modal-1 block variant="primary">Dodaj odbiorcę</b-button>
     </b-col>
 

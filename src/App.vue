@@ -36,8 +36,8 @@
 
         <b-nav-item-dropdown v-if="showStaffBoard" right text="Rezerwacje">
           <b-dropdown-item>
-            <b-link :to="{name: 'reservations', query: {date: false} }" router-tag="li">Wszystkie zarezerwowane
-              terminy
+            <b-link :to="{name: 'reservations', query: {date: false} }" router-tag="li">
+              Wszystkie zarezerwowane terminy
             </b-link>
             <!--            <router-link to="/donors" id="thisLink" class="nav-item">Wyświetl dawców</router-link>-->
           </b-dropdown-item>
@@ -96,7 +96,7 @@
     </b-navbar>
 
     <b-container>
-      <b-card class="p-xl-2">
+      <b-card class="p-xl-3">
         <transition mode="out-in" name="fade">
           <router-view :key="$route.fullPath"/>
         </transition>
@@ -147,7 +147,8 @@ export default {
 #app {
   background-image: url("../public/bg.png");
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: 130%;
+  background-position-x: center;
 }
 
 .fade-enter-active,

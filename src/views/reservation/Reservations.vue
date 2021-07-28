@@ -4,19 +4,33 @@
         header="Przegląd wszystkich zarezerwowanych terminów" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
 
-    <div v-if="isDatePickerEnabled === 'true' || isDatePickerEnabled === true">
-      Ustaw termin:
-      <b-form-datepicker
-          v-model="dateValue"
-          v-bind="labelsLanguagePL['pl']"
-          :initial-date="dateValue"
-          label-today
-          locale="pl"
-          start-weekday="1"
-          today-button>
 
-      </b-form-datepicker>
-    </div>
+    <b-col md="4" offset-md="9">
+      <b-link :to="{name: 'reservations', query: {date: false} }">
+        <b-button v-if="isDatePickerEnabled === true" class="mr-1" size="sm" variant="info">Wszystkie zarezerwowane
+          terminy
+        </b-button>
+      </b-link>
+      <b-link :to="{name: 'reservations', query: {date: true} }">
+        <b-button v-if="isDatePickerEnabled !== true" class="mr-1" size="sm" variant="info">Rezerwacje według daty
+        </b-button>
+      </b-link>
+    </b-col>
+
+    <b-row style="margin-bottom: 2rem">
+      <div v-if="isDatePickerEnabled === 'true' || isDatePickerEnabled === true">
+        <strong>Ustaw termin:</strong>
+        <b-form-datepicker
+            v-model="dateValue"
+            v-bind="labelsLanguagePL['pl']"
+            :initial-date="dateValue"
+            label-today
+            locale="pl"
+            start-weekday="1"
+            today-button>
+        </b-form-datepicker>
+      </div>
+    </b-row>
 
     <b-row style="margin-top: 1rem;">
       <!-- User Interface controls -->
@@ -60,7 +74,6 @@
         </b-col>
 
         <b-col class="my-1" lg="6">
-
         </b-col>
 
         <b-col class="my-1" lg="6">
@@ -107,7 +120,6 @@
               <b-form-checkbox value="donorLastName">Nazwisko</b-form-checkbox>
               <b-form-checkbox value="pesel">Pesel</b-form-checkbox>
               <b-form-checkbox value="donationType">Typ pobrania</b-form-checkbox>
-
             </b-form-checkbox-group>
           </b-form-group>
         </b-col>
@@ -273,7 +285,7 @@ export default {
 
     },
     getProperReservations() {
-      if (this.isDatePickerEnabled === 'true') {
+      if (this.isDatePickerEnabled === true) {
         ReservationService.getAllReservationsByDate(this.dateValue).then(
             response => {
               const results_tmp = [];

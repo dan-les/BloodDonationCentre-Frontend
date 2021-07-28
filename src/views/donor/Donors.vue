@@ -3,13 +3,6 @@
     <b-jumbotron
         header="Przegląd dawców" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
-    <!--    <b-row>-->
-    <!--      <b-col md="2" offset-md="10">-->
-    <!--        &lt;!&ndash;        <b-link :to="{ name: 'editDonor', param:  12}">&ndash;&gt;-->
-    <!--        <b-button block variant="primary">Dodaj dawcę!</b-button>-->
-    <!--        &lt;!&ndash;        </b-link>&ndash;&gt;-->
-    <!--      </b-col>-->
-    <!--    </b-row>-->
 
     <b-row style="margin-top: 1rem;">
       <!-- User Interface controls -->
@@ -96,9 +89,11 @@
                 :aria-describedby="ariaDescribedby"
                 class="mt-1"
             >
+              <b-form-checkbox value="id">ID</b-form-checkbox>
+              <b-form-checkbox value="username">Login</b-form-checkbox>
               <b-form-checkbox value="firstName">Imię</b-form-checkbox>
               <b-form-checkbox value="lastName">Nazwisko</b-form-checkbox>
-              <b-form-checkbox value="pesel">Pesel</b-form-checkbox>
+              <b-form-checkbox value="pesel">PESEL</b-form-checkbox>
               <b-form-checkbox value="bloodGroupWithRh">Krew</b-form-checkbox>
               <b-form-checkbox value="gender">Płeć</b-form-checkbox>
             </b-form-checkbox-group>
