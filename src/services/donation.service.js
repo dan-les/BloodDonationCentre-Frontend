@@ -16,8 +16,14 @@ class DonationService {
             });
     }
 
-    getDonationsStatistics() {
-        return axios.get(API_URL + '/statistics', {headers: authHeader()});
+    getDonationsStatistics(donationType) {
+        return axios.get(API_URL + '/statistics',
+            {
+                params: {
+                    donationType: donationType
+                },
+                headers: authHeader()
+            });
     }
 
     getDonationsStatisticsByDonor(donorId) {
