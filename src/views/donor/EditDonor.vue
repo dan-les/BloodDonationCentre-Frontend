@@ -9,16 +9,17 @@
         <b-form v-if="show" @reset="onReset" @submit.prevent="onSubmit">
 
 
-          <b-form-group id="input-group-2" label="Wpisz login:" label-for="input-11">
+          <b-form-group id="input-group-2" label="Login:">
             <b-form-input
                 id="first-name"
                 v-model="form.username"
                 placeholder="login"
                 required
+                disabled
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-2" label="Wpisz imię:" label-for="input-1">
+          <b-form-group id="input-group-2" label="Wpisz imię:">
             <b-form-input
                 id="first-name"
                 v-model="form.firstName"
@@ -27,7 +28,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-2" label="Wpisz nazwisko:" label-for="input-2">
+          <b-form-group id="input-group-2" label="Wpisz nazwisko:">
             <b-form-input
                 id="last-name"
                 v-model="form.lastName"
@@ -51,7 +52,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-2" label="Wpisz PESEL:" label-for="input-3">
+          <b-form-group id="input-group-2" label="Wpisz PESEL:">
             <b-form-input
                 id="pesel"
                 v-model="form.pesel"
@@ -60,7 +61,7 @@
             ></b-form-input>
           </b-form-group>
 
-          <b-form-group id="input-group-3" label="Grupa krwi:" label-for="input-4">
+          <b-form-group id="input-group-3" label="Grupa krwi:">
             <b-form-select
                 id="blood"
                 v-model="form.bloodGroupWithRh"
@@ -68,7 +69,7 @@
                 required
             ></b-form-select>
           </b-form-group>
-          <b-form-group id="input-group-4" label="Płeć:" label-for="input-5">
+          <b-form-group id="input-group-4" label="Płeć:">
             <b-form-select
                 id="gender"
                 v-model="form.gender"
@@ -96,9 +97,6 @@
       </b-col>
     </b-row>
 
-    <b-card class="mt-3" header="JSON - POST">
-      <pre class="m-0">{{ form }}</pre>
-    </b-card>
   </b-container>
 
 </template>
@@ -128,8 +126,6 @@ export default {
           if (response.data.gender !== '') {
             this.form.gender = response.data.gender;
           }
-
-
         },
         error => {
           this.content =
@@ -161,10 +157,7 @@ export default {
   },
   methods: {
     onSubmit(event) {
-      console.log(this.form);
-
       event.preventDefault()
-      // alert(JSON.stringify(this.form))
 
       DonorService.putDonor(this.$route.params.id, this.form)
           .then(response => {
@@ -202,7 +195,6 @@ export default {
         autoHideDelay: 2000,
         solid: true
       })
-
     },
     makeToastError() {
       this.$bvToast.toast('Coś poszło nie tak...', {
