@@ -54,13 +54,13 @@
         <b-card>
           <b-card-title>Jakie są zalecenia przed pobraniem?</b-card-title>
           <b-card-text>
-            <b-ol>
+            <ul style="margin-left: -1rem">
               <li>bądź wyspanym</li>
               <li>w ciągu doby poprzedzającej oddanie krwi staraj się wypić dużo płynów</li>
               <li>unikaj nadmiernego wysiłku fizycznego</li>
               <li>ogranicz palenie papierosów</li>
               <li>przyjdź jak będziesz zdrowy</li>
-            </b-ol>
+            </ul>
           </b-card-text>
         </b-card>
 

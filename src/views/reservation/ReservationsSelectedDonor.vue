@@ -189,7 +189,7 @@ export default {
       sortDesc: true,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
       emptyText: 'Brak rezerwacji.',
-      sortDirection: ' ',
+      sortDirection: 'asc',
       filter: null,
       filterOn: [],
       infoModal: {
@@ -286,21 +286,22 @@ export default {
                 error.toString();
           }
       )
-    }
+    },
+    info(item, index, button) {
+      this.infoModal.title = `Row index: ${index}`
+      this.infoModal.content = JSON.stringify(item, null, 2)
+      this.$root.$emit('bv::show::modal', this.infoModal.id, button)
+    },
+    resetInfoModal() {
+      this.infoModal.title = ''
+      this.infoModal.content = ''
+    },
+    onFiltered(filteredItems) {
+      this.totalRows = filteredItems.length
+      this.currentPage = 1
+    },
   },
-  info(item, index, button) {
-    this.infoModal.title = `Row index: ${index}`
-    this.infoModal.content = JSON.stringify(item, null, 2)
-    this.$root.$emit('bv::show::modal', this.infoModal.id, button)
-  },
-  resetInfoModal() {
-    this.infoModal.title = ''
-    this.infoModal.content = ''
-  },
-  onFiltered(filteredItems) {
-    this.totalRows = filteredItems.length
-    this.currentPage = 1
-  },
+
 
 }
 </script>

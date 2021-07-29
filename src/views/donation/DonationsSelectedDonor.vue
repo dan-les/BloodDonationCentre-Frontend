@@ -217,7 +217,7 @@ export default {
       sortDesc: true,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
       emptyText: 'Brak dostępnych pobrań.',
-      sortDirection: '',
+      sortDirection: 'asc',
       filter: null,
       filterOn: [],
 

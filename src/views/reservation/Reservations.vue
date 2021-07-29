@@ -233,7 +233,7 @@ export default {
       sortDesc: false,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
       emptyText: 'Brak rezerwacji.',
-      sortDirection: ' ',
+      sortDirection: 'asc',
       filter: null,
       filterOn: [],
       infoModal: {

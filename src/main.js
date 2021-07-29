@@ -21,7 +21,12 @@ library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 Vue.config.productionTip = false;
 
 Validator.localize({pl: pl})
-Vue.use(VeeValidate, {locale: 'pl'})
+
+Vue.use(VeeValidate, {
+    locale: 'pl',
+    inject: true,
+    fieldsBagName: 'veeFields'
+});
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.use(Vuex);
 Vue.config.devtools = true

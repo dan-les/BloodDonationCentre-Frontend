@@ -138,7 +138,7 @@
           :current-page="currentPage"
           :empty-filtered-text="emptyFilteredText"
           :empty-text="emptyText"
-          :fields="fields"
+          :fields="tableFields"
           :filter="filter"
           :filter-included-fields="filterOn"
           :items="items"
@@ -215,7 +215,7 @@ export default {
   data() {
     return {
       items: [],
-      fields: [
+      tableFields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         // {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
         // {key: 'email', label: 'Email', sortable: true, sortDirection: 'desc'},
@@ -234,9 +234,8 @@ export default {
       sortDesc: false,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
       emptyText: 'Brak danych. Coś poszło nie tak... ☹',
-      sortDirection: ' ',
+      sortDirection: 'asc',
       filter: null,
-
       filterOn: [],
       infoModal: {
         id: 'info-modal',
@@ -248,7 +247,7 @@ export default {
   computed: {
     sortOptions() {
       // Create an options list from our fields
-      return this.fields
+      return this.tableFields
           .filter(f => f.sortable)
           .map(f => {
             return {text: f.label, value: f.key}
