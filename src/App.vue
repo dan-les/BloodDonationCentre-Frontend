@@ -5,70 +5,59 @@
 
       <b-navbar-nav>
         <b-nav-item>
-          <b-link router-tag="li" to="/home">
+          <b-link router-tag="li" style="padding: 0.1rem;" to="/home">
             <font-awesome-icon icon="home"/>
             Strona główna
           </b-link>
         </b-nav-item>
         <b-nav-item v-if="showAdminBoard">
-          <b-link router-tag="li" to="/admin">Panel Admina</b-link>
+          <b-link router-tag="li" style="padding: 0.1rem;" to="/admin">Panel Admina</b-link>
         </b-nav-item>
         <b-nav-item v-if="showStaffBoard">
-          <b-link router-tag="li" to="/staff">Panel Pracownika</b-link>
+          <b-link router-tag="li" style="padding: 0.1rem;" to="/staff">Panel Pracownika</b-link>
         </b-nav-item>
-
 
         <b-nav-item v-if="showStaffBoard">
-          <b-link router-tag="li" to="/donors">Dawcy</b-link>
+          <b-link router-tag="li" style="padding: 0.1rem;" to="/donors">Dawcy</b-link>
         </b-nav-item>
-
-        <!--        <b-nav-item-dropdown v-if="showStaffBoard" right text="Dawcy">-->
-        <!--          <b-dropdown-item>-->
-        <!--            <b-link router-tag="li" to="/donors">Wyświetl dawców</b-link>-->
-        <!--            &lt;!&ndash;            <router-link to="/donors" id="thisLink" class="nav-item">Wyświetl dawców</router-link>&ndash;&gt;-->
-        <!--          </b-dropdown-item>-->
-        <!--          <b-dropdown-item>-->
-        <!--            <b-link router-tag="li" to="/donors/add">Dodaj dawcę</b-link>-->
-        <!--            &lt;!&ndash;            <router-link to="/donors">Dodaj dawcę</router-link>&ndash;&gt;-->
-        <!--          </b-dropdown-item>-->
-        <!--        </b-nav-item-dropdown>-->
-        <!--        &lt;!&ndash;&ndash;&gt;-->
-
-        <b-nav-item-dropdown v-if="showStaffBoard" right text="Rezerwacje">
+        <b-nav-item-dropdown v-if="showStaffBoard" right style="padding: 0.1rem;" text="Rezerwacje">
           <b-dropdown-item>
-            <b-link :to="{name: 'reservations', query: {date: false} }" router-tag="li">
+            <b-link :to="{name: 'reservations', query: {date: false} }" router-tag="li" style="padding: 0.1rem;">
               Wszystkie zarezerwowane terminy
             </b-link>
-            <!--            <router-link to="/donors" id="thisLink" class="nav-item">Wyświetl dawców</router-link>-->
           </b-dropdown-item>
           <b-dropdown-item>
-            <b-link :to="{name: 'reservations', query: {date: true} }" router-tag="li">Rezerwacje według daty</b-link>
-            <!--            <router-link to="/donors">Dodaj dawcę</router-link>-->
+            <b-link :to="{name: 'reservations', query: {date: true} }" router-tag="li" style="padding: 0.1rem;">
+              Rezerwacje według daty
+            </b-link>
           </b-dropdown-item>
         </b-nav-item-dropdown>
 
         <b-nav-item v-if="showStaffBoard">
-          <b-link :to="{name: 'donationsAllDonors'}" router-tag="li">Pobrania</b-link>
+          <b-link :to="{name: 'donationsAllDonors'}" router-tag="li" style="padding: 0.1rem;">Pobrania</b-link>
         </b-nav-item>
 
         <b-nav-item v-if="showStaffBoard">
-          <b-link :to="{name: 'recipients'}" router-tag="li">Odbiorcy</b-link>
+          <b-link :to="{name: 'recipients'}" router-tag="li" style="padding: 0.1rem;">Odbiorcy</b-link>
         </b-nav-item>
 
         <b-nav-item v-if="showNormalUserBoard">
-          <b-link v-if="currentUser" router-tag="li" to="/user">Panel użytkownika</b-link>
+          <b-link v-if="currentUser" router-tag="li" style="padding: 0.1rem;" to="/user">Panel użytkownika</b-link>
         </b-nav-item>
       </b-navbar-nav>
 
       <div v-if="!currentUser" class="navbar-nav ml-auto">
         <b-nav-item>
-          <b-link router-tag="li" to="/register">
+          <b-link
+              router-tag="li"
+              style="padding: 0.1rem;"
+              to="/register">
             <font-awesome-icon icon="user-plus"/>
             Zarejestruj się!
           </b-link>
         </b-nav-item>
         <b-nav-item>
-          <b-link router-tag="li" to="/login">
+          <b-link router-tag="li" style="padding: 0.1rem;" to="/login">
             <font-awesome-icon icon="sign-in-alt"/>
             Zaloguj się!
           </b-link>
@@ -77,7 +66,7 @@
 
       <div v-if="currentUser" class="navbar-nav ml-auto">
         <b-nav-item>
-          <b-link router-tag="li" to="/profile">
+          <b-link router-tag="li" style="padding: 0.1rem;" to="/profile">
             <font-awesome-icon icon="user"/>
             <span v-if="currentUser.firstName === null || currentUser.lastName === null">
               {{ currentUser.username }}
@@ -88,7 +77,7 @@
           </b-link>
         </b-nav-item>
         <b-nav-item
-            to="/logout" @click.prevent="logOut">
+            style="padding: 0.1rem;" to="/logout" @click.prevent="logOut">
           <font-awesome-icon icon="sign-out-alt"/>
           Wyloguj się!
         </b-nav-item>
