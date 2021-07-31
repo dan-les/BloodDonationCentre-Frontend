@@ -158,14 +158,14 @@
                @hide="resetInfoModal"
                @ok="changeRecipient(infoModal.content)">
         <b-form-group label="Wybierz podmiot, do którego wydana będzie dawka materiału biologicznego:">
-          <filter-recipients
+          <lookup-field
               :fields="recipients"
               :items="recipients"
               :placeholder="placeholder"
               :sort-by="'id'"
               @item-selected="setSelectedRecipient"
           >
-          </filter-recipients>
+          </lookup-field>
         </b-form-group>
       </b-modal>
     </b-row>
