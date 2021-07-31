@@ -1,7 +1,8 @@
 <template>
   <b-container style="margin-top: -3rem">
-    <div class="card card-container">
+    <div :class="{'card card-container' : role === undefined}">
       <img
+          v-if="role === undefined"
           id="profile-img"
           class="profile-img-card"
           src="../../assets/user_img.png"
@@ -89,7 +90,8 @@
             </div>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary btn-block">Zarejestruj się</button>
+            <button v-if="role === undefined" class="btn btn-primary btn-block">Zarejestruj się</button>
+            <button v-else class="btn btn-primary btn-block">Zarejestruj nowego pracownika w systemie</button>
           </div>
         </div>
       </form>
@@ -112,7 +114,7 @@ export default {
   name: 'Register',
   data() {
     return {
-      user: new User('', '', '', '', ''),
+      user: new User('', '', '', '', '', []),
       submitted: false,
       successful: false,
       message: ''
@@ -124,12 +126,21 @@ export default {
     }
   },
   mounted() {
-    if (this.loggedIn) {
+    if (this.loggedIn && !this.$store.state.auth.user.roles.includes('ROLE_ADMIN')) {
       this.$router.push('/profile');
     }
   },
+  props: ['role'],
   methods: {
     handleRegister() {
+      let tmp_array = [];
+      if (this.role === 'staff') {
+        tmp_array.push(this.role);
+        this.user.role = tmp_array;
+      } else {
+        tmp_array.push('user');
+        this.user.role = tmp_array;
+      }
       this.message = '';
       this.submitted = true;
       this.$validator.validate().then(isValid => {

@@ -15,6 +15,7 @@ import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import AddReservationModel from "./components/AddReservationForm";
 import DonorDetailsHeader from "./components/DonorDetailsHeader";
 import LookupField from "./components/LookupField";
+import Register from "./views/authorize/Register";
 // import ComplexTable from "./components/ComplexTable";
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
@@ -37,6 +38,7 @@ Vue.use(IconsPlugin)
 Vue.component("add-reservation-model", AddReservationModel);
 Vue.component("donor-details-header", DonorDetailsHeader);
 Vue.component("lookup-field", LookupField);
+Vue.component("register", Register);
 // Vue.component("complex-table", ComplexTable);
 
 new Vue({

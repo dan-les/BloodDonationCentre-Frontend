@@ -28,17 +28,24 @@ export const auth = {
         register({commit}, user) {
             return AuthService.register(user).then(
                 response => {
-                    console.log(response.data.message)
                     commit('registerSuccess');
+                    console.log(response.data.message)
                     if (response.data.message === "User successfully register!") {
                         response.data.message = 'Użytkownik pomyślnie zarejestrowany!';
                         return Promise.resolve(response.data);
                     } else {
-                        Promise.reject("Error during registration");
+                        Promise.reject("Błąd podczas rejestracji");
                     }
                 },
                 error => {
                     commit('registerFailure');
+                    if (error.response.data.message === "Error: Username is already taken!") {
+                        error.response.data.message = 'Użytkownik o takim loginie już istnieje!';
+                    } else if (error.response.data.message === "Error: Email is already in use!") {
+                        error.response.data.message = "Użytkownik z takim e-mailem już istnieje!";
+                    } else if (error.response.data.message === "Error: Role is not found.") {
+                        error.response.data.message = 'Błędne uprawnienia nowego użytkownika!';
+                    }
                     return Promise.reject(error);
                 }
             );

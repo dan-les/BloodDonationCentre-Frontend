@@ -9,7 +9,7 @@
         header="Twoje dane" header-level="5" header-tag="h2" style="padding: 1.5rem">
     </b-jumbotron>
 
-    <b-jumbotron style="padding: 1.5rem">
+    <b-jumbotron v-if="showData" style="padding: 1.5rem">
       <p>
         <strong>Imię:</strong> {{ user[0].firstName }}
       </p>
@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       user: [],
+      showData: false
     }
   },
 
@@ -64,6 +65,7 @@ export default {
             gender: response.data.gender
           });
           this.user = results_tmp;
+          this.showData = true;
 
         },
         error => {

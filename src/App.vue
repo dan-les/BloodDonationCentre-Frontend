@@ -11,7 +11,7 @@
           </b-link>
         </b-nav-item>
         <b-nav-item v-if="showAdminBoard">
-          <b-link router-tag="li" style="padding: 0.1rem;" to="/admin">Panel Admina</b-link>
+          <b-link router-tag="li" style="padding: 0.1rem;" to="/admin">Panel Administratora</b-link>
         </b-nav-item>
         <b-nav-item v-if="showStaffBoard">
           <b-link router-tag="li" style="padding: 0.1rem;" to="/staff">Panel Pracownika</b-link>
