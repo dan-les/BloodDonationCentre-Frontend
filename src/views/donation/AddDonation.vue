@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <donor-details-header
-        :key=this.donorIdx
+        v-if="donorIdx !== null"
         :donorIdx=this.donorIdx
         :title=this.headerTitle
     ></donor-details-header>
@@ -66,7 +66,6 @@ export default {
           });
           this.reservationDetails = results_tmp;
           this.donorIdx = response.data.donorId;
-          this.getDonor(response.data.donorId);
           this.selectedDonationType = response.data.donationType;
         },
         error => {
@@ -99,11 +98,12 @@ export default {
   },
   methods: {
     addNewDonation() {
+      console.log(this.reservationDetails)
       DonationService.addNewDonation({
         amount: this.amount,
         date: this.reservationDetails[0].date,
         donationType: this.selectedDonationType,
-        donorId: this.donor[0].id,
+        donorId: this.donorIdx,
         isReleased: false,
         recipientId: null
       })
