@@ -14,6 +14,7 @@ import {faHome, faSignInAlt, faSignOutAlt, faUser, faUserPlus} from '@fortawesom
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import AddReservationModel from "./components/AddReservationForm";
 import DonorDetailsHeader from "./components/DonorDetailsHeader";
+import FilterRecipientsForm from "./components/FilterRecipientsForm";
 // import ComplexTable from "./components/ComplexTable";
 
 library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
@@ -35,6 +36,7 @@ Vue.use(IconsPlugin)
 
 Vue.component("add-reservation-model", AddReservationModel);
 Vue.component("donor-details-header", DonorDetailsHeader);
+Vue.component("filter-recipients", FilterRecipientsForm);
 // Vue.component("complex-table", ComplexTable);
 
 new Vue({

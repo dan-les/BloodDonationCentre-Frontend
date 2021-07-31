@@ -148,8 +148,6 @@
             Wydaj
           </b-button>
         </template>
-
-
       </b-table>
 
       <b-modal :id="infoModal.id"
@@ -160,15 +158,15 @@
                @hide="resetInfoModal"
                @ok="changeRecipient(infoModal.content)">
         <b-form-group label="Wybierz podmiot, do którego wydana będzie dawka materiału biologicznego:">
-          <b-form-select
-              v-model="selectedRecipient"
-              :options="recipients"
-              class="mb-3"
-              text-field="name"
-              value-field="id"
-          ></b-form-select>
+          <filter-recipients
+              :fields="recipients"
+              :items="recipients"
+              :placeholder="placeholder"
+              :sort-by="'id'"
+              @item-selected="setSelectedRecipient"
+          >
+          </filter-recipients>
         </b-form-group>
-        <!--        <div class="mt-3">Selected: <strong>{{ selectedRecipient }}</strong></div>-->
       </b-modal>
     </b-row>
 
@@ -232,6 +230,9 @@ export default {
     this.getAllRecipients();
   },
   methods: {
+    setSelectedRecipient(recipientData) {
+      this.selectedRecipient = recipientData.id;
+    },
     changeRecipient(id) {
       if (this.selectedRecipient !== null) {
         DonationService.patchDonationRecipient({
@@ -312,6 +313,7 @@ export default {
   },
   data() {
     return {
+      placeholder: "Wyszukaj odbiorcę",
       selectedDonationType: null,
       selectedIsReleased: false,
       selectedBloodGroupWithRh: null,
