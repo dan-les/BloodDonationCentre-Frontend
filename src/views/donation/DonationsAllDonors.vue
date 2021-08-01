@@ -128,7 +128,7 @@
           :current-page="currentPage"
           :empty-filtered-text="emptyFilteredText"
           :empty-text="emptyText"
-          :fields="fieldsDonations"
+          :fields="visibleFieldsDonations"
           :filter="filter"
           :filter-included-fields="filterOn"
           :items="donations"
@@ -144,8 +144,7 @@
 
         <template #cell(actions)="row">
           <b-button v-if="row.item.isReleased === 'nie'" class="mr-1" size="sm" variant="primary"
-                    @click="info(row.item, row.item.id, $event.target)">
-            Wydaj
+                    @click="info(row.item, row.item.id, $event.target)"> Wydaj
           </b-button>
         </template>
       </b-table>
@@ -195,6 +194,9 @@ export default {
     propertiesChangeChecker() {
       return `${this.selectedDonationType}|${this.selectedIsReleased}|${this.selectedBloodGroupWithRh}`;
     },
+    visibleFieldsDonations() {
+      return this.fieldsDonations.filter(fieldsDonations => fieldsDonations.visible)
+    }
   },
   watch: {
     propertiesChangeChecker(newVal) {
@@ -203,6 +205,8 @@ export default {
       newSelectedDonationType = newSelectedDonationType === 'null' ? null : newSelectedDonationType;
       newSelectedIsReleased = newSelectedIsReleased === 'null' ? null : newSelectedIsReleased;
       newSelectedBloodGroupWithRh = newSelectedBloodGroupWithRh === 'null' ? null : newSelectedBloodGroupWithRh;
+
+      this.changeDisplayedFields(newSelectedIsReleased)
 
       this.getAllDonations(newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh);
     },
@@ -225,11 +229,24 @@ export default {
     if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
-
     this.getAllDonations(this.selectedDonationType, this.selectedIsReleased, this.selectedBloodGroupWithRh);
     this.getAllRecipients();
   },
   methods: {
+    changeDisplayedFields(newSelectedIsReleased) {
+      let objIndexRecipientName = this.fieldsDonations.findIndex((obj => obj.key === 'recipientName'));
+      if (newSelectedIsReleased === 'false') {
+        this.fieldsDonations[objIndexRecipientName].visible = false;
+      } else {
+        this.fieldsDonations[objIndexRecipientName].visible = true;
+      }
+      let objIndexActions = this.fieldsDonations.findIndex((obj => obj.key === 'actions'));
+      if (newSelectedIsReleased === 'true') {
+        this.fieldsDonations[objIndexActions].visible = false;
+      } else {
+        this.fieldsDonations[objIndexActions].visible = true;
+      }
+    },
     setSelectedRecipient(recipientData) {
       this.selectedRecipient = recipientData.id;
     },
@@ -333,19 +350,15 @@ export default {
       bloods: [{text: 'Wszystkie rodzaje', value: null},
         'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
       fieldsDonations: [
-        {key: 'id', label: 'ID', sortable: true, class: 'text-center'},
-        {key: 'date', label: 'Data', sortable: true, class: 'text-center'},
-        {key: 'amount', label: 'Ilość [ml]', sortable: true, class: 'text-center'},
-        {key: 'donationType', label: 'Typ', sortable: true, class: 'text-center'},
-        {key: 'donorId', label: 'ID dawcy', sortable: true, class: 'text-center'},
-        // {key: 'donorFirstName', label: 'Imię dawcy', sortable: true, class: 'text-center'},
-        // {key: 'donorLastName', label: 'Nazwisko dawcy', sortable: true, class: 'text-center'},
-        {key: 'bloodGroupWithRh', label: 'Krew', sortable: true, class: 'text-center'},
-        {key: 'isReleased', label: 'Wydano?', sortable: true, class: 'text-center'},
-        // {key: 'recipientId', label: 'Id odbiorcy', sortable: true, class: 'text-center'}
-        {key: 'recipientName', label: 'Nazwa odbiorcy', sortable: true, class: 'text-center'},
-        {key: 'actions', label: 'Akcje', active: false}
-
+        {key: 'id', label: 'ID', sortable: true, class: 'text-center', visible: true},
+        {key: 'date', label: 'Data', sortable: true, class: 'text-center', visible: true},
+        {key: 'amount', label: 'Ilość [ml]', sortable: true, class: 'text-center', visible: true},
+        {key: 'donationType', label: 'Typ', sortable: true, class: 'text-center', visible: true},
+        {key: 'donorId', label: 'ID dawcy', sortable: true, class: 'text-center', visible: true},
+        {key: 'bloodGroupWithRh', label: 'Krew', sortable: true, class: 'text-center', visible: true},
+        {key: 'isReleased', label: 'Wydano?', sortable: true, class: 'text-center', visible: true},
+        {key: 'recipientName', label: 'Nazwa odbiorcy', sortable: true, class: 'text-center', visible: false},
+        {key: 'actions', label: 'Akcje', visible: true}
       ],
       recipients: [],
       donations: [],

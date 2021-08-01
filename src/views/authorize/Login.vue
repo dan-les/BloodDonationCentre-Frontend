@@ -44,7 +44,7 @@
         <div class="form-group">
           <button :disabled="loading" class="btn btn-primary btn-block">
             <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Login</span>
+            <span>Zaloguj się</span>
           </button>
         </div>
         <div class="form-group">
