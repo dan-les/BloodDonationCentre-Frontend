@@ -230,12 +230,6 @@ export default {
           });
 
           this.donor = results_tmp;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
         }
     )
     this.getAllReservationsByDonorId()
@@ -278,12 +272,6 @@ export default {
             this.reservations = results_tmp;
             // Set the initial number of items
             this.totalRows = this.reservations.length;
-          },
-          error => {
-            this.content =
-                (error.response && error.response.data && error.response.data.message) ||
-                error.message ||
-                error.toString();
           }
       )
     },

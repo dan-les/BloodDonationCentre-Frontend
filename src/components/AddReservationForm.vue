@@ -108,7 +108,7 @@ export default {
       this.getDateForDonation();
     },
     dateValue: function () {
-      this.getHours();
+      this.getHoursWithAvailability();
     }
   },
   methods: {
@@ -127,12 +127,11 @@ export default {
           })
           .catch(e => {
             this.makeToastError();
-            console.log(e);
           })
     },
 
-    getHours() {
-      ReservationService.getHours(this.dateValue).then(
+    getHoursWithAvailability() {
+      ReservationService.getHoursWithAvailability(this.dateValue).then(
           response => {
             const results_tmp = [];
             for (const idx in response.data) {

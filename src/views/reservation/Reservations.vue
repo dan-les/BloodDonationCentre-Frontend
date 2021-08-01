@@ -280,7 +280,6 @@ export default {
           })
           .catch(e => {
             this.makeToastError();
-            console.log(e);
           });
 
     },
@@ -302,12 +301,6 @@ export default {
               }
               this.items = results_tmp;
               this.totalRows = this.items.length;
-            },
-            error => {
-              this.content =
-                  (error.response && error.response.data && error.response.data.message) ||
-                  error.message ||
-                  error.toString();
             }
         )
       } else {
@@ -329,12 +322,6 @@ export default {
               this.items = results_tmp;
               // Set the initial number of items
               this.totalRows = this.items.length;
-            },
-            error => {
-              this.content =
-                  (error.response && error.response.data && error.response.data.message) ||
-                  error.message ||
-                  error.toString();
             }
         )
       }

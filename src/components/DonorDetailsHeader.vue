@@ -51,12 +51,6 @@ export default {
           });
 
           this.donor = results_tmp;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
         }
     )
   },

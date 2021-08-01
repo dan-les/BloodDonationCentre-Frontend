@@ -197,7 +197,6 @@ export default {
           })
           .catch(e => {
             this.makeToastError();
-            console.log(e);
           });
 
     },

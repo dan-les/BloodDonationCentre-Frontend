@@ -126,12 +126,6 @@ export default {
           if (response.data.gender !== '') {
             this.form.gender = response.data.gender;
           }
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
         }
     )
   },
@@ -165,7 +159,6 @@ export default {
           })
           .catch(e => {
             this.makeToastError();
-            console.log(e);
           });
 
     }
@@ -219,7 +212,6 @@ export default {
           })
           .catch(e => {
             this.makeToastError();
-            console.log(e);
           });
     }
   }

@@ -67,9 +67,6 @@ export default {
           this.user = results_tmp;
           this.showData = true;
 
-        },
-        error => {
-
         }
     )
   }

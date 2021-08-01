@@ -236,12 +236,6 @@ export default {
             this.items = results_tmp;
             // Set the initial number of items
             this.totalRows = this.items.length;
-          },
-          error => {
-            this.content =
-                (error.response && error.response.data && error.response.data.message) ||
-                error.message ||
-                error.toString();
           }
       )
     },
@@ -266,7 +260,6 @@ export default {
               autoHideDelay: 2000,
               solid: true
             })
-            console.log(e);
           })
     },
 

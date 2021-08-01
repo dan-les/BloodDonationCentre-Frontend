@@ -188,12 +188,6 @@ export default {
           this.donations = results_tmp;
           // Set the initial number of items
           this.totalRows = this.donations.length;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
         }
     )
 

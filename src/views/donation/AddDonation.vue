@@ -67,12 +67,6 @@ export default {
           this.reservationDetails = results_tmp;
           this.donorIdx = response.data.donorId;
           this.selectedDonationType = response.data.donationType;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
         }
     )
   },
@@ -106,15 +100,10 @@ export default {
         donorId: this.donorIdx,
         isReleased: false,
         recipientId: null
+      }).then(response => {
+        this.makeToastSuccess('Donacja została została dodana do systemu!');
+        this.shouldBeUnHide = false;
       })
-          .then(response => {
-            this.makeToastSuccess('Donacja została została dodana do systemu!');
-            this.shouldBeUnHide = false;
-          })
-          .catch(e => {
-            this.makeToastError();
-            console.log(e);
-          })
     },
 
     makeToastSuccess(message) {

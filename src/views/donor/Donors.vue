@@ -261,7 +261,6 @@ export default {
 
     DonorService.getAllDonors().then(
         response => {
-          // console.log(response);
           const results_tmp = [];
           for (const idx in response.data) {
 
@@ -279,12 +278,6 @@ export default {
           this.items = results_tmp;
           // Set the initial number of items
           this.totalRows = this.items.length;
-        },
-        error => {
-          this.content =
-              (error.response && error.response.data && error.response.data.message) ||
-              error.message ||
-              error.toString();
         }
     )
   },

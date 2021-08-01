@@ -12,10 +12,6 @@ class DonorService {
         return axios.get(API_URL + `${id}`, {headers: authHeader()});
     }
 
-    // addDonor(data) {
-    //     return axios.post(API_URL, data, {headers: authHeader()});
-    // }
-
     putDonor(id, data) {
         return axios.put(API_URL + `${id}`, data, {headers: authHeader()});
     }

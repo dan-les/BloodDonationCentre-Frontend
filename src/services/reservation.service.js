@@ -5,7 +5,7 @@ const API_URL = 'http://localhost:8080/api/reservation/';
 
 class ReservationService {
 
-    getHours(date) {
+    getHoursWithAvailability(date) {
         return axios.get(API_URL + 'available-hours/list',
             {
                 params: {

@@ -8,13 +8,6 @@ class RecipientService {
         return axios.get(API_URL + 'list', {headers: authHeader()});
     }
 
-    // getDonorById(id) {
-    //     return axios.get(API_URL + `${id}`, {headers: authHeader()});
-    // }
-
-    // addDonor(data) {
-    //     return axios.post(API_URL, data, {headers: authHeader()});
-    // }
     addNewRecipient(data) {
         return axios.post(API_URL, data, {headers: authHeader()});
     }
