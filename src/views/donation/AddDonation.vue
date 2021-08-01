@@ -92,7 +92,6 @@ export default {
   },
   methods: {
     addNewDonation() {
-      console.log(this.reservationDetails)
       DonationService.addNewDonation({
         amount: this.amount,
         date: this.reservationDetails[0].date,
@@ -100,6 +99,7 @@ export default {
         donorId: this.donorIdx,
         isReleased: false,
         recipientId: null
+        // eslint-disable-next-line no-unused-vars
       }).then(response => {
         this.makeToastSuccess('Donacja została została dodana do systemu!');
         this.shouldBeUnHide = false;
