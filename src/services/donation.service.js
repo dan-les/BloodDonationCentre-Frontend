@@ -1,4 +1,3 @@
-import axios from 'axios';
 import api from "./api";
 
 const API_URL = 'http://localhost:8080/api/donation';
@@ -25,15 +24,15 @@ class DonationService {
     }
 
     getDonationsStatisticsByDonor(donorId) {
-        return axios.get(API_URL + '/donor/' + `${donorId}` + '/statistics');
+        return api.get(API_URL + '/donor/' + `${donorId}` + '/statistics');
     }
 
     addNewDonation(data) {
-        return axios.post(API_URL, data);
+        return api.post(API_URL, data);
     }
 
     getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
-        return axios.get(API_URL + '/list', {
+        return api.get(API_URL + '/list', {
             params: {
                 donationType: selectedDonationType,
                 isReleased: selectedIsReleased,
