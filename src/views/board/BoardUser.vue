@@ -186,8 +186,7 @@ export default {
               });
             }
             this.donations = results_tmp;
-          }
-      )
+          })
     },
     deleteReservation(id) {
       ReservationService.deleteReservation(id)

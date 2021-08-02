@@ -51,6 +51,7 @@
 <script>
 import DonationService from '../services/donation.service';
 import ReservationService from '../services/reservation.service'
+import EventBus from "../common/EventBus";
 
 export default {
   mounted() {
@@ -125,9 +126,7 @@ export default {
             this.dateValue = '';
             this.selectedDonationType = '';
           })
-          .catch(e => {
-            this.makeToastError();
-          })
+
     },
 
     getHoursWithAvailability() {
@@ -144,14 +143,7 @@ export default {
             }
             this.optionsTime = results_tmp;
 
-          },
-          error => {
-            this.content =
-                (error.response && error.response.data && error.response.data.message) ||
-                error.message ||
-                error.toString();
-          }
-      )
+          })
     },
     getDateForDonation() {
       console.log(this.donorIdx)
@@ -159,6 +151,11 @@ export default {
           .then(
               response => {
                 this.min = response.data.date;
+              },
+              error => {
+                if (error.response && error.response.status === 403) {
+                  EventBus.dispatch("logout");
+                }
               }
           )
 

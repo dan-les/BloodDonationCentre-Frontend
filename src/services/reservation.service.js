@@ -1,5 +1,5 @@
 import axios from 'axios';
-import authHeader from './auth-header';
+import api from "./api";
 
 const API_URL = 'http://localhost:8080/api/reservation/';
 
@@ -10,39 +10,37 @@ class ReservationService {
             {
                 params: {
                     date: date
-                },
-                headers: authHeader()
+                }
             });
     }
 
     addNewReservation(data) {
-        return axios.post(API_URL, data, {headers: authHeader()});
+        return api.post(API_URL, data);
     }
 
     getAllReservations() {
-        return axios.get(API_URL + 'list', {headers: authHeader()});
+        return api.get(API_URL + 'list');
     }
 
     getAllReservationsByDonorId(donorId) {
-        return axios.get(API_URL + 'list/donor/' + `${donorId}`, {headers: authHeader()});
+        return api.get(API_URL + 'list/donor/' + `${donorId}`);
     }
 
     getAllReservationsByDate(date) {
-        return axios.get(API_URL + 'list',
+        return api.get(API_URL + 'list',
             {
                 params: {
                     date: date,
-                },
-                headers: authHeader()
+                }
             });
     }
 
     deleteReservation(id) {
-        return axios.delete(API_URL + `${id}`, {headers: authHeader()});
+        return api.delete(API_URL + `${id}`);
     }
 
     getReservationById(id) {
-        return axios.get(API_URL + `${id}`, {headers: authHeader()});
+        return api.get(API_URL + `${id}`);
     }
 }
 

@@ -13,9 +13,9 @@
             <b-form-input
                 id="first-name"
                 v-model="form.username"
+                disabled
                 placeholder="login"
                 required
-                disabled
             ></b-form-input>
           </b-form-group>
 
