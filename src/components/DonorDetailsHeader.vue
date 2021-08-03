@@ -36,6 +36,7 @@ export default {
     }
   },
   mounted() {
+    let loader = this.$loading.show();
     DonorService.getDonorById(this.donorIdx).then(
         response => {
           const results_tmp = [];
@@ -51,6 +52,10 @@ export default {
           });
 
           this.donor = results_tmp;
+          loader.hide();
+        },
+        () => {
+          loader.hide();
         }
     )
   },

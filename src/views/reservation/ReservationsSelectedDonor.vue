@@ -258,6 +258,7 @@ export default {
           });
     },
     getAllReservationsByDonorId() {
+      let loader = this.$loading.show();
       ReservationService.getAllReservationsByDonorId(this.$route.params.id).then(
           response => {
             const results_tmp = [];
@@ -272,6 +273,10 @@ export default {
             this.reservations = results_tmp;
             // Set the initial number of items
             this.totalRows = this.reservations.length;
+            loader.hide();
+          },
+          () => {
+            loader.hide();
           }
       )
     },

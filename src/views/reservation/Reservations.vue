@@ -274,16 +274,17 @@ export default {
   methods: {
     deleteReservation(id) {
       ReservationService.deleteReservation(id)
-          .then(response => {
+          .then(() => {
             this.getProperReservations();
             this.makeToastSuccess('Pomyślnie usunięto rezerwację');
           })
-          .catch(e => {
+          .catch(() => {
             this.makeToastError();
           });
 
     },
     getProperReservations() {
+      let loader = this.$loading.show();
       if (this.isDatePickerEnabled === true) {
         ReservationService.getAllReservationsByDate(this.dateValue).then(
             response => {
@@ -301,6 +302,10 @@ export default {
               }
               this.items = results_tmp;
               this.totalRows = this.items.length;
+              loader.hide();
+            },
+            () => {
+              loader.hide();
             }
         )
       } else {
@@ -322,6 +327,10 @@ export default {
               this.items = results_tmp;
               // Set the initial number of items
               this.totalRows = this.items.length;
+              loader.hide();
+            },
+            () => {
+              loader.hide();
             }
         )
       }

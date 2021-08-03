@@ -142,13 +142,18 @@ export default {
     if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_USER')) {
       this.$router.push('/login');
     }
-
+    let loader = this.$loading.show();
     DonationService.getDonationsStatisticsByDonor(this.$store.state.auth.user.id).then(
         response => {
           this.barChartData.datasets[0].data.push(response.data.blood)
           this.barChartData.datasets[0].data.push(response.data.plasma)
           this.show = true
-        })
+          loader.hide();
+        },
+        () => {
+          loader.hide();
+        }
+    )
 
     this.getAllDonationsByDonor()
     this.getAllReservationsByDonor()

@@ -46,6 +46,7 @@ export default {
     mdbContainer
   },
   mounted() {
+    let loader = this.$loading.show();
     if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
@@ -64,6 +65,10 @@ export default {
             this.barChartDataBlood.datasets[0].data.push(response.data[idx].quantity)
           }
           this.showBloodChart = true
+          loader.hide();
+        },
+        () => {
+          loader.hide();
         })
   },
   data() {

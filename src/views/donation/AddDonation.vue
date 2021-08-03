@@ -49,7 +49,7 @@ export default {
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-
+    let loader = this.$loading.show();
     ReservationService.getReservationById(this.$route.params.id).then(
         response => {
           const results_tmp = [];
@@ -67,6 +67,10 @@ export default {
           this.reservationDetails = results_tmp;
           this.donorIdx = response.data.donorId;
           this.selectedDonationType = response.data.donationType;
+          loader.hide();
+        },
+        () => {
+          loader.hide();
         }
     )
   },
@@ -99,8 +103,7 @@ export default {
         donorId: this.donorIdx,
         isReleased: false,
         recipientId: null
-        // eslint-disable-next-line no-unused-vars
-      }).then(response => {
+      }).then(() => {
         this.makeToastSuccess('Donacja została została dodana do systemu!');
         this.shouldBeUnHide = false;
       })

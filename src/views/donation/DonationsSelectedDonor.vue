@@ -170,6 +170,7 @@ export default {
     }
   },
   mounted() {
+    let loader = this.$loading.show();
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
@@ -188,9 +189,12 @@ export default {
           this.donations = results_tmp;
           // Set the initial number of items
           this.totalRows = this.donations.length;
+          loader.hide();
+        },
+        () => {
+          loader.hide();
         }
     )
-
 
   },
   methods: {

@@ -17,30 +17,39 @@ import DonorDetailsHeader from "./components/DonorDetailsHeader";
 import LookupField from "./components/LookupField";
 import Register from "./views/authorize/Register";
 import setupInterceptors from './services/setupInterceptors';
-// import ComplexTable from "./components/ComplexTable";
 
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
+import VueLoading from 'vue-loading-overlay';
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 Vue.config.productionTip = false;
+Vue.config.devtools = true
 
 Validator.localize({pl: pl})
-setupInterceptors(store);
+
+Vue.use(IconsPlugin)
+Vue.use(Vuex);
+Vue.use(BootstrapVue)
 Vue.use(VeeValidate, {
     locale: 'pl',
     inject: true,
     fieldsBagName: 'veeFields'
 });
-Vue.component('font-awesome-icon', FontAwesomeIcon);
-Vue.use(Vuex);
-Vue.config.devtools = true
-Vue.use(BootstrapVue)
-Vue.use(IconsPlugin)
+Vue.use(VueLoading, {
+    color: "#1f4fa0",
+    loader: "dots",
+    width: 120,
+    height: 120,
+    opacity: 0.35
+});
 
 Vue.component("add-reservation-model", AddReservationModel);
 Vue.component("donor-details-header", DonorDetailsHeader);
 Vue.component("lookup-field", LookupField);
 Vue.component("register", Register);
-// Vue.component("complex-table", ComplexTable);
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
+
+setupInterceptors(store);
 
 new Vue({
     router,

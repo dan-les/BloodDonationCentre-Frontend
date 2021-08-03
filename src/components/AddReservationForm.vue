@@ -16,7 +16,7 @@
           v-model="dateValue"
           v-bind="labelsLanguagePL['pl']"
           :date-disabled-fn="dateDisabled"
-          :min="min"
+          :min="soonestPossibleDate"
           locale="pl"
           start-weekday="1">
       </b-form-datepicker>
@@ -51,7 +51,7 @@
 <script>
 import DonationService from '../services/donation.service';
 import ReservationService from '../services/reservation.service'
-import EventBus from "../common/EventBus";
+
 
 export default {
   mounted() {
@@ -69,7 +69,7 @@ export default {
     return {
       dateValue: '',
       donorId: this.donorIdx,
-      min: null,
+      soonestPossibleDate: null,
       labelsLanguagePL: {
         pl: {
           labelPrevDecade: "Poprzednia dekada",
@@ -130,6 +130,7 @@ export default {
     },
 
     getHoursWithAvailability() {
+      let loader = this.$loading.show();
       ReservationService.getHoursWithAvailability(this.dateValue).then(
           response => {
             const results_tmp = [];
@@ -142,23 +143,24 @@ export default {
               });
             }
             this.optionsTime = results_tmp;
-
+            loader.hide();
+          },
+          () => {
+            loader.hide();
           })
     },
     getDateForDonation() {
-      console.log(this.donorIdx)
+      let loader = this.$loading.show();
       DonationService.getSoonestPossibleDateForNextDonation(this.selectedDonationType, this.donorIdx)
           .then(
               response => {
-                this.min = response.data.date;
+                this.soonestPossibleDate = response.data.date;
+                loader.hide();
               },
-              error => {
-                if (error.response && error.response.status === 403) {
-                  EventBus.dispatch("logout");
-                }
+              () => {
+                loader.hide();
               }
           )
-
     },
     dateDisabled(ymd, date) {
       // Disable weekends (Sunday = `0`, Saturday = `6`) and

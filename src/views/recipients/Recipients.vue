@@ -193,7 +193,7 @@ export default {
       sortBy: 'time',
       sortDesc: false,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
-      emptyText: 'Brak rezerwacji.',
+      emptyText: 'Brak odbiorców.',
       sortDirection: 'asc',
       filter: null,
       filterOn: [],
@@ -224,6 +224,7 @@ export default {
   },
   methods: {
     getRecipients() {
+      let loader = this.$loading.show();
       RecipientService.getAllRecipients().then(
           response => {
             const results_tmp = [];
@@ -236,8 +237,13 @@ export default {
             this.items = results_tmp;
             // Set the initial number of items
             this.totalRows = this.items.length;
+            loader.hide();
+          },
+          () => {
+            loader.hide();
           }
       )
+
     },
     addRecipient() {
       RecipientService.addNewRecipient({

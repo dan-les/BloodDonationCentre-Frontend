@@ -51,7 +51,7 @@ export default {
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-
+    let loader = this.$loading.show();
     DonorService.getDonorById(this.$store.state.auth.user.id).then(
         response => {
           const results_tmp = [];
@@ -66,8 +66,12 @@ export default {
           });
           this.user = results_tmp;
           this.showData = true;
-
-        })
+          loader.hide();
+        },
+        () => {
+          loader.hide();
+        }
+    )
   }
 
 

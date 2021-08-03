@@ -109,7 +109,7 @@ export default {
     if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
-
+    let loader = this.$loading.show();
     DonorService.getDonorById(this.$route.params.id).then(
         response => {
           // console.log(response);
@@ -118,14 +118,16 @@ export default {
           this.form.firstName = response.data.firstName;
           this.form.lastName = response.data.lastName;
           this.form.pesel = response.data.pesel;
-
           if (response.data.bloodGroupWithRh !== '') {
             this.form.bloodGroupWithRh = response.data.bloodGroupWithRh;
           }
-
           if (response.data.gender !== '') {
             this.form.gender = response.data.gender;
           }
+          loader.hide();
+        },
+        () => {
+          loader.hide();
         }
     )
   },
@@ -152,7 +154,6 @@ export default {
   methods: {
     onSubmit(event) {
       event.preventDefault()
-
       DonorService.putDonor(this.$route.params.id, this.form)
           .then(response => {
             this.makeToastSuccess('Dane dawcy zostały pomyślnie zmienione');
@@ -210,7 +211,7 @@ export default {
 
             this.makeToastSuccess('Pomyślnie usunięto dawcę');
           })
-          .catch(e => {
+          .catch(() => {
             this.makeToastError();
           });
     }

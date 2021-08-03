@@ -226,6 +226,7 @@ export default {
     }
   },
   mounted() {
+
     if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
@@ -270,6 +271,7 @@ export default {
       this.selectedRecipient = null
     },
     getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
+      let loader = this.$loading.show();
       DonationService.getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh).then(
           response => {
             const results_tmp = [];
@@ -291,6 +293,11 @@ export default {
             this.donations = results_tmp;
             // Set the initial number of items
             this.totalRows = this.donations.length;
+            loader.hide();
+          },
+
+          () => {
+            loader.hide();
           }
       )
     },

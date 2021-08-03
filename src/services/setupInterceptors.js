@@ -32,12 +32,9 @@ const setup = (store) => {
                         const rs = await axiosInstance.post("/auth/refresh-token", {
                             refreshToken: TokenService.getLocalRefreshToken(),
                         });
-
                         const {accessToken} = rs.data;
-
                         store.dispatch('auth/refreshToken', accessToken);
                         TokenService.updateLocalAccessToken(accessToken);
-
                         return axiosInstance(originalConfig);
                     } catch (_error) {
                         return Promise.reject(_error);
@@ -45,9 +42,7 @@ const setup = (store) => {
                 } else if (err.response && err.response.status === 403) {
                     EventBus.dispatch("logout");
                 }
-
             }
-
             return Promise.reject(err);
         }
     );

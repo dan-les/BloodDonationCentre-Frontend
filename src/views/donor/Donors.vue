@@ -132,7 +132,6 @@
         </b-col>
       </b-row>
 
-
       <!-- Main table element -->
       <b-table
           :current-page="currentPage"
@@ -148,6 +147,7 @@
           :sort-direction="sortDirection"
           show-empty
           small
+
 
           stacked="md"
           @filtered="onFiltered"
@@ -203,9 +203,8 @@
         </template>
       </b-table>
     </b-row>
+
   </b-container>
-
-
 </template>
 
 <script>
@@ -214,6 +213,8 @@ import DonorService from '../../services/donor.service';
 export default {
   data() {
     return {
+      fullPage: true,
+
       items: [],
       tableFields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
@@ -233,7 +234,7 @@ export default {
       sortBy: 'lastName',
       sortDesc: false,
       emptyFilteredText: 'Brak wyników wyszukiwania spełniających podane kryteria',
-      emptyText: 'Brak danych. Coś poszło nie tak... ☹',
+      emptyText: 'Brak danych. ',
       sortDirection: 'asc',
       filter: null,
       filterOn: [],
@@ -259,11 +260,11 @@ export default {
       this.$router.push('/login');
     }
 
+    let loader = this.$loading.show();
     DonorService.getAllDonors().then(
         response => {
           const results_tmp = [];
           for (const idx in response.data) {
-
             results_tmp.push({
               id: response.data[idx].id,
               username: response.data[idx].username,
@@ -278,6 +279,10 @@ export default {
           this.items = results_tmp;
           // Set the initial number of items
           this.totalRows = this.items.length;
+          loader.hide();
+        },
+        () => {
+          loader.hide();
         }
     )
   },
