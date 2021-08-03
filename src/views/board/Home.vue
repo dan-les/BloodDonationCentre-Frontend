@@ -9,6 +9,7 @@
       </b-jumbotron>
     </div>
 
+
     <div>
       <b-card-group columns>
         <b-card
@@ -21,8 +22,7 @@
             Proces pobierania krwi zajmuje ok. godziny.
             Na początku wymagane jest wypełnienia formularza wstępnego.
             Dodatkowo przeprowadzane jest wstepne badanie.
-            Samo pobranie krwi zajmuje około 10 minut. Oddanie osocza metodą plazmaferezy automatycznej lub płytek krwi
-            metodą automatycznej trombaferezy może potrwać dłużej - około dwie godziny.
+            Samo pobranie krwi zajmuje około 10 minut.
           </b-card-text>
         </b-card>
 
@@ -45,9 +45,6 @@
             img-src="https://1.bp.blogspot.com/-jCNEDiu1kJc/XPfZ9DdVgKI/AAAAAAAAAVU/vPLjciZhyQ08N3qvXhqVQcXqG8R5iLvrACEwYBhgL/s1600/Zrzut%2Bekranu%2B%25287%2529.png"
             img-top>
 
-          <!--          <template #footer>-->
-          <!--            <small class="text-muted">Jaka krew przeważa?</small>-->
-          <!--          </template>-->
         </b-card>
 
 
