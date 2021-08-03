@@ -3,13 +3,8 @@
     <div>
       <b-jumbotron border-variant="dark" header-level="4">
         <template #header> Witaj na stronie Centrum Krwiodawstwa</template>
-        <!--        <template #lead>-->
-        <!--          Aplikacja została wykonana jako praca inżynierska przez Daniela Leśniewicza.-->
-        <!--        </template>-->
       </b-jumbotron>
     </div>
-
-
     <div>
       <b-card-group columns>
         <b-card
@@ -44,9 +39,7 @@
             img-alt="Image"
             img-src="https://1.bp.blogspot.com/-jCNEDiu1kJc/XPfZ9DdVgKI/AAAAAAAAAVU/vPLjciZhyQ08N3qvXhqVQcXqG8R5iLvrACEwYBhgL/s1600/Zrzut%2Bekranu%2B%25287%2529.png"
             img-top>
-
         </b-card>
-
 
         <b-card>
           <b-card-title>Jakie są zalecenia przed pobraniem?</b-card-title>
@@ -61,7 +54,6 @@
           </b-card-text>
         </b-card>
 
-
         <b-card img-alt="Image"
                 img-src="https://img.grouponcdn.com/seocms/aNG4Rq8286RemrggcnyzFR/las_vegas_restaurants-1243x746"
                 img-top
@@ -71,14 +63,15 @@
             medycznych. Należy zatem w dniu pobrania oraz dniu poprzedzającym nie spożywać tłustych posików.
           </b-card-text>
         </b-card>
-
-
       </b-card-group>
     </div>
-
+    <div>
+      <b-jumbotron bg-variant="light" header-level="5" style=" margin-top:4rem; padding: 0.9rem; border: 0rem"
+                   text-variant="secondary">
+        <div>
+          Aplikacja została wykonana w ramach pracy inżynierskiej przez Daniela Leśniewicza w 2021 roku.
+        </div>
+      </b-jumbotron>
+    </div>
   </b-container>
 </template>
-
-<script>
-
-</script>
