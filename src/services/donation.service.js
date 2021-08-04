@@ -1,11 +1,11 @@
 import api from "./api";
 
-const API_URL = 'http://localhost:8080/api/donation';
+const API_URL = 'donation/';
 
 class DonationService {
 
     getSoonestPossibleDateForNextDonation(donationType, donorId) {
-        return api.get(API_URL + '/next',
+        return api.get(API_URL + 'next',
             {
                 params: {
                     donationType: donationType,
@@ -15,7 +15,7 @@ class DonationService {
     }
 
     getDonationsStatistics(donationType) {
-        return api.get(API_URL + '/statistics',
+        return api.get(API_URL + 'statistics',
             {
                 params: {
                     donationType: donationType
@@ -24,7 +24,7 @@ class DonationService {
     }
 
     getDonationsStatisticsByDonor(donorId) {
-        return api.get(API_URL + '/donor/' + `${donorId}` + '/statistics');
+        return api.get(API_URL + 'donor/' + `${donorId}` + '/statistics');
     }
 
     addNewDonation(data) {
@@ -32,7 +32,7 @@ class DonationService {
     }
 
     getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
-        return api.get(API_URL + '/list', {
+        return api.get(API_URL + 'list', {
             params: {
                 donationType: selectedDonationType,
                 isReleased: selectedIsReleased,
@@ -42,7 +42,7 @@ class DonationService {
     }
 
     getAllDonationsByDonorId(donorId) {
-        return api.get(API_URL + '/list',
+        return api.get(API_URL + 'list',
             {
                 params: {
                     donorId: donorId,

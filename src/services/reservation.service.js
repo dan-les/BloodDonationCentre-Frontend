@@ -1,6 +1,6 @@
 import api from "./api";
 
-const API_URL = 'http://localhost:8080/api/reservation/';
+const API_URL = 'reservation/';
 
 class ReservationService {
 
