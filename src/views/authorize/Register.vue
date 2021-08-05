@@ -1,95 +1,126 @@
 <template>
-  <b-container style="margin-top: -3rem">
+  <b-container style="margin-top: -2rem">
+
+
     <div :class="{'card card-container' : role === undefined}">
-      <img
-          v-if="role === undefined"
-          id="profile-img"
-          class="profile-img-card"
-          src="../../assets/user_img.png"
-      />
+      <b-row>
+        <img
+            v-if="role === undefined"
+            id="profile-img"
+            class="profile-img-card"
+            src="../../assets/user_img.png"
+        />
+      </b-row>
+
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
-          <div class="form-group">
-            <label>Login</label>
-            <input
-                v-model="user.username"
-                v-validate="'required|min:3|max:20'"
-                class="form-control"
-                data-vv-as="'login'"
-                name="username"
-                type="text"
-            />
-            <div
-                v-if="submitted && errors.has('username')"
-                class="alert-danger"
-            >{{ errors.first('username') }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Imię</label>
-            <input
-                v-model="user.firstName"
-                v-validate="'required|min:1|max:40'"
-                class="form-control"
-                data-vv-as="'imię'"
-                name="firstName"
-                type="text"
-            />
-            <div
-                v-if="submitted && errors.has('firstName')"
-                class="alert-danger"
-            >{{ errors.first('firstName') }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Nazwisko</label>
-            <input
-                v-model="user.lastName"
-                v-validate="'required|min:1|max:40'"
-                class="form-control"
-                data-vv-as="'Nazwisko'"
-                name="lastName"
-                type="text"
-            />
-            <div
-                v-if="submitted && errors.has('lastName')"
-                class="alert-danger"
-            >{{ errors.first('lastName') }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label>E-mail</label>
-            <input
-                v-model="user.email"
-                v-validate="'required|email|max:50'"
-                class="form-control"
-                data-vv-as="'e-mail'"
-                name="email"
-                type="email"
-            />
-            <div
-                v-if="submitted && errors.has('email')"
-                class="alert-danger"
-            >{{ errors.first('email') }}
-            </div>
-          </div>
-          <div class="form-group">
-            <label>Hasło</label>
-            <input
-                v-model="user.password"
-                v-validate="'required|min:6|max:40'"
-                class="form-control"
-                data-vv-as="'hasło'"
-                name="password"
-                type="password"
-            />
-            <div
-                v-if="submitted && errors.has('password')"
-                class="alert-danger"
-            >{{ errors.first('password') }}
-            </div>
-          </div>
-          <div class="form-group">
+          <b-row>
+            <b-col>
+              <div class="form-group">
+                <label>Login</label>
+                <input
+                    v-model="user.username"
+                    v-validate="'required|min:3|max:20'"
+                    class="form-control"
+                    data-vv-as="'login'"
+                    name="username"
+                    type="text"
+                />
+                <div
+                    v-if="submitted && errors.has('username')"
+                    class="alert-danger"
+                >{{ errors.first('username') }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Hasło</label>
+                <input
+                    ref="password"
+                    v-model="user.password"
+                    v-validate="'required|min:6|max:40'"
+                    class="form-control"
+                    data-vv-as="'hasło'"
+                    name="password"
+                    type="password"
+                />
+                <div
+                    v-if="submitted && errors.has('password')"
+                    class="alert-danger"
+                >{{ errors.first('password') }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Powtórz hasło</label>
+                <input
+                    v-validate="'required|min:6|max:40|confirmed:password'"
+                    class="form-control"
+                    data-vv-as="'powtórzone hasło'"
+                    name="passwordRepeated"
+                    type="password"
+                />
+                <div
+                    v-if="submitted && errors.has('passwordRepeated')"
+                    class="alert-danger"
+                >{{ errors.first('passwordRepeated') }}
+                </div>
+              </div>
+            </b-col>
+
+            <b-col>
+              <div class="form-group">
+                <label>Imię</label>
+                <input
+                    v-model="user.firstName"
+                    v-validate="'required|min:1|max:40'"
+                    class="form-control"
+                    data-vv-as="'imię'"
+                    name="firstName"
+                    type="text"
+                />
+                <div
+                    v-if="submitted && errors.has('firstName')"
+                    class="alert-danger"
+                >{{ errors.first('firstName') }}
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Nazwisko</label>
+                <input
+                    v-model="user.lastName"
+                    v-validate="'required|min:1|max:40'"
+                    class="form-control"
+                    data-vv-as="'Nazwisko'"
+                    name="lastName"
+                    type="text"
+                />
+                <div
+                    v-if="submitted && errors.has('lastName')"
+                    class="alert-danger"
+                >{{ errors.first('lastName') }}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>E-mail</label>
+                <input
+                    v-model="user.email"
+                    v-validate="'required|email|max:50'"
+                    class="form-control"
+                    data-vv-as="'e-mail'"
+                    name="email"
+                    type="email"
+                />
+                <div
+                    v-if="submitted && errors.has('email')"
+                    class="alert-danger"
+                >{{ errors.first('email') }}
+                </div>
+              </div>
+            </b-col>
+          </b-row>
+
+          <div class="form-group" style="margin-top: 1rem">
             <button v-if="role === undefined" class="btn btn-primary btn-block">Zarejestruj się</button>
             <button v-else class="btn btn-primary btn-block">Zarejestruj nowego pracownika w systemie</button>
           </div>
@@ -115,11 +146,13 @@ export default {
   data() {
     return {
       user: new User('', '', '', '', '', []),
+      passwordRepeated: '',
       submitted: false,
       successful: false,
       message: ''
     };
   },
+
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
@@ -147,7 +180,12 @@ export default {
         if (isValid) {
           this.$store.dispatch('auth/register', this.user).then(
               data => {
-                this.message = data.message;
+                if (this.role === undefined) {
+                  this.message = data.message + ' Za chwilę nastąpi przekierowanie na stronę logowania...';
+                  setTimeout(() => this.$router.push({path: '/login'}), 5000);
+                } else {
+                  this.message = data.message;
+                }
                 this.successful = true;
               },
               error => {
@@ -172,7 +210,7 @@ label {
 }
 
 .card-container.card {
-  max-width: 350px !important;
+  max-width: 650px !important;
   padding: 40px 40px;
 }
 

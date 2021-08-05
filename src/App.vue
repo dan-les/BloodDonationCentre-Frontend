@@ -53,13 +53,13 @@
               style="padding: 0.1rem;"
               to="/register">
             <font-awesome-icon icon="user-plus"/>
-            Zarejestruj się!
+            Zarejestruj się
           </b-link>
         </b-nav-item>
         <b-nav-item>
           <b-link router-tag="li" style="padding: 0.1rem;" to="/login">
             <font-awesome-icon icon="sign-in-alt"/>
-            Zaloguj się!
+            Zaloguj się
           </b-link>
         </b-nav-item>
       </div>
@@ -79,7 +79,7 @@
         <b-nav-item
             style="padding: 0.1rem;" to="/logout" @click.prevent="logOut">
           <font-awesome-icon icon="sign-out-alt"/>
-          Wyloguj się!
+          Wyloguj się
         </b-nav-item>
       </div>
     </b-navbar>

@@ -14,7 +14,7 @@
           <mdb-container v-if="show">
             <mdb-horizontal-bar-chart
                 :data="barChartData"
-                :height="200"
+                :height="270"
                 :options="barChartOptions"
                 :width="600"
             ></mdb-horizontal-bar-chart>
@@ -115,7 +115,7 @@ export default {
       },
       barChartOptions: {
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: false,
         scales: {
           xAxes: [
             {
