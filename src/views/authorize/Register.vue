@@ -121,7 +121,7 @@
           </b-row>
 
           <div class="form-group" style="margin-top: 1rem">
-            <button v-if="role === undefined" class="btn btn-primary btn-block">Zarejestruj się</button>
+            <button v-if="role === undefined" class="btn btn-primary btn-block"> Zarejestruj się</button>
             <button v-else class="btn btn-primary btn-block">Zarejestruj nowego pracownika w systemie</button>
           </div>
         </div>
@@ -139,7 +139,7 @@
 </template>
 
 <script>
-import User from '../../models/user';
+import User from '../../model/user';
 
 export default {
   name: 'Register',

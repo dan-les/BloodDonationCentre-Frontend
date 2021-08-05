@@ -6,9 +6,7 @@
     ></donor-details-header>
 
     <b-row style="margin-top: 1rem;">
-      <!-- User Interface controls -->
       <b-row>
-        <!-- sortowanie-->
         <b-col class="my-1" lg="6">
           <b-form-group
               v-slot="{ ariaDescribedby }"
@@ -168,6 +166,8 @@
 <script>
 import ReservationService from '../../services/reservation.service';
 import DonorService from "../../services/donor.service";
+import Reservation from "../../model/reservation";
+import Donor from "../../model/donor";
 
 export default {
   data() {
@@ -201,7 +201,6 @@ export default {
   },
   computed: {
     sortOptions() {
-      // Create an options list from our fields
       return this.fieldsReservations
           .filter(f => f.sortable)
           .map(f => {
@@ -214,21 +213,21 @@ export default {
     if (!this.$store.state.auth.user && !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
-
     DonorService.getDonorById(this.$route.params.id).then(
         response => {
           const results_tmp = [];
-          results_tmp.push({
-            id: response.data.id,
-            username: response.data.username,
-            email: response.data.email,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            pesel: response.data.pesel,
-            bloodGroupWithRh: response.data.bloodGroupWithRh,
-            gender: response.data.gender
-          });
-
+          results_tmp.push(
+              new Donor(
+                  response.data.id,
+                  response.data.username,
+                  response.data.email,
+                  response.data.firstName,
+                  response.data.lastName,
+                  response.data.pesel,
+                  response.data.bloodGroupWithRh,
+                  response.data.gender
+              )
+          );
           this.donor = results_tmp;
         }
     )
@@ -237,7 +236,6 @@ export default {
 
   methods: {
     deleteReservation(id) {
-
       ReservationService.deleteReservation(id)
           .then(() => {
             this.$bvToast.toast('Pomyślnie usunięto rezerwację', {
@@ -248,7 +246,7 @@ export default {
             })
             this.getAllReservationsByDonorId();
           })
-          .catch(e => {
+          .catch(() => {
             this.$bvToast.toast('Coś poszło nie tak...', {
               title: `Błąd`,
               variant: 'danger',
@@ -263,15 +261,20 @@ export default {
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-              results_tmp.push({
-                id: response.data[idx].id,
-                date: response.data[idx].date,
-                time: response.data[idx].time,
-                donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-              });
+              results_tmp.push(
+                  new Reservation(
+                      response.data[idx].id,
+                      response.data[idx].donorId,
+                      response.data[idx].donorFirstName,
+                      response.data[idx].donorLastName,
+                      response.data[idx].pesel,
+                      response.data[idx].date,
+                      response.data[idx].time,
+                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                  )
+              );
             }
             this.reservations = results_tmp;
-            // Set the initial number of items
             this.totalRows = this.reservations.length;
             loader.hide();
           },

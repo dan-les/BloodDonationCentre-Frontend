@@ -43,6 +43,8 @@
 <script>
 import DonationService from '../../services/donation.service';
 import ReservationService from '../../services/reservation.service'
+import Donation from "../../model/donation";
+import Reservation from "../../model/reservation";
 
 export default {
   mounted() {
@@ -53,17 +55,17 @@ export default {
     ReservationService.getReservationById(this.$route.params.id).then(
         response => {
           const results_tmp = [];
-          results_tmp.push({
-            id: response.data.id,
-            donorId: response.data.donorId,
-            donorFirstName: response.data.donorFirstName,
-            donorLastName: response.data.donorLastName,
-            pesel: response.data.pesel,
-            date: response.data.date,
-            time: response.data.time,
-            // donationType: response.data.donationType === 'plasma' ? 'osocze' : 'krew'
-            donationType: response.data.donationType
-          });
+          results_tmp.push(
+              new Reservation(response.data.id,
+                  response.data.donorId,
+                  response.data.donorFirstName,
+                  response.data.donorLastName,
+                  response.data.pesel,
+                  response.data.date,
+                  response.data.time,
+                  response.data.donationType
+              )
+          );
           this.reservationDetails = results_tmp;
           this.donorIdx = response.data.donorId;
           this.selectedDonationType = response.data.donationType;
@@ -96,14 +98,21 @@ export default {
   },
   methods: {
     addNewDonation() {
-      DonationService.addNewDonation({
-        amount: this.amount,
-        date: this.reservationDetails[0].date,
-        donationType: this.selectedDonationType,
-        donorId: this.donorIdx,
-        isReleased: false,
-        recipientId: null
-      }).then(() => {
+      DonationService.addNewDonation(
+          new Donation(
+              null,
+              this.reservationDetails[0].date,
+              this.amount,
+              this.selectedDonationType,
+              this.donorIdx,
+              '',
+              '',
+              '',
+              false,
+              null,
+              ''
+          )
+      ).then(() => {
         this.makeToastSuccess('Donacja została została dodana do systemu!');
         this.shouldBeUnHide = false;
       })
@@ -116,7 +125,6 @@ export default {
         autoHideDelay: 2000,
         solid: true
       })
-
     },
     makeToastError() {
       this.$bvToast.toast('Coś poszło nie tak...', {

@@ -179,17 +179,14 @@
           </b-link>
           <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
         </template>
-
       </b-table>
-
     </b-row>
   </b-container>
-
-
 </template>
 
 <script>
 import ReservationService from '../../services/reservation.service';
+import Reservation from "../../model/reservation";
 
 export default {
   data() {
@@ -253,7 +250,6 @@ export default {
           })
     }
   },
-
   watch: {
     dateValue() {
       this.getProperReservations();
@@ -261,7 +257,6 @@ export default {
     isDatePickerEnabled() {
       this.getProperReservations();
     }
-
   },
   mounted() {
     if (!this.$store.state.auth.user && !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
@@ -269,7 +264,6 @@ export default {
     }
     // sprawdzenie, czy w ścieżce jest date jako true czy jako false
     this.isDatePickerEnabled = this.$route.query.date;
-
   },
   methods: {
     deleteReservation(id) {
@@ -281,7 +275,6 @@ export default {
           .catch(() => {
             this.makeToastError();
           });
-
     },
     getProperReservations() {
       let loader = this.$loading.show();
@@ -290,15 +283,18 @@ export default {
             response => {
               const results_tmp = [];
               for (const idx in response.data) {
-                results_tmp.push({
-                  id: response.data[idx].id,
-                  donorFirstName: response.data[idx].donorFirstName,
-                  donorLastName: response.data[idx].donorLastName,
-                  pesel: response.data[idx].pesel,
-                  date: response.data[idx].date,
-                  time: response.data[idx].time,
-                  donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-                });
+                results_tmp.push(
+                    new Reservation(
+                        response.data[idx].id,
+                        response.data[idx].donorId,
+                        response.data[idx].donorFirstName,
+                        response.data[idx].donorLastName,
+                        response.data[idx].pesel,
+                        response.data[idx].date,
+                        response.data[idx].time,
+                        response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                    )
+                );
               }
               this.items = results_tmp;
               this.totalRows = this.items.length;
@@ -313,19 +309,20 @@ export default {
             response => {
               const results_tmp = [];
               for (const idx in response.data) {
-
-                results_tmp.push({
-                  id: response.data[idx].id,
-                  donorFirstName: response.data[idx].donorFirstName,
-                  donorLastName: response.data[idx].donorLastName,
-                  pesel: response.data[idx].pesel,
-                  date: response.data[idx].date,
-                  time: response.data[idx].time,
-                  donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-                });
+                results_tmp.push(
+                    new Reservation(
+                        response.data[idx].id,
+                        response.data[idx].donorId,
+                        response.data[idx].donorFirstName,
+                        response.data[idx].donorLastName,
+                        response.data[idx].pesel,
+                        response.data[idx].date,
+                        response.data[idx].time,
+                        response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                    )
+                );
               }
               this.items = results_tmp;
-              // Set the initial number of items
               this.totalRows = this.items.length;
               loader.hide();
             },

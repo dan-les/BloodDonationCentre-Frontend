@@ -181,6 +181,8 @@
 <script>
 import DonationService from '../../services/donation.service';
 import RecipientService from '../../services/recipient.service';
+import Donation from "../../model/donation";
+import Recipient from "../../model/recipient";
 
 export default {
   computed: {
@@ -276,22 +278,24 @@ export default {
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-              results_tmp.push({
-                id: response.data[idx].id,
-                date: response.data[idx].date,
-                amount: response.data[idx].amount,
-                donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
-                donorId: response.data[idx].donorId,
-                donorFirstName: response.data[idx].donorFirstName,
-                donorLastName: response.data[idx].donorLastName,
-                bloodGroupWithRh: response.data[idx].bloodGroupWithRh,
-                isReleased: response.data[idx].isReleased === true ? 'tak' : 'nie',
-                recipientId: response.data[idx].isReleased,
-                recipientName: response.data[idx].recipientName,
-              });
+              results_tmp.push(
+                  new Donation(
+                      response.data[idx].id,
+                      response.data[idx].date,
+                      response.data[idx].amount,
+                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
+                      response.data[idx].donorId,
+                      response.data[idx].donorFirstName,
+                      response.data[idx].donorLastName,
+                      response.data[idx].bloodGroupWithRh,
+                      response.data[idx].isReleased === true ? 'tak' : 'nie',
+                      response.data[idx].isReleased,
+                      response.data[idx].recipientId,
+                      response.data[idx].recipientName
+                  )
+              );
             }
             this.donations = results_tmp;
-            // Set the initial number of items
             this.totalRows = this.donations.length;
             loader.hide();
           },
@@ -306,22 +310,16 @@ export default {
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-              results_tmp.push({
-                id: response.data[idx].id,
-                name: response.data[idx].name
-              });
+              results_tmp.push(new Recipient(response.data[idx].id, response.data[idx].name));
             }
             this.recipients = results_tmp;
-
           }
       )
     },
     onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
-
   },
   data() {
     return {
@@ -330,7 +328,6 @@ export default {
       selectedIsReleased: false,
       selectedBloodGroupWithRh: null,
       selectedRecipient: null,
-
       totalRows: 1,
       currentPage: 1,
       perPage: 20,

@@ -5,9 +5,7 @@
         style="padding: 0.9rem">
     </b-jumbotron>
 
-
     <b-col md="4" offset-md="8">
-
       <b-button v-b-modal.modal-1 block variant="primary">Dodaj odbiorcę</b-button>
     </b-col>
 
@@ -43,9 +41,7 @@
     </b-modal>
 
     <b-row style="margin-top: 1rem;">
-      <!-- User Interface controls -->
       <b-row>
-        <!-- sortowanie-->
         <b-col class="my-1" lg="6">
           <b-form-group
               v-slot="{ ariaDescribedby }"
@@ -83,9 +79,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col class="my-1" offset="3" sm="3">
-
-        </b-col>
+        <b-col class="my-1" offset="3" sm="3"></b-col>
 
         <b-col class="my-1" lg="6">
           <b-form-group
@@ -111,10 +105,7 @@
           </b-form-group>
         </b-col>
 
-        <b-col class="my-1" lg="3">
-
-        </b-col>
-
+        <b-col class="my-1" lg="3"></b-col>
         <b-col class="my-1" md="6" sm="5">
           <b-form-group
               class="mb-0"
@@ -154,7 +145,7 @@
           :fields="fields"
           :filter="filter"
           :filter-included-fields="filterOn"
-          :items="items"
+          :items="recipients"
           :per-page="perPage"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
@@ -175,16 +166,16 @@
 
 <script>
 import RecipientService from '../../services/recipient.service';
+import Recipient from "../../model/recipient";
 
 export default {
   data() {
     return {
       newRecipient: null,
-      items: [],
+      recipients: [],
       fields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         {key: 'name', label: 'Nazwa', sortable: true, sortDirection: 'desc'},
-        // {key: 'actions', label: 'Akcje'}
       ],
       totalRows: 1,
       currentPage: 1,
@@ -206,7 +197,6 @@ export default {
   },
   computed: {
     sortOptions() {
-      // Create an options list from our fields
       return this.fields
           .filter(f => f.sortable)
           .map(f => {
@@ -214,7 +204,6 @@ export default {
           })
     }
   },
-
   mounted() {
     if (!this.$store.state.auth.user && !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
@@ -229,56 +218,47 @@ export default {
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-              results_tmp.push({
-                id: response.data[idx].id,
-                name: response.data[idx].name,
-              });
+              results_tmp.push(new Recipient(response.data[idx].id, response.data[idx].name));
             }
-            this.items = results_tmp;
-            // Set the initial number of items
-            this.totalRows = this.items.length;
+            this.recipients = results_tmp;
+            this.totalRows = this.recipients.length;
             loader.hide();
           },
           () => {
             loader.hide();
           }
       )
-
     },
     addRecipient() {
       RecipientService.addNewRecipient({
         name: this.newRecipient,
+      }).then(() => {
+        this.getRecipients();
+        this.$bvToast.toast('Odbiorca został pomyślnie dodany do systemu!', {
+          title: `Sukces`,
+          variant: 'info',
+          autoHideDelay: 2000,
+          solid: true
+        })
+        this.newRecipient = null;
+      }).catch(() => {
+        this.$bvToast.toast('Coś poszło nie tak...', {
+          title: `Błąd`,
+          variant: 'danger',
+          autoHideDelay: 2000,
+          solid: true
+        })
       })
-          .then(response => {
-            this.getRecipients();
-            this.$bvToast.toast('Odbiorca został pomyślnie dodany do systemu!', {
-              title: `Sukces`,
-              variant: 'info',
-              autoHideDelay: 2000,
-              solid: true
-            })
-            this.newRecipient = null;
-          })
-          .catch(e => {
-            this.$bvToast.toast('Coś poszło nie tak...', {
-              title: `Błąd`,
-              variant: 'danger',
-              autoHideDelay: 2000,
-              solid: true
-            })
-          })
     },
 
     resetData() {
       this.newRecipient = null;
     },
-
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`
       this.infoModal.content = JSON.stringify(item, null, 2)
       this.$root.$emit('bv::show::modal', this.infoModal.id, button)
     },
-
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1

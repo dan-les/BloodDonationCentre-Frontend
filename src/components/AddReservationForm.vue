@@ -103,7 +103,6 @@ export default {
 
     }
   },
-
   watch: {
     selectedDonationType: function () {
       this.getDateForDonation();
@@ -120,22 +119,19 @@ export default {
         time: this.selectedTime,
         donationType: this.selectedDonationType
       })
-          .then(response => {
+          .then(() => {
             this.makeToastSuccess('Rezerwacja została dodana!');
             this.selectedTime = null;
             this.dateValue = '';
             this.selectedDonationType = '';
           })
-
     },
-
     getHoursWithAvailability() {
       let loader = this.$loading.show();
       ReservationService.getHoursWithAvailability(this.dateValue).then(
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-
               results_tmp.push({
                 text: response.data[idx].hour,
                 value: response.data[idx].hour,
@@ -178,7 +174,6 @@ export default {
         autoHideDelay: 2000,
         solid: true
       })
-
     },
     makeToastError() {
       this.$bvToast.toast('Coś poszło nie tak...', {
