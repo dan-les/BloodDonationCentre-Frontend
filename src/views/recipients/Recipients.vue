@@ -155,9 +155,6 @@
           stacked="md"
           @filtered="onFiltered"
       >
-        <template #cell(actions)="row">
-          <!--          <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>-->
-        </template>
       </b-table>
     </b-row>
   </b-container>
