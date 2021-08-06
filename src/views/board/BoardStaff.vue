@@ -1,8 +1,8 @@
 <template>
   <b-container>
     <b-jumbotron
-        header="Panel pracownika - aktualny stan w magazynie" header-level="5" header-tag="h4"
-        style="padding: 0.9rem">
+        header="Panel pracownika - aktualny stan materiału biologicznego w magazynie"
+        header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
 
     <b-card no-body>
@@ -134,11 +134,10 @@ export default {
       },
       barChartOptions: {
         legend: {
-          // display: false,
           boxWidth: 2222,
           labels: {
             fontSize: 15,
-            // remove filled rectangle
+            // remove filled rectangle in title
             boxWidth: 0
           }
         },

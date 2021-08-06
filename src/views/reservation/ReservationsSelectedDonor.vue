@@ -271,8 +271,7 @@ export default {
                       response.data[idx].date,
                       response.data[idx].time,
                       response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-                  )
-              );
+                  ));
             }
             this.reservations = results_tmp;
             this.totalRows = this.reservations.length;

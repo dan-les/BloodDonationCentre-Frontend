@@ -140,7 +140,7 @@
           :fields="tableFields"
           :filter="filter"
           :filter-included-fields="filterOn"
-          :items="items"
+          :items="donors"
           :per-page="perPage"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
@@ -209,13 +209,12 @@
 
 <script>
 import DonorService from '../../services/donor.service';
+import Donor from "../../model/donor";
 
 export default {
   data() {
     return {
-      fullPage: true,
-
-      items: [],
+      donors: [],
       tableFields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         // {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
@@ -247,7 +246,6 @@ export default {
   },
   computed: {
     sortOptions() {
-      // Create an options list from our fields
       return this.tableFields
           .filter(f => f.sortable)
           .map(f => {
@@ -265,20 +263,20 @@ export default {
         response => {
           const results_tmp = [];
           for (const idx in response.data) {
-            results_tmp.push({
-              id: response.data[idx].id,
-              username: response.data[idx].username,
-              email: response.data[idx].email,
-              firstName: response.data[idx].firstName,
-              lastName: response.data[idx].lastName,
-              pesel: response.data[idx].pesel,
-              bloodGroupWithRh: response.data[idx].bloodGroupWithRh,
-              gender: response.data[idx].gender
-            });
+            results_tmp.push(
+                new Donor(
+                    response.data[idx].id,
+                    response.data[idx].username,
+                    response.data[idx].email,
+                    response.data[idx].firstName,
+                    response.data[idx].lastName,
+                    response.data[idx].pesel,
+                    response.data[idx].bloodGroupWithRh,
+                    response.data[idx].gender
+                ));
           }
-          this.items = results_tmp;
-          // Set the initial number of items
-          this.totalRows = this.items.length;
+          this.donors = results_tmp;
+          this.totalRows = this.donors.length;
           loader.hide();
         },
         () => {

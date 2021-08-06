@@ -74,6 +74,7 @@
 import DonationService from "../../services/donation.service";
 import {mdbContainer, mdbHorizontalBarChart} from "mdbvue";
 import ReservationService from "../../services/reservation.service";
+import Reservation from "../../model/reservation";
 
 export default {
   components: {
@@ -168,12 +169,18 @@ export default {
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-              results_tmp.push({
-                id: response.data[idx].id,
-                date: response.data[idx].date,
-                time: response.data[idx].time,
-                donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-              });
+              results_tmp.push(
+                  new Reservation(
+                      response.data[idx].id,
+                      response.data[idx].donorId,
+                      response.data[idx].donorFirstName,
+                      response.data[idx].donorLastName,
+                      response.data[idx].pesel,
+                      response.data[idx].date,
+                      response.data[idx].time,
+                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                  )
+              );
             }
             this.reservations = results_tmp;
           }
@@ -184,22 +191,28 @@ export default {
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-              results_tmp.push({
-                date: response.data[idx].date,
-                amount: response.data[idx].amount,
-                donationType: response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
-              });
+              results_tmp.push(
+                  new Reservation(
+                      response.data[idx].id,
+                      response.data[idx].donorId,
+                      response.data[idx].donorFirstName,
+                      response.data[idx].donorLastName,
+                      response.data[idx].pesel,
+                      response.data[idx].date,
+                      response.data[idx].time,
+                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                  ));
             }
             this.donations = results_tmp;
           })
     },
     deleteReservation(id) {
       ReservationService.deleteReservation(id)
-          .then(response => {
+          .then(() => {
             this.getAllReservationsByDonor();
             this.makeToastSuccess('Pomyślnie usunięto rezerwację');
           })
-          .catch(e => {
+          .catch(() => {
             this.makeToastError();
           });
 

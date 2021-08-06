@@ -218,7 +218,8 @@ export default {
           response => {
             const results_tmp = [];
             for (const idx in response.data) {
-              results_tmp.push(new Recipient(response.data[idx].id, response.data[idx].name));
+              results_tmp.push(
+                  new Recipient(response.data[idx].id, response.data[idx].name));
             }
             this.recipients = results_tmp;
             this.totalRows = this.recipients.length;

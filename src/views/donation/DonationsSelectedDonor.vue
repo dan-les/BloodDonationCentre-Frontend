@@ -190,7 +190,6 @@ export default {
             );
           }
           this.donations = results_tmp;
-          // Set the initial number of items
           this.totalRows = this.donations.length;
           loader.hide();
         },
@@ -198,11 +197,9 @@ export default {
           loader.hide();
         }
     )
-
   },
   methods: {
     onFiltered(filteredItems) {
-      // Trigger pagination to update the number of buttons/pages due to filtering
       this.totalRows = filteredItems.length
       this.currentPage = 1
     },
@@ -231,7 +228,5 @@ export default {
       donations: [],
     }
   },
-
-
 }
 </script>

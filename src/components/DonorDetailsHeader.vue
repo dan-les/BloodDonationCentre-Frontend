@@ -10,6 +10,7 @@
 
 <script>
 import DonorService from "../services/donor.service";
+import Donor from "../model/donor";
 
 export default {
   data() {
@@ -40,17 +41,17 @@ export default {
     DonorService.getDonorById(this.donorIdx).then(
         response => {
           const results_tmp = [];
-          results_tmp.push({
-            id: response.data.id,
-            username: response.data.username,
-            email: response.data.email,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            pesel: response.data.pesel,
-            bloodGroupWithRh: response.data.bloodGroupWithRh,
-            gender: response.data.gender
-          });
-
+          results_tmp.push(
+              new Donor(
+                  response.data.id,
+                  response.data.username,
+                  response.data.email,
+                  response.data.firstName,
+                  response.data.lastName,
+                  response.data.pesel,
+                  response.data.bloodGroupWithRh,
+                  response.data.gender
+              ));
           this.donor = results_tmp;
           loader.hide();
         },

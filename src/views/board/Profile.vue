@@ -1,35 +1,30 @@
 <template>
   <b-container fluid>
-    <!--    <b-jumbotron style="padding: 1.9rem">-->
-    <!--      <h4>-->
-    <!--        Zalogowano pomyślnie jako <strong>{{ currentUser.username }}!</strong>-->
-    <!--      </h4>-->
-    <!--    </b-jumbotron>-->
     <b-jumbotron
         header="Twoje dane" header-level="5" header-tag="h2" style="padding: 1.5rem">
     </b-jumbotron>
 
     <b-jumbotron v-if="showData" style="padding: 1.5rem">
       <p>
-        <strong>Imię:</strong> {{ user[0].firstName }}
+        <strong>Imię:</strong> {{ user.firstName }}
       </p>
       <p>
-        <strong>Nazwisko:</strong> {{ user[0].lastName }}
+        <strong>Nazwisko:</strong> {{ user.lastName }}
       </p>
       <p>
-        <strong>Login:</strong> {{ user[0].username }}
+        <strong>Login:</strong> {{ user.username }}
       </p>
       <p>
-        <strong>Email:</strong> {{ user[0].email }}
+        <strong>Email:</strong> {{ user.email }}
       </p>
       <p>
-        <strong>Pesel:</strong> {{ user[0].pesel }}
+        <strong>Pesel:</strong> {{ user.pesel }}
       </p>
       <p>
-        <strong>Grupa krwi:</strong> {{ user[0].bloodGroupWithRh }}
+        <strong>Grupa krwi:</strong> {{ user.bloodGroupWithRh }}
       </p>
       <p>
-        <strong>Płeć:</strong> {{ user[0].gender }}
+        <strong>Płeć:</strong> {{ user.gender }}
       </p>
     </b-jumbotron>
 
@@ -38,11 +33,12 @@
 
 <script>
 import DonorService from "../../services/donor.service";
+import User from "../../model/donor";
 
 export default {
   data() {
     return {
-      user: [],
+      user: null,
       showData: false
     }
   },
@@ -54,17 +50,16 @@ export default {
     let loader = this.$loading.show();
     DonorService.getDonorById(this.$store.state.auth.user.id).then(
         response => {
-          const results_tmp = [];
-          results_tmp.push({
-            username: response.data.username,
-            email: response.data.email,
-            firstName: response.data.firstName,
-            lastName: response.data.lastName,
-            pesel: response.data.pesel,
-            bloodGroupWithRh: response.data.bloodGroupWithRh,
-            gender: response.data.gender
-          });
-          this.user = results_tmp;
+          this.user = new User(
+              response.data.id,
+              response.data.username,
+              response.data.email,
+              response.data.firstName,
+              response.data.lastName,
+              response.data.pesel,
+              response.data.bloodGroupWithRh,
+              response.data.gender
+          )
           this.showData = true;
           loader.hide();
         },
@@ -73,7 +68,5 @@ export default {
         }
     )
   }
-
-
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container style="z-index: 9999">
     <b-form-group v-slot="{ ariaDescribedby }" label="Wybór typu pobrania:">
       <b-form-radio-group
           v-model="selectedDonationType"
@@ -39,6 +39,8 @@
       </b-form-group>
 
     </div>
+
+    <div ref="hoursContainer"/>
 
     <div v-if="selectedTime !== null && dateValue !== '' &&  selectedDonationType !== ''" @click="addNewReservation">
       <b-button block variant="primary">Zarezerwuj termin na pobranie materiału biologicznego</b-button>
@@ -127,7 +129,15 @@ export default {
           })
     },
     getHoursWithAvailability() {
-      let loader = this.$loading.show();
+      let loader;
+      if (this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
+        loader = this.$loading.show();
+      } else {
+        loader = this.$loading.show({
+          container: this.$refs.hoursContainer,
+          backgroundColor: "#ffffff"
+        });
+      }
       ReservationService.getHoursWithAvailability(this.dateValue).then(
           response => {
             const results_tmp = [];
@@ -146,7 +156,16 @@ export default {
           })
     },
     getDateForDonation() {
-      let loader = this.$loading.show();
+      let loader;
+      if (this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
+        loader = this.$loading.show();
+      } else {
+        loader = this.$loading.show({
+          container: this.$refs.hoursContainer,
+          backgroundColor: "#ffffff"
+        });
+      }
+
       DonationService.getSoonestPossibleDateForNextDonation(this.selectedDonationType, this.donorIdx)
           .then(
               response => {

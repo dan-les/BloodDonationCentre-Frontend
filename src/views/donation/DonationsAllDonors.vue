@@ -5,7 +5,6 @@
     </b-jumbotron>
 
     <b-row>
-
       <b-col>
         <b-form-group v-slot="{ ariaDescribedby }" label="Dostępność dawek z materiałem biologicznym:">
           <b-form-radio
@@ -44,10 +43,6 @@
         </b-form-group>
       </b-col>
     </b-row>
-
-
-    <!--    <div class="mt-3">Selected: <strong>{{ selectedDonationType }}</strong></div>-->
-
 
     <b-row style="margin-top: 1rem;">
       <b-row>
@@ -141,7 +136,6 @@
           stacked="md"
           @filtered="onFiltered"
       >
-
         <template #cell(actions)="row">
           <b-button v-if="row.item.isReleased === 'nie'" class="mr-1" size="sm" variant="primary"
                     @click="info(row.item, row.item.id, $event.target)"> Wydaj
@@ -207,9 +201,7 @@ export default {
       newSelectedDonationType = newSelectedDonationType === 'null' ? null : newSelectedDonationType;
       newSelectedIsReleased = newSelectedIsReleased === 'null' ? null : newSelectedIsReleased;
       newSelectedBloodGroupWithRh = newSelectedBloodGroupWithRh === 'null' ? null : newSelectedBloodGroupWithRh;
-
       this.changeDisplayedFields(newSelectedIsReleased)
-
       this.getAllDonations(newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh);
     },
     selectedRecipient() {
@@ -224,11 +216,9 @@ export default {
       } else {
         this.fieldsDonations.push({key: 'actions', label: 'Akcje', active: false});
       }
-
     }
   },
   mounted() {
-
     if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }

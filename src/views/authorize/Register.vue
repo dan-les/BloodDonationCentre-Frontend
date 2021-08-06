@@ -152,7 +152,6 @@ export default {
       message: ''
     };
   },
-
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;

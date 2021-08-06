@@ -40,7 +40,7 @@ Vue.use(VueLoading, {
     width: 120,
     height: 120,
     opacity: 0.45,
-    backgroundColor: "#cbd5ea"
+    backgroundColor: "#cbd5ea",
 });
 
 Vue.component("add-reservation-model", AddReservationModel);

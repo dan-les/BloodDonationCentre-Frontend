@@ -56,7 +56,8 @@ export default {
         response => {
           const results_tmp = [];
           results_tmp.push(
-              new Reservation(response.data.id,
+              new Reservation(
+                  response.data.id,
                   response.data.donorId,
                   response.data.donorFirstName,
                   response.data.donorLastName,
@@ -64,8 +65,7 @@ export default {
                   response.data.date,
                   response.data.time,
                   response.data.donationType
-              )
-          );
+              ));
           this.reservationDetails = results_tmp;
           this.donorIdx = response.data.donorId;
           this.selectedDonationType = response.data.donationType;

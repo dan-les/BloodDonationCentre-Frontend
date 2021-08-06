@@ -12,7 +12,7 @@
           <b-form-group id="input-group-2" label="Login:">
             <b-form-input
                 id="first-name"
-                v-model="form.username"
+                v-model="donor.username"
                 disabled
                 placeholder="login"
                 required
@@ -22,7 +22,7 @@
           <b-form-group id="input-group-2" label="Wpisz imię:">
             <b-form-input
                 id="first-name"
-                v-model="form.firstName"
+                v-model="donor.firstName"
                 placeholder="imię"
                 required
             ></b-form-input>
@@ -31,7 +31,7 @@
           <b-form-group id="input-group-2" label="Wpisz nazwisko:">
             <b-form-input
                 id="last-name"
-                v-model="form.lastName"
+                v-model="donor.lastName"
                 placeholder="nazwisko"
                 required
             ></b-form-input>
@@ -45,7 +45,7 @@
           >
             <b-form-input
                 id="input-1"
-                v-model="form.email"
+                v-model="donor.email"
                 placeholder=" email"
                 required
                 type="email"
@@ -55,7 +55,7 @@
           <b-form-group id="input-group-2" label="Wpisz PESEL:">
             <b-form-input
                 id="pesel"
-                v-model="form.pesel"
+                v-model="donor.pesel"
                 placeholder="pesel"
                 required
             ></b-form-input>
@@ -64,7 +64,7 @@
           <b-form-group id="input-group-3" label="Grupa krwi:">
             <b-form-select
                 id="blood"
-                v-model="form.bloodGroupWithRh"
+                v-model="donor.bloodGroupWithRh"
                 :options="bloods"
                 required
             ></b-form-select>
@@ -72,7 +72,7 @@
           <b-form-group id="input-group-4" label="Płeć:">
             <b-form-select
                 id="gender"
-                v-model="form.gender"
+                v-model="donor.gender"
                 :options="genders"
                 required
             ></b-form-select>
@@ -103,6 +103,7 @@
 
 <script>
 import DonorService from '../../services/donor.service';
+import Donor from "../../model/donor";
 
 export default {
   mounted() {
@@ -112,18 +113,16 @@ export default {
     let loader = this.$loading.show();
     DonorService.getDonorById(this.$route.params.id).then(
         response => {
-          // console.log(response);
-          this.form.username = response.data.username;
-          this.form.email = response.data.email;
-          this.form.firstName = response.data.firstName;
-          this.form.lastName = response.data.lastName;
-          this.form.pesel = response.data.pesel;
-          if (response.data.bloodGroupWithRh !== '') {
-            this.form.bloodGroupWithRh = response.data.bloodGroupWithRh;
-          }
-          if (response.data.gender !== '') {
-            this.form.gender = response.data.gender;
-          }
+          this.donor = new Donor(
+              response.data.id,
+              response.data.username,
+              response.data.email,
+              response.data.firstName,
+              response.data.lastName,
+              response.data.pesel,
+              response.data.bloodGroupWithRh,
+              response.data.gender
+          )
           loader.hide();
         },
         () => {
@@ -133,55 +132,41 @@ export default {
   },
   data() {
     return {
-      form: {
-        // email: '',
-        username: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        pesel: '',
-        bloodGroupWithRh: null,
-        gender: null,
-        // checked: []
-      },
+      donor: null,
       bloods: [{text: 'wybierz grupę krwi', value: null},
         'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
       genders: [{text: 'wybierz płeć', value: null}, {text: 'Kobieta', value: 'K'}, {text: 'Mężczyzna', value: 'M'}],
       show: true
-
     }
   },
   methods: {
     onSubmit(event) {
       event.preventDefault()
-      DonorService.putDonor(this.$route.params.id, this.form)
-          .then(response => {
+      DonorService.putDonor(this.$route.params.id, this.donor)
+          .then(() => {
             this.makeToastSuccess('Dane dawcy zostały pomyślnie zmienione');
           })
-          .catch(e => {
+          .catch(() => {
             this.makeToastError();
           });
-
-    }
-    ,
+    },
     onReset(event) {
       event.preventDefault()
-      // Reset our form values
-      this.form.username = '',
-          this.form.email = '',
-          this.form.firstName = '',
-          this.form.lastName = '',
-          this.form.pesel = '',
-          this.form.bloodGroupWithRh = null
-      this.form.gender = null
-
-      // Trick to reset/clear native browser form validation state
+      this.resetDonorProperties()
       this.show = false
       this.$nextTick(() => {
         this.show = true
       })
     },
-
+    resetDonorProperties() {
+      this.donor.username = ''
+      this.donor.email = ''
+      this.donor.firstName = ''
+      this.donor.lastName = ''
+      this.donor.pesel = ''
+      this.donor.bloodGroupWithRh = null
+      this.donor.gender = null
+    },
     makeToastSuccess(message) {
       this.$bvToast.toast(message, {
         title: `Sukces`,
@@ -200,15 +185,8 @@ export default {
     },
     deleteDonor() {
       DonorService.deleteDonor(this.$route.params.id)
-          .then(response => {
-            this.form.username = '',
-                this.form.email = '',
-                this.form.firstName = '',
-                this.form.lastName = '',
-                this.form.pesel = '',
-                this.form.bloodGroupWithRh = null
-            this.form.gender = null
-
+          .then(() => {
+            this.resetDonorProperties()
             this.makeToastSuccess('Pomyślnie usunięto dawcę');
           })
           .catch(() => {
