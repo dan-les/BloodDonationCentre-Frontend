@@ -11,7 +11,7 @@
     <b-card no-body>
       <b-tabs card>
         <b-tab title="Twoje statystyki">
-          <b-alert v-if="!showDonations" show variant="info">
+          <b-alert v-if="!showDonations && showDonations !== null" show variant="info">
             Nie oddawałeś/aś jeszcze krwi ani osocza, dlatego nie możemy wyświetlić twoich statystyk. 😢
           </b-alert>
           <mdb-container v-if="showDonations">
@@ -106,7 +106,7 @@ export default {
         {key: 'donationType', label: 'Rodzaj pobrania', sortable: true, class: 'text-center'},
         {key: 'actions', label: 'Akcje', class: 'text-center'}
       ],
-      showDonations: false,
+      showDonations: null,
       showReservations: false,
       barChartData: {
         labels: ["krew", "osocze"],
@@ -224,6 +224,8 @@ export default {
             this.donations = results_tmp;
             if (results_tmp.length > 0) {
               this.showDonations = true;
+            } else {
+              this.showDonations = false;
             }
 
           })
