@@ -11,7 +11,10 @@
     <b-card no-body>
       <b-tabs card>
         <b-tab title="Twoje statystyki">
-          <mdb-container v-if="show">
+          <b-alert v-if="!showDonations" show variant="info">
+            Nie oddawałeś/aś jeszcze krwi ani osocza, dlatego nie możemy wyświetlić twoich statystyk. 😢
+          </b-alert>
+          <mdb-container v-if="showDonations">
             <mdb-horizontal-bar-chart
                 :data="barChartData"
                 :height="270"
@@ -22,27 +25,33 @@
         </b-tab>
 
         <b-tab lazy title="Historia pobrań">
-          <b-table :fields="fieldsDonations" :items="donations" hover striped></b-table>
+          <b-alert v-if="!showDonations" show variant="info">
+            Brak dostępnych pobrań 😢
+          </b-alert>
+          <b-table v-if="showDonations" :fields="fieldsDonations" :items="donations" hover striped></b-table>
         </b-tab>
 
         <b-tab lazy title="Zarezerwowane terminy">
-
+          <b-alert v-if="!showReservations" show variant="info">
+            Brak dostępnych rezerwacji 😢
+          </b-alert>
           <b-row class="justify-content-end" style="margin-bottom: 1rem">
             <b-col col lg="3">
-              <b-button v-b-modal.modal-prevent-closing class="mr-1" size="sm" variant="primary">Zarezerwuj termin na
-                pobranie
+              <b-button v-b-modal.modal-prevent-closing class="mr-1" size="sm" variant="primary">
+                Zarezerwuj termin na pobranie
               </b-button>
             </b-col>
           </b-row>
           <b-table
+              v-if="showReservations"
               :fields="fieldsReservations"
               :items="reservations"
               hover
               striped
           >
             <template #cell(actions)="row">
-              <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń
-                rezerwację
+              <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">
+                Usuń rezerwację
               </b-button>
             </template>
           </b-table>
@@ -97,7 +106,8 @@ export default {
         {key: 'donationType', label: 'Rodzaj pobrania', sortable: true, class: 'text-center'},
         {key: 'actions', label: 'Akcje', class: 'text-center'}
       ],
-      show: false,
+      showDonations: false,
+      showReservations: false,
       barChartData: {
         labels: ["krew", "osocze"],
         datasets: [{
@@ -115,6 +125,13 @@ export default {
         }]
       },
       barChartOptions: {
+        legend: {
+          labels: {
+            fontSize: 15,
+            // remove filled rectangle in title
+            boxWidth: 0
+          }
+        },
         responsive: true,
         maintainAspectRatio: false,
         scales: {
@@ -148,7 +165,6 @@ export default {
         response => {
           this.barChartData.datasets[0].data.push(response.data.blood)
           this.barChartData.datasets[0].data.push(response.data.plasma)
-          this.show = true
           loader.hide();
         },
         () => {
@@ -179,10 +195,12 @@ export default {
                       response.data[idx].date,
                       response.data[idx].time,
                       response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-                  )
-              );
+                  ));
             }
             this.reservations = results_tmp;
+            if (results_tmp.length > 0) {
+              this.showReservations = true;
+            }
           }
       )
     },
@@ -204,6 +222,10 @@ export default {
                   ));
             }
             this.donations = results_tmp;
+            if (results_tmp.length > 0) {
+              this.showDonations = true;
+            }
+
           })
     },
     deleteReservation(id) {

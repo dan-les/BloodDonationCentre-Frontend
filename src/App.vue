@@ -147,7 +147,7 @@ export default {
 #app {
   background-image: url("assets/background_image.png");
   background-repeat: no-repeat;
-  background-size: 125%;
+  background-size: 120%;
   background-position-x: center;
 }
 

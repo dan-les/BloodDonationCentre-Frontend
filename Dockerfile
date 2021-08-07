@@ -10,10 +10,7 @@ COPY . /app
 # generate build
 RUN npm run build
 
-
-############
 ### prod ###
-############
 # base image
 FROM nginx:alpine
 # copy artifact build from the 'build environment'
@@ -23,5 +20,12 @@ EXPOSE 80
 # run nginx
 CMD ["nginx", "-g", "daemon off;"]
 
-# docker build -t vue-prod -f Dockerfile .
-# docker run -itd -p 30103:80 vue-prod
+# docker build -f Dockerfile -t vue-bdc:v2 .
+# docker run -itd -p 30103:80 vue-bdc:v2
+
+# docker images
+# zapis:
+# docker save -o d:/image.tar bdc:v1
+
+# ładowanie:
+# docker load -i d:/image.tar
