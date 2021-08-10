@@ -17,13 +17,13 @@
       <p>
         <strong>Email:</strong> {{ user.email }}
       </p>
-      <p>
+      <p v-if=" user.pesel !== null">
         <strong>Pesel:</strong> {{ user.pesel }}
       </p>
-      <p>
+      <p v-if=" user.bloodGroupWithRh !== null">
         <strong>Grupa krwi:</strong> {{ user.bloodGroupWithRh }}
       </p>
-      <p>
+      <p v-if=" user.gender !== null">
         <strong>Płeć:</strong> {{ user.gender }}
       </p>
     </b-jumbotron>
