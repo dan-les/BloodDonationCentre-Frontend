@@ -10,7 +10,7 @@ import pl from 'vee-validate/dist/locale/pl'
 import Vuex from 'vuex';
 import {library} from '@fortawesome/fontawesome-svg-core';
 import {FontAwesomeIcon} from '@fortawesome/vue-fontawesome';
-import {faHome, faSignInAlt, faSignOutAlt, faUser, faUserPlus} from '@fortawesome/free-solid-svg-icons';
+import {faHome, faQuestion, faSignInAlt, faSignOutAlt, faUser, faUserPlus} from '@fortawesome/free-solid-svg-icons';
 import {BootstrapVue, IconsPlugin} from 'bootstrap-vue'
 import AddReservationModel from "./components/AddReservationForm";
 import DonorDetailsHeader from "./components/DonorDetailsHeader";
@@ -48,7 +48,7 @@ Vue.component("donor-details-header", DonorDetailsHeader);
 Vue.component("lookup-field", LookupField);
 Vue.component("register", Register);
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-library.add(faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
+library.add(faQuestion, faHome, faUser, faUserPlus, faSignInAlt, faSignOutAlt);
 
 setupInterceptors(store);
 

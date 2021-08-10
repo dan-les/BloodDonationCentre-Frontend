@@ -33,9 +33,7 @@
     </b-row>
 
     <b-row style="margin-top: 1rem;">
-      <!-- User Interface controls -->
       <b-row>
-        <!-- sortowanie-->
         <b-col class="my-1" lg="6">
           <b-form-group
               v-slot="{ ariaDescribedby }"
@@ -163,21 +161,24 @@
           :fields="fields"
           :filter="filter"
           :filter-included-fields="filterOn"
-          :items="items"
+          :items="reservations"
           :per-page="perPage"
           :sort-by.sync="sortBy"
           :sort-desc.sync="sortDesc"
           :sort-direction="sortDirection"
+          :tbody-tr-class="rowClass"
           show-empty
           small
           stacked="md"
           @filtered="onFiltered"
       >
         <template #cell(actions)="row">
+          <span v-if="row.item.isAppointmentFinished !== true">
+          <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
           <b-link :to="{ name: 'addDonation', params: { id: row.item.id}  }">
             <b-button class="mr-1" size="sm" variant="primary">Dodaj pobranie</b-button>
           </b-link>
-          <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
+          </span>
         </template>
       </b-table>
     </b-row>
@@ -211,7 +212,7 @@ export default {
       },
       isDatePickerEnabled: '',
       dateValue: todayDate,
-      items: [],
+      reservations: [],
       fields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         {key: 'donorFirstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
@@ -266,6 +267,10 @@ export default {
     this.isDatePickerEnabled = this.$route.query.date;
   },
   methods: {
+    rowClass(item, type) {
+      if (!item || type !== 'row') return
+      if (item.isAppointmentFinished === true) return 'text-secondary'
+    },
     deleteReservation(id) {
       ReservationService.deleteReservation(id)
           .then(() => {
@@ -292,12 +297,14 @@ export default {
                         response.data[idx].pesel,
                         response.data[idx].date,
                         response.data[idx].time,
-                        response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
-                    )
-                );
+                        response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
+                        response.data[idx].isAppointmentFinished
+                    ));
               }
-              this.items = results_tmp;
-              this.totalRows = this.items.length;
+
+              this.reservations = results_tmp;
+              console.log(this.reservations)
+              this.totalRows = this.reservations.length;
               loader.hide();
             },
             () => {
@@ -318,11 +325,12 @@ export default {
                         response.data[idx].pesel,
                         response.data[idx].date,
                         response.data[idx].time,
-                        response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                        response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
+                        response.data[idx].isAppointmentFinished
                     ));
               }
-              this.items = results_tmp;
-              this.totalRows = this.items.length;
+              this.reservations = results_tmp;
+              this.totalRows = this.reservations.length;
               loader.hide();
             },
             () => {

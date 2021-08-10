@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-container style="margin-bottom: 2rem">
     <b-jumbotron style="padding: 1.9rem">
       <h4 v-if="this.$store.state.auth.user.firstName === null">
         Witaj ponownie na naszej stronie!
@@ -50,9 +50,21 @@
               striped
           >
             <template #cell(actions)="row">
-              <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">
+              <span v-if="row.item.isAppointmentFinished !== true">
+                <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">
                 Usuń rezerwację
               </b-button>
+              </span>
+              <span v-else>
+            <b-button
+                v-b-popover.hover.top="'Dla tej rezerwacji odnotowano już pobranie, zatem nie można jej usunąć'"
+                class="mr-1"
+                size="sm"
+                title="Pobranie zostało zarejestrowane w systemie"
+                variant="info">
+                <font-awesome-icon icon="question"/>
+              </b-button>
+              </span>
             </template>
           </b-table>
         </b-tab>
@@ -194,7 +206,8 @@ export default {
                       response.data[idx].pesel,
                       response.data[idx].date,
                       response.data[idx].time,
-                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
+                      response.data[idx].isAppointmentFinished
                   ));
             }
             this.reservations = results_tmp;
@@ -218,7 +231,7 @@ export default {
                       response.data[idx].pesel,
                       response.data[idx].date,
                       response.data[idx].time,
-                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew'
+                      response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
                   ));
             }
             this.donations = results_tmp;

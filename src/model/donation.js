@@ -1,6 +1,6 @@
 export default class Donation {
     constructor(id, date, amount, donationType, donorId, donorFirstName, donorLastName,
-                bloodGroupWithRh, isReleased, recipientId, recipientName) {
+                bloodGroupWithRh, isReleased, recipientId, recipientName, reservationId) {
         this.id = id;
         this.date = date;
         this.amount = amount;
@@ -12,5 +12,6 @@ export default class Donation {
         this.isReleased = isReleased;
         this.recipientId = recipientId;
         this.recipientName = recipientName;
+        this.reservationId = reservationId;
     }
 }

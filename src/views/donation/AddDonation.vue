@@ -110,7 +110,8 @@ export default {
               '',
               false,
               null,
-              ''
+              '',
+              this.$route.params.id
           )
       ).then(() => {
         this.makeToastSuccess('Donacja została została dodana do systemu!');
