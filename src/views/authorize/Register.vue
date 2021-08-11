@@ -19,12 +19,13 @@
               <div class="form-group">
                 <label>Login</label>
                 <input
-                    v-model="user.username"
-                    v-validate="'required|min:3|max:20'"
+                    v-model.trim="user.username"
+                    v-validate="'required|min:5|max:20'"
                     class="form-control"
                     data-vv-as="'login'"
                     name="username"
                     type="text"
+                    @keydown.space.prevent
                 />
                 <div
                     v-if="submitted && errors.has('username')"
@@ -72,7 +73,7 @@
                 <label>Imię</label>
                 <input
                     v-model="user.firstName"
-                    v-validate="'required|min:1|max:40'"
+                    v-validate="'required|min:1|max:40|alpha'"
                     class="form-control"
                     data-vv-as="'imię'"
                     name="firstName"
@@ -88,7 +89,7 @@
                 <label>Nazwisko</label>
                 <input
                     v-model="user.lastName"
-                    v-validate="'required|min:1|max:40'"
+                    v-validate="'required|min:1|max:40|alpha'"
                     class="form-control"
                     data-vv-as="'Nazwisko'"
                     name="lastName"
@@ -181,7 +182,7 @@ export default {
               data => {
                 if (this.role === undefined) {
                   this.message = data.message + ' Za chwilę nastąpi przekierowanie na stronę logowania...';
-                  setTimeout(() => this.$router.push({path: '/login'}), 5000);
+                  setTimeout(() => this.$router.push({path: '/login'}), 3000);
                 } else {
                   this.message = data.message;
                 }

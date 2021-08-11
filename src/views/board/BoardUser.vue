@@ -80,8 +80,9 @@
         size="xl"
         title="Rezerwacja terminu na pobranie"
         @ok="reloadData"
+        @close="reloadData"
     >
-      <form ref="form" @submit.stop.prevent="handleSubmit">
+      <form ref="form" @submit.stop.prevent>
         <add-reservation-model
             :donorIdx="this.$store.state.auth.user.id"
         ></add-reservation-model>
