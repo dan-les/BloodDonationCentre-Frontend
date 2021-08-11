@@ -10,7 +10,7 @@
         <div class="form-group">
           <label>Login</label>
           <input
-              v-model="user.username"
+              v-model.trim="user.username"
               v-validate="'required'"
               class="form-control"
               data-vv-as="'login'"
