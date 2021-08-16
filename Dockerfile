@@ -25,7 +25,7 @@ CMD ["nginx", "-g", "daemon off;"]
 
 # docker images
 # zapis:
-# docker save -o d:/image.tar bdc:v1
+# docker save -o d:/vue-bdc-v3.tar vue-bdc:v3
 
 # ładowanie:
 # docker load -i d:/image.tar
