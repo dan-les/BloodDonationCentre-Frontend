@@ -37,7 +37,7 @@
           </b-alert>
           <b-row class="justify-content-end" style="margin-bottom: 1rem">
             <b-col col lg="3">
-              <b-button v-b-modal.modal-prevent-closing class="mr-1" size="sm" variant="primary">
+              <b-button v-b-modal.modal-prevent-closing class="mr-1 mt-1" size="sm" variant="primary">
                 Zarezerwuj termin na pobranie
               </b-button>
             </b-col>
@@ -51,14 +51,14 @@
           >
             <template #cell(actions)="row">
               <span v-if="row.item.isAppointmentFinished !== true">
-                <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">
+                <b-button class="mr-1 mt-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">
                 Usuń rezerwację
               </b-button>
               </span>
               <span v-else>
             <b-button
                 v-b-popover.hover.top="'Dla tej rezerwacji odnotowano już pobranie, zatem nie można jej usunąć'"
-                class="mr-1"
+                class="mr-1 mt-1"
                 size="sm"
                 title="Pobranie zostało zarejestrowane w systemie"
                 variant="info">

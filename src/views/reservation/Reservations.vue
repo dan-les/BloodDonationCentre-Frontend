@@ -7,12 +7,12 @@
 
     <b-col md="4" offset-md="9">
       <b-link :to="{name: 'reservations', query: {date: false} }">
-        <b-button v-if="isDatePickerEnabled === true" class="mr-1" size="sm" variant="info">Wszystkie zarezerwowane
+        <b-button v-if="isDatePickerEnabled === true" class="mr-1 mt-1" size="sm" variant="info">Wszystkie zarezerwowane
           terminy
         </b-button>
       </b-link>
       <b-link :to="{name: 'reservations', query: {date: true} }">
-        <b-button v-if="isDatePickerEnabled !== true" class="mr-1" size="sm" variant="info">Rezerwacje według daty
+        <b-button v-if="isDatePickerEnabled !== true" class="mr-1 mt-1" size="sm" variant="info">Rezerwacje według daty
         </b-button>
       </b-link>
     </b-col>
@@ -174,9 +174,9 @@
       >
         <template #cell(actions)="row">
           <span v-if="row.item.isAppointmentFinished !== true">
-          <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
+          <b-button class="mr-1 mt-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
           <b-link :to="{ name: 'addDonation', params: { id: row.item.id}  }">
-            <b-button class="mr-1" size="sm" variant="primary">Dodaj pobranie</b-button>
+            <b-button class="mr-1 mt-1" size="sm" variant="primary">Dodaj pobranie</b-button>
           </b-link>
           </span>
         </template>

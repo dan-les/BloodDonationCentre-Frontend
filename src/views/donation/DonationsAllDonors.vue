@@ -137,7 +137,7 @@
           @filtered="onFiltered"
       >
         <template #cell(actions)="row">
-          <b-button v-if="row.item.isReleased === 'nie'" class="mr-1" size="sm" variant="primary"
+          <b-button v-if="row.item.isReleased === 'nie'" class="mr-1 mt-1" size="sm" variant="primary"
                     @click="info(row.item, row.item.id, $event.target)"> Wydaj
           </b-button>
         </template>

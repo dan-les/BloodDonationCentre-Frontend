@@ -158,33 +158,33 @@
 
         <template #cell(actions)="row">
 
-          <b-button class="mr-1" size="sm" variant="info" @click="row.toggleDetails">
+          <b-button class="mr-1 mt-1" size="sm" variant="info" @click="row.toggleDetails">
             {{ row.detailsShowing ? 'Ukryj' : 'Szczegóły' }}
           </b-button>
 
 
           <b-link :to="{ name: 'donationsSelectedDonor', params: { id: row.item.id}  }">
-            <b-button class="mr-1" size="sm" variant="primary">Pobrania</b-button>
+            <b-button class="mr-1 mt-1" size="sm" variant="primary">Pobrania</b-button>
           </b-link>
           <!--          <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">-->
           <!--            <b-button class="mr-1" size="sm" variant="primary">Umów termin</b-button>-->
           <!--          </b-link>-->
 
-          <b-dropdown class="mr-1" size="sm" text="Rezerwacje" variant="primary">
+          <b-dropdown class="mr-1 mt-1" size="sm" text="Rezerwacje" variant="primary">
             <b-dropdown-item>
               <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">
-                <b-button class="mx-1" size="sm" variant="primary">Zarezerwuj termin na pobranie</b-button>
+                <b-button class="mr-1 mt-1" size="sm" variant="primary">Zarezerwuj termin na pobranie</b-button>
               </b-link>
             </b-dropdown-item>
             <b-dropdown-item>
               <b-link :to="{ name: 'DonorReservations', params: { id: row.item.id}  }">
-                <b-button class="mx-1" size="sm" variant="primary">Historia rezerwacji terminów</b-button>
+                <b-button class="mr-1 mt-1" size="sm" variant="primary">Historia rezerwacji terminów</b-button>
               </b-link>
             </b-dropdown-item>
           </b-dropdown>
 
           <b-link :to="{ name: 'editDonor', params: { id: row.item.id}  }">
-            <b-button class="mr-0" size="sm">Edytuj</b-button>
+            <b-button class="mr-1 mt-1" size="sm">Edytuj</b-button>
           </b-link>
         </template>
         <template #row-details="row">
