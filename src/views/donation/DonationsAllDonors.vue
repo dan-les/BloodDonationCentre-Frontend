@@ -243,13 +243,16 @@ export default {
     setSelectedRecipient(recipientData) {
       this.selectedRecipient = recipientData.id;
     },
-    changeRecipient(id) {
+    changeRecipient: function (id) {
       if (this.selectedRecipient !== null) {
         DonationService.patchDonationRecipient({
           id: id,
           isReleased: true,
           recipientId: this.selectedRecipient
-        }).then(this.selectedRecipient = null)
+        }).then(() => {
+          this.selectedRecipient = null
+          this.getAllDonations(this.selectedDonationType, this.selectedIsReleased, this.selectedBloodGroupWithRh)
+        })
       }
     },
     info(item, index, button) {
