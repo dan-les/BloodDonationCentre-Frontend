@@ -24,13 +24,6 @@
           </mdb-container>
         </b-tab>
 
-        <b-tab lazy title="Historia pobrań">
-          <b-alert v-if="!showDonations" show variant="info">
-            Brak dostępnych pobrań 😢
-          </b-alert>
-          <b-table v-if="showDonations" :fields="fieldsDonations" :items="donations" hover striped></b-table>
-        </b-tab>
-
         <b-tab lazy title="Zarezerwowane terminy">
           <b-alert v-if="!showReservations" show variant="info">
             Brak dostępnych rezerwacji 😢
@@ -68,6 +61,14 @@
             </template>
           </b-table>
         </b-tab>
+
+
+        <b-tab lazy title="Historia pobrań">
+          <b-alert v-if="!showDonations" show variant="info">
+            Brak dostępnych pobrań 😢
+          </b-alert>
+          <b-table v-if="showDonations" :fields="fieldsDonations" :items="donations" hover striped></b-table>
+        </b-tab>
       </b-tabs>
     </b-card>
 
@@ -97,6 +98,7 @@ import DonationService from "../../services/donation.service";
 import {mdbContainer, mdbHorizontalBarChart} from "mdbvue";
 import ReservationService from "../../services/reservation.service";
 import Reservation from "../../model/reservation";
+import Donation from "../../model/donation";
 
 export default {
   components: {
@@ -224,14 +226,10 @@ export default {
             const results_tmp = [];
             for (const idx in response.data) {
               results_tmp.push(
-                  new Reservation(
+                  new Donation(
                       response.data[idx].id,
-                      response.data[idx].donorId,
-                      response.data[idx].donorFirstName,
-                      response.data[idx].donorLastName,
-                      response.data[idx].pesel,
                       response.data[idx].date,
-                      response.data[idx].time,
+                      response.data[idx].amount,
                       response.data[idx].donationType === 'plasma' ? 'osocze' : 'krew',
                   ));
             }
