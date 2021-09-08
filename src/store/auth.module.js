@@ -39,11 +39,11 @@ export const auth = {
                 },
                 error => {
                     commit('registerFailure');
-                    if (error.response.data.message === "Error: Username is already taken!") {
+                    if (error.response.data.message === "Username is already taken") {
                         error.response.data.message = 'Użytkownik o takim loginie już istnieje!';
-                    } else if (error.response.data.message === "Error: Email is already in use!") {
+                    } else if (error.response.data.message === "Email is already in use") {
                         error.response.data.message = "Użytkownik z takim e-mailem już istnieje!";
-                    } else if (error.response.data.message === "Error: Role is not found.") {
+                    } else if (error.response.data.message === "Role is not found") {
                         error.response.data.message = 'Błędne uprawnienia nowego użytkownika!';
                     }
                     return Promise.reject(error);
