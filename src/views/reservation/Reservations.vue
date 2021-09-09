@@ -23,12 +23,13 @@
         <b-form-datepicker
             v-model="dateValue"
             v-bind="labelsLanguagePL['pl']"
+            :date-disabled-fn="dateDisabled"
             :initial-date="dateValue"
             label-today
             locale="pl"
             start-weekday="1"
-            today-button>
-        </b-form-datepicker>
+            today-button
+        ></b-form-datepicker>
       </div>
     </b-row>
 
@@ -352,6 +353,15 @@ export default {
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1
+    },
+    dateDisabled(ymd, date) {
+      // Disable weekends (Sunday = `0`, Saturday = `6`) and
+      // disable days that fall on the 13th of the month
+      const weekday = date.getDay()
+      // const day = date.getDate()
+      // Return `true` if the date should be disabled
+      // return weekday === 0 || weekday === 6 || day === 13
+      return weekday === 0
     },
     makeToastSuccess(message) {
       this.$bvToast.toast(message, {

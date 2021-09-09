@@ -51,7 +51,6 @@ export default {
       }
     },
     rowSelected(rowArray) {
-      // No rows or 1 row can be selected
       if (rowArray.length === 1) {
         this.$emit('item-selected', rowArray[0])
         this.filterCriteria = rowArray[0].name
