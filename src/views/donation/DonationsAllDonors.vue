@@ -283,7 +283,6 @@ export default {
                       response.data[idx].bloodGroupWithRh,
                       response.data[idx].isReleased === true ? 'tak' : 'nie',
                       response.data[idx].isReleased,
-                      response.data[idx].recipientId,
                       response.data[idx].recipientName
                   )
               );
