@@ -154,8 +154,9 @@ export default {
 #app {
   background-image: url("assets/background_image.png");
   background-repeat: no-repeat;
-  background-size: 120%;
+  background-size: 110%;
   background-position-x: center;
+  background-position-y: top;
 }
 
 .fade-enter-active,
