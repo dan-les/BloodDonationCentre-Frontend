@@ -7,8 +7,6 @@
     <b-row>
       <b-col md="6">
         <b-form v-if="show" @reset="onReset" @submit.prevent="onSubmit">
-
-
           <b-form-group id="input-group-2" label="Login:">
             <b-form-input
                 id="first-name"
@@ -78,23 +76,22 @@
             ></b-form-select>
           </b-form-group>
 
-          <b-button style="margin: 1rem" type="submit" variant="primary">Zapisz dane dawcy</b-button>
+          <b-button class="m-3" type="submit" variant="primary">Zapisz dane dawcy</b-button>
           <b-button type="reset" variant="danger">Resetuj pola</b-button>
+          <b-button class="m-3" variant="danger" @click="deleteDonor">
+            Usuń dawcę
+          </b-button>
         </b-form>
-      </b-col>
 
-      <b-col align-self="end">
-        <b-row>
+        <b-row class="mt-3">
           <b-link :to="'/donors'">
-            <b-button style="margin: 1rem">
+            <b-button>
               Powrót na stronę z dawcami
             </b-button>
           </b-link>
-          <b-button style="margin: 1rem" variant="danger" @click="deleteDonor">
-            Usuń dawcę
-          </b-button>
         </b-row>
       </b-col>
+
     </b-row>
 
   </b-container>
@@ -132,6 +129,7 @@ export default {
   },
   data() {
     return {
+      isDeleted: false,
       donor: null,
       bloods: [{text: 'wybierz grupę krwi', value: null},
         'A Rh+', 'A Rh-', 'B Rh+', 'B Rh-', 'AB Rh+', 'AB Rh-', '0 Rh+', '0 Rh-'],
@@ -186,7 +184,8 @@ export default {
     deleteDonor() {
       DonorService.deleteDonor(this.$route.params.id)
           .then(() => {
-            this.resetDonorProperties()
+            this.isDeleted = true;
+            this.show = false;
             this.makeToastSuccess('Pomyślnie usunięto dawcę');
           })
           .catch(() => {
