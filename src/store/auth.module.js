@@ -29,7 +29,6 @@ export const auth = {
             return AuthService.register(user).then(
                 response => {
                     commit('registerSuccess');
-                    console.log(response.data.message)
                     if (response.data.message === "User successfully register!") {
                         response.data.message = 'Użytkownik pomyślnie zarejestrowany!';
                         return Promise.resolve(response.data);

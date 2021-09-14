@@ -23,7 +23,6 @@
         <b-form-datepicker
             v-model="dateValue"
             v-bind="labelsLanguagePL['pl']"
-            :date-disabled-fn="dateDisabled"
             :initial-date="dateValue"
             label-today
             locale="pl"
@@ -218,11 +217,11 @@ export default {
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
         {key: 'donorFirstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
         {key: 'donorLastName', label: 'Nazwisko', sortable: true, sortDirection: 'desc'},
-        {key: 'pesel', label: 'PESEL', sortable: true, class: 'text-center'},
+        {key: 'pesel', label: 'PESEL', sortable: true},
         {key: 'date', label: 'Data', sortable: true,},
         {key: 'time', label: 'Godzina', sortable: true,},
         {key: 'donationType', label: 'Typ pobrania', sortable: true,},
-        {key: 'actions', label: 'Akcje'}
+        {key: 'actions', label: 'Akcje', class: 'text-center'}
       ],
       totalRows: 1,
       currentPage: 1,
@@ -244,7 +243,6 @@ export default {
   },
   computed: {
     sortOptions() {
-      // Create an options list from our fields
       return this.fields
           .filter(f => f.sortable)
           .map(f => {
@@ -304,7 +302,6 @@ export default {
               }
 
               this.reservations = results_tmp;
-              console.log(this.reservations)
               this.totalRows = this.reservations.length;
               loader.hide();
             },
@@ -353,15 +350,6 @@ export default {
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1
-    },
-    dateDisabled(ymd, date) {
-      // Disable weekends (Sunday = `0`, Saturday = `6`) and
-      // disable days that fall on the 13th of the month
-      const weekday = date.getDay()
-      // const day = date.getDate()
-      // Return `true` if the date should be disabled
-      // return weekday === 0 || weekday === 6 || day === 13
-      return weekday === 0
     },
     makeToastSuccess(message) {
       this.$bvToast.toast(message, {
