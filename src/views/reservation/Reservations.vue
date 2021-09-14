@@ -7,12 +7,12 @@
 
     <b-col md="4" offset-md="9">
       <b-link :to="{name: 'reservations', query: {date: false} }">
-        <b-button v-if="isDatePickerEnabled === true" class="mr-1 mt-1" size="sm" variant="info">Wszystkie zarezerwowane
+        <b-button v-if="isDatePickerEnabled === true" class="m-1" size="sm" variant="info">Wszystkie zarezerwowane
           terminy
         </b-button>
       </b-link>
       <b-link :to="{name: 'reservations', query: {date: true} }">
-        <b-button v-if="isDatePickerEnabled !== true" class="mr-1 mt-1" size="sm" variant="info">Rezerwacje według daty
+        <b-button v-if="isDatePickerEnabled !== true" class="m-1" size="sm" variant="info">Rezerwacje według daty
         </b-button>
       </b-link>
     </b-col>

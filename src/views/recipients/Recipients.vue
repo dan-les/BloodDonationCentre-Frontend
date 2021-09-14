@@ -18,7 +18,7 @@
         @hide="resetData"
         @ok="addRecipient()"
     >
-      <form name="form" @submit.prevent="handleLogin">
+      <form name="form" @submit.prevent>
         <div class="form-group">
           <label>Nazwa odbiorcy</label>
           <input
