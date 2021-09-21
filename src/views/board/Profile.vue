@@ -48,8 +48,8 @@ export default {
       this.$router.push('/login');
     }
     let loader = this.$loading.show();
-    DonorService.getDonorById(this.$store.state.auth.user.id).then(
-        response => {
+    DonorService.getDonorById(this.$store.state.auth.user.id)
+        .then(response => {
           this.user = new User(
               response.data.id,
               response.data.username,
@@ -61,12 +61,10 @@ export default {
               response.data.gender
           )
           this.showData = true;
+        })
+        .finally(() => {
           loader.hide();
-        },
-        () => {
-          loader.hide();
-        }
-    )
+        })
   }
 };
 </script>

@@ -267,8 +267,8 @@ export default {
     },
     getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
       let loader = this.$loading.show();
-      DonationService.getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh).then(
-          response => {
+      DonationService.getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh)
+          .then(response => {
             const results_tmp = [];
             for (const idx in response.data) {
               results_tmp.push(
@@ -289,13 +289,10 @@ export default {
             }
             this.donations = results_tmp;
             this.totalRows = this.donations.length;
+          })
+          .finally(() => {
             loader.hide();
-          },
-
-          () => {
-            loader.hide();
-          }
-      )
+          })
     },
     getAllRecipients() {
       RecipientService.getAllRecipients().then(

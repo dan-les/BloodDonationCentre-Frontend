@@ -303,15 +303,13 @@ export default {
 
               this.reservations = results_tmp;
               this.totalRows = this.reservations.length;
+            })
+            .finally(() => {
               loader.hide();
-            },
-            () => {
-              loader.hide();
-            }
-        )
+            })
       } else {
-        ReservationService.getAllReservations().then(
-            response => {
+        ReservationService.getAllReservations()
+            .then(response => {
               const results_tmp = [];
               for (const idx in response.data) {
                 results_tmp.push(
@@ -329,12 +327,11 @@ export default {
               }
               this.reservations = results_tmp;
               this.totalRows = this.reservations.length;
+            })
+            .finally(() => {
               loader.hide();
-            },
-            () => {
-              loader.hide();
-            }
-        )
+            })
+
       }
     },
 

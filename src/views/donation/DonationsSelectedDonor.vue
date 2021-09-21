@@ -176,8 +176,8 @@ export default {
       this.$router.push('/login');
     }
 
-    DonationService.getAllDonationsByDonorId(this.$route.params.id).then(
-        response => {
+    DonationService.getAllDonationsByDonorId(this.$route.params.id)
+        .then(response => {
           const results_tmp = [];
           for (const idx in response.data) {
             results_tmp.push(
@@ -191,12 +191,10 @@ export default {
           }
           this.donations = results_tmp;
           this.totalRows = this.donations.length;
+        })
+        .finally(() => {
           loader.hide();
-        },
-        () => {
-          loader.hide();
-        }
-    )
+        })
   },
   methods: {
     onFiltered(filteredItems) {

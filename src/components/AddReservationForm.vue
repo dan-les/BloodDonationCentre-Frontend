@@ -138,8 +138,8 @@ export default {
           backgroundColor: "#ffffff"
         });
       }
-      ReservationService.getHoursWithAvailability(this.dateValue).then(
-          response => {
+      ReservationService.getHoursWithAvailability(this.dateValue)
+          .then(response => {
             const results_tmp = [];
             for (const idx in response.data) {
               results_tmp.push({
@@ -149,9 +149,8 @@ export default {
               });
             }
             this.optionsTime = results_tmp;
-            loader.hide();
-          },
-          () => {
+          })
+          .finally(() => {
             loader.hide();
           })
     },
@@ -167,23 +166,15 @@ export default {
       }
 
       DonationService.getSoonestPossibleDateForNextDonation(this.selectedDonationType, this.donorIdx)
-          .then(
-              response => {
-                this.soonestPossibleDate = response.data.date;
-                loader.hide();
-              },
-              () => {
-                loader.hide();
-              }
-          )
+          .then(response => {
+            this.soonestPossibleDate = response.data.date;
+          })
+          .finally(() => {
+            loader.hide();
+          })
     },
     dateDisabled(ymd, date) {
-      // Disable weekends (Sunday = `0`, Saturday = `6`) and
-      // disable days that fall on the 13th of the month
       const weekday = date.getDay()
-      // const day = date.getDate()
-      // Return `true` if the date should be disabled
-      // return weekday === 0 || weekday === 6 || day === 13
       return weekday === 0
     },
     makeToastSuccess: function (message) {

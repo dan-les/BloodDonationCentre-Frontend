@@ -38,8 +38,8 @@ export default {
   },
   mounted() {
     let loader = this.$loading.show();
-    DonorService.getDonorById(this.donorIdx).then(
-        response => {
+    DonorService.getDonorById(this.donorIdx)
+        .then(response => {
           const results_tmp = [];
           results_tmp.push(
               new Donor(
@@ -53,13 +53,12 @@ export default {
                   response.data.gender
               ));
           this.donor = results_tmp;
+
+        })
+        .finally(() => {
           loader.hide();
-        },
-        () => {
-          loader.hide();
-        }
-    )
-  },
+        })
+  }
 }
 </script>
 

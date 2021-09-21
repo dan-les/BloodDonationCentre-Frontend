@@ -211,8 +211,8 @@ export default {
   methods: {
     getRecipients() {
       let loader = this.$loading.show();
-      RecipientService.getAllRecipients().then(
-          response => {
+      RecipientService.getAllRecipients()
+          .then(response => {
             const results_tmp = [];
             for (const idx in response.data) {
               results_tmp.push(
@@ -220,12 +220,11 @@ export default {
             }
             this.recipients = results_tmp;
             this.totalRows = this.recipients.length;
+          })
+          .finally(() => {
             loader.hide();
-          },
-          () => {
-            loader.hide();
-          }
-      )
+          })
+
     },
     addRecipient() {
       RecipientService.addNewRecipient({

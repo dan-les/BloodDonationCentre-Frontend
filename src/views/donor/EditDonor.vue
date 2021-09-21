@@ -108,8 +108,8 @@ export default {
       this.$router.push('/login');
     }
     let loader = this.$loading.show();
-    DonorService.getDonorById(this.$route.params.id).then(
-        response => {
+    DonorService.getDonorById(this.$route.params.id)
+        .then(response => {
           this.donor = new Donor(
               response.data.id,
               response.data.username,
@@ -120,12 +120,10 @@ export default {
               response.data.bloodGroupWithRh,
               response.data.gender
           )
+        })
+        .finally(() => {
           loader.hide();
-        },
-        () => {
-          loader.hide();
-        }
-    )
+        })
   },
   data() {
     return {

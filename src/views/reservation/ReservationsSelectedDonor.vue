@@ -257,8 +257,8 @@ export default {
     },
     getAllReservationsByDonorId() {
       let loader = this.$loading.show();
-      ReservationService.getAllReservationsByDonorId(this.$route.params.id).then(
-          response => {
+      ReservationService.getAllReservationsByDonorId(this.$route.params.id)
+          .then(response => {
             const results_tmp = [];
             for (const idx in response.data) {
               results_tmp.push(
@@ -275,12 +275,10 @@ export default {
             }
             this.reservations = results_tmp;
             this.totalRows = this.reservations.length;
+          })
+          .finally(() => {
             loader.hide();
-          },
-          () => {
-            loader.hide();
-          }
-      )
+          })
     },
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`

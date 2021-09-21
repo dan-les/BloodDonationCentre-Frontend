@@ -259,8 +259,8 @@ export default {
     }
 
     let loader = this.$loading.show();
-    DonorService.getAllDonors().then(
-        response => {
+    DonorService.getAllDonors()
+        .then(response => {
           const results_tmp = [];
           for (const idx in response.data) {
             results_tmp.push(
@@ -277,12 +277,11 @@ export default {
           }
           this.donors = results_tmp;
           this.totalRows = this.donors.length;
+
+        })
+        .finally(() => {
           loader.hide();
-        },
-        () => {
-          loader.hide();
-        }
-    )
+        })
   },
   methods: {
     onFiltered(filteredItems) {

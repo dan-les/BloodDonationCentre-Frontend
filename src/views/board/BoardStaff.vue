@@ -50,8 +50,8 @@ export default {
     if (!this.$store.state.auth.user || !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
-    DonationService.getDonationsStatistics("plasma").then(
-        response => {
+    DonationService.getDonationsStatistics("plasma")
+        .then(response => {
           for (const idx in response.data) {
             this.barChartDataPlasma.labels.push(response.data[idx].bloodGroupWithRh)
             this.barChartDataPlasma.datasets[0].data.push(response.data[idx].quantity)
@@ -65,9 +65,8 @@ export default {
             this.barChartDataBlood.datasets[0].data.push(response.data[idx].quantity)
           }
           this.showBloodChart = true
-          loader.hide();
-        },
-        () => {
+        })
+        .finally(() => {
           loader.hide();
         })
   },

@@ -52,8 +52,8 @@ export default {
       this.$router.push('/login');
     }
     let loader = this.$loading.show();
-    ReservationService.getReservationById(this.$route.params.id).then(
-        response => {
+    ReservationService.getReservationById(this.$route.params.id)
+        .then(response => {
           const results_tmp = [];
           results_tmp.push(
               new Reservation(
@@ -69,12 +69,10 @@ export default {
           this.reservationDetails = results_tmp;
           this.donorIdx = response.data.donorId;
           this.selectedDonationType = response.data.donationType;
+        })
+        .finally(() => {
           loader.hide();
-        },
-        () => {
-          loader.hide();
-        }
-    )
+        })
   },
   data() {
     return {

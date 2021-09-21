@@ -80,8 +80,8 @@
         ok-variant="secondary"
         size="xl"
         title="Rezerwacja terminu na pobranie"
-        @ok="reloadData"
         @close="reloadData"
+        @ok="reloadData"
     >
       <form ref="form" @submit.stop.prevent>
         <add-reservation-model
@@ -180,12 +180,10 @@ export default {
         response => {
           this.barChartData.datasets[0].data.push(response.data.blood)
           this.barChartData.datasets[0].data.push(response.data.plasma)
+        })
+        .finally(() => {
           loader.hide();
-        },
-        () => {
-          loader.hide();
-        }
-    )
+        })
 
     this.getAllDonationsByDonor()
     this.getAllReservationsByDonor()
@@ -239,7 +237,6 @@ export default {
             } else {
               this.showDonations = false;
             }
-
           })
     },
     deleteReservation(id) {
