@@ -9,7 +9,7 @@
       <b-card-group columns>
         <b-card
             img-alt="Image"
-            img-src="https://cdn.medme.pl/zdjecie/17561,840,440,1/grupa-krwi-a.jpg"
+            :img-src="require('../../assets/blood_group_dose.jpg')"
             img-top
             title="Ile trwa cały proces?"
         >
@@ -23,11 +23,12 @@
 
         <b-card
             img-alt="Image"
-            img-src="https://bi.im-g.pl/im/77/39/16/z23303543Q,Warto-znac-swoja-grupe-krwi--oznaczenie-grupy-krwi.jpg"
+            :img-src="require('../../assets/doses.jpg')"
             overlay>
         </b-card>
 
-        <b-card img-alt="Image" img-src="https://www.eastcottvets.co.uk/uploads/Blogs/blooddonation.jpg" img-top
+        <b-card :img-src="require('../../assets/blood_donation.png')"
+                img-alt="Image" img-top
                 title="Jakie skutki ma pobranie krwi?">
           <b-card-text>
             Sam zabieg pobrania krwi jest bezbolesny. Są jednak osoby, które odczuwają dyskomfort związany z
@@ -37,7 +38,7 @@
 
         <b-card
             img-alt="Image"
-            img-src="https://1.bp.blogspot.com/-jCNEDiu1kJc/XPfZ9DdVgKI/AAAAAAAAAVU/vPLjciZhyQ08N3qvXhqVQcXqG8R5iLvrACEwYBhgL/s1600/Zrzut%2Bekranu%2B%25287%2529.png"
+            :img-src="require('../../assets/statistics.png')"
             img-top>
         </b-card>
 
@@ -55,7 +56,7 @@
         </b-card>
 
         <b-card img-alt="Image"
-                img-src="https://img.grouponcdn.com/seocms/aNG4Rq8286RemrggcnyzFR/las_vegas_restaurants-1243x746"
+                :img-src="require('../../assets/food.jpg')"
                 img-top
                 title="Co jeść przed pobraniem?">
           <b-card-text>
