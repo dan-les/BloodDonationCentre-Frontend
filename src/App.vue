@@ -96,6 +96,9 @@
         <transition mode="out-in" name="fade">
           <router-view :key="$route.fullPath"/>
         </transition>
+        <b-card-text class=" small text-muted text-center font-weight-light" style="margin-top: 2rem">Copyright © 2021
+          Daniel Leśniewicz
+        </b-card-text>
       </b-card>
     </b-container>
 
@@ -161,7 +164,7 @@ export default {
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.3s ease;
+  transition: opacity 0.45s ease;
 }
 
 
