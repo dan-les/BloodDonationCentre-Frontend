@@ -92,7 +92,7 @@
     </b-navbar>
 
     <b-container style="padding-top: 5rem">
-      <b-card class="p-xl-3">
+      <b-card class="p-xl-3" style="margin-bottom: 2rem">
         <transition mode="out-in" name="fade">
           <router-view :key="$route.fullPath"/>
         </transition>
