@@ -32,12 +32,12 @@ export const router = new Router({
         {
             path: '/admin',
             name: 'admin',
-            component: () => import('./views/board/BoardAdmin.vue')
+            component: () => import('./views/board/AdminBoard.vue')
         },
         {
             path: '/staff',
             name: 'staff',
-            component: () => import('./views/board/BoardStaff.vue')
+            component: () => import('./views/board/StaffBoard.vue')
         },
         {
             path: '/donors',
@@ -77,7 +77,7 @@ export const router = new Router({
         {
             path: '/user',
             name: 'user',
-            component: () => import('./views/board/BoardUser.vue')
+            component: () => import('./views/board/UserBoard.vue')
         },
         {
             path: "/donors/edit/:id",
