@@ -10,22 +10,33 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item>
-            <b-link router-tag="li" style="padding: 0.1rem;" to="/home">
+            <b-link active-class="font-weight-bold text-light" router-tag="li" style="padding: 0.1rem;" to="/home">
               <font-awesome-icon icon="home"/>
               Strona główna
             </b-link>
           </b-nav-item>
           <b-nav-item v-if="showAdminBoard">
-            <b-link router-tag="li" style="padding: 0.1rem;" to="/admin">Panel Administratora</b-link>
+            <b-link active-class="font-weight-bold text-light" router-tag="li" style="padding: 0.1rem;" to="/admin">
+              Panel Administratora
+            </b-link>
           </b-nav-item>
           <b-nav-item v-if="showStaffBoard">
-            <b-link router-tag="li" style="padding: 0.1rem;" to="/staff">Panel Pracownika</b-link>
+            <b-link active-class="font-weight-bold text-light" router-tag="li" style="padding: 0.1rem;" to="/staff">
+              Panel Pracownika
+            </b-link>
           </b-nav-item>
 
           <b-nav-item v-if="showStaffBoard">
-            <b-link router-tag="li" style="padding: 0.1rem;" to="/donors">Dawcy</b-link>
+            <b-link active-class="font-weight-bold text-light" router-tag="li" style="padding: 0.1rem;" to="/donors">
+              Dawcy
+            </b-link>
           </b-nav-item>
-          <b-nav-item-dropdown v-if="showStaffBoard" right style="padding: 0.1rem;" text="Rezerwacje">
+
+          <b-nav-item-dropdown v-if="showStaffBoard"
+                               :toggle-class="($route.name==='reservations') ? 'font-weight-bold text-light' : ''"
+                               right
+                               style="padding: 0.1rem;" text="Rezerwacje"
+          >
             <b-dropdown-item>
               <b-link :to="{name: 'reservations', query: {date: false} }" router-tag="li" style="padding: 0.1rem;">
                 Wszystkie zarezerwowane terminy
@@ -39,22 +50,28 @@
           </b-nav-item-dropdown>
 
           <b-nav-item v-if="showStaffBoard">
-            <b-link :to="{name: 'donationsAllDonors'}" router-tag="li" style="padding: 0.1rem;">Pobrania</b-link>
+            <b-link :to="{name: 'donationsAllDonors'}" active-class="font-weight-bold text-light" router-tag="li"
+                    style="padding: 0.1rem;">Pobrania
+            </b-link>
           </b-nav-item>
 
           <b-nav-item v-if="showStaffBoard">
-            <b-link :to="{name: 'recipients'}" router-tag="li" style="padding: 0.1rem;">Odbiorcy</b-link>
+            <b-link :to="{name: 'recipients'}" active-class="font-weight-bold text-light" router-tag="li"
+                    style="padding: 0.1rem;">Odbiorcy
+            </b-link>
           </b-nav-item>
 
           <b-nav-item v-if="showNormalUserBoard">
-            <b-link v-if="currentUser" router-tag="li" style="padding: 0.1rem;" to="/user">Panel użytkownika</b-link>
+            <b-link v-if="currentUser" active-class="font-weight-bold text-light" router-tag="li"
+                    style="padding: 0.1rem;" to="/user">Panel użytkownika
+            </b-link>
           </b-nav-item>
         </b-navbar-nav>
-
 
         <div v-if="!currentUser" class="navbar-nav ml-auto">
           <b-nav-item>
             <b-link
+                active-class="font-weight-bold text-light"
                 router-tag="li"
                 style="padding: 0.1rem;"
                 to="/register">
@@ -63,7 +80,10 @@
             </b-link>
           </b-nav-item>
           <b-nav-item>
-            <b-link router-tag="li" style="padding: 0.1rem;" to="/login">
+            <b-link active-class="font-weight-bold text-light"
+                    router-tag="li"
+                    style="padding: 0.1rem;"
+                    to="/login">
               <font-awesome-icon icon="sign-in-alt"/>
               Zaloguj się
             </b-link>
@@ -72,7 +92,7 @@
 
         <div v-if="currentUser" class="navbar-nav ml-auto">
           <b-nav-item>
-            <b-link router-tag="li" style="padding: 0.1rem;" to="/profile">
+            <b-link active-class="font-weight-bold text-light" router-tag="li" style="padding: 0.1rem;" to="/profile">
               <font-awesome-icon icon="user"/>
               <span v-if="currentUser.firstName === null || currentUser.lastName === null">
               {{ currentUser.username }}
