@@ -9,8 +9,7 @@ export const router = new Router({
     routes: [
         {
             path: '/',
-            name: 'home',
-            component: Home
+            redirect: '/home'
         },
         {
             path: '/home',
@@ -91,7 +90,7 @@ export const router = new Router({
         },
         {
             path: '*',
-            redirect: '/'
+            redirect: '/home'
         }
     ]
 });
