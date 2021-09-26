@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <b-container id="app" fluid>
     <b-navbar fixed="top" style="background-color: #aa0000" toggleable="lg" type="dark">
       <b-link style="padding: 0.1rem;" to="/home">
         <b-navbar-brand>Centrum Krwiodwstwa</b-navbar-brand>
@@ -122,7 +122,7 @@
       </b-card>
     </b-container>
 
-  </div>
+  </b-container>
 </template>
 
 <script>
@@ -176,18 +176,15 @@ export default {
 <style>
 #app {
   /*background-image: url("assets/background_image_blue.png");*/
-  background-image: url("assets/background_image_red.png");
+  background-image: url("assets/background_image_red_cut.png");
   background-repeat: no-repeat;
-  background-size: 110%;
-  background-position-x: center;
-  background-position-y: top;
+  background-size: 100%;
 }
 
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.45s ease;
 }
-
 
 .fade-enter-from,
 .fade-leave-to {
