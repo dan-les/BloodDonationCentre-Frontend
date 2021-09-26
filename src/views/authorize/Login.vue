@@ -1,58 +1,75 @@
 <template>
-  <b-container>
-    <div class="card card-container">
-      <img
-          id="profile-img"
-          class="profile-img-card"
-          height="512" src="../../assets/user_img.png" width="512"
-      />
-      <form name="form" @submit.prevent="handleLogin">
-        <div class="form-group">
-          <label>Login</label>
-          <input
-              v-model.trim="user.username"
-              v-validate="'required'"
-              class="form-control"
-              data-vv-as="'login'"
-              name="username"
-              type="text"
-          />
-          <div
-              v-if="errors.has('username')"
-              class="alert alert-danger"
-              role="alert"
-          >{{ errors.first('username') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <label>Hasło</label>
-          <input
-              v-model="user.password"
-              v-validate="'required'"
-              class="form-control"
-              data-vv-as="'hasło'"
-              name="password"
-              type="password"
-          />
-          <div
-              v-if="errors.has('password')"
-              class="alert alert-danger"
-              role="alert"
-          >{{ errors.first('password') }}
-          </div>
-        </div>
-        <div class="form-group">
-          <button :disabled="loading" class="btn btn-primary btn-block">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span> Zaloguj się</span>
-          </button>
-        </div>
-        <div class="form-group">
-          <div v-if="message" class="alert alert-danger" role="alert">{{ message }}</div>
-        </div>
-      </form>
-    </div>
-  </b-container>
+  <b-row align-h="center">
+    <b-col md="4">
+      <b-card bg-variant="light">
+        <b-img
+            :srcset="require('../../assets/user_img_blue_darker.png')"
+            alt="User image"
+            center
+            height="88"
+            style="margin: 1rem 0 2rem"
+            width="88">
+        </b-img>
+
+        <b-form @submit.prevent="handleLogin">
+          <b-form-group>
+            <label>Login</label>
+            <b-form-input
+                v-model.trim="user.username"
+                v-validate="'required'"
+                data-vv-as="'login'"
+                name="username"
+                type="text"
+            ></b-form-input>
+            <b-alert
+                :show="errors.has('username')"
+                variant="danger"
+            >{{ errors.first('username') }}
+            </b-alert>
+          </b-form-group>
+
+          <b-form-group>
+            <label>Hasło</label>
+            <b-form-input
+                v-model="user.password"
+                v-validate="'required'"
+                data-vv-as="'hasło'"
+                name="password"
+                type="password"
+            ></b-form-input>
+            <b-alert
+                :show="errors.has('password')"
+                variant="danger"
+            >{{ errors.first('password') }}
+            </b-alert>
+          </b-form-group>
+
+          <b-form-group>
+            <b-button :disabled="loading" block type="sumbit" variant="primary">
+              <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+              <span> Zaloguj się</span>
+            </b-button>
+          </b-form-group>
+
+          <b-form-group>
+            <b-alert
+                :show="message.length > 0"
+                variant="danger"
+            >{{ message }}
+            </b-alert>
+          </b-form-group>
+        </b-form>
+
+        <footer>
+          <b-container class="text-center">
+            <small>Nie masz jeszcze założonego konta? <br> Możesz zarejestrować się
+              <b-link to="/register"> tutaj.</b-link>
+            </small>
+          </b-container>
+        </footer>
+      </b-card>
+    </b-col>
+  </b-row>
 </template>
 
 <script>
@@ -103,37 +120,9 @@ export default {
 };
 </script>
 
-<style scoped>
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-.card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
-}
-
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+<style>
+.alert {
+  margin-top: 0.25rem;
+  padding: 0.25rem 0.25rem;
 }
 </style>

@@ -10,14 +10,10 @@
     <b-card no-body>
       <b-tabs card>
         <b-tab active title="Dodawanie nowego pracownika do systemu">
-          <b-row>
-            <b-col col lg="6">
               <register
                   :role="'staff'"
-                  style="margin-top: 2rem"
+                  style="margin-top: 1rem"
               />
-            </b-col>
-          </b-row>
         </b-tab>
         <b-tab disabled title="Zarządzanie pracownikami"><p>I'm the first tab</p></b-tab>
         <b-tab disabled title="Zgłoszenia zarejestowane w systemie"><p>I'm a disabled tab!</p></b-tab>

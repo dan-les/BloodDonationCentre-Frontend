@@ -1,6 +1,8 @@
 <template>
   <b-container id="app" fluid>
-    <b-navbar fixed="top" style="background-color: #aa0000" toggleable="lg" type="dark">
+    <!--    #ab3739-->
+    <!--    #a53234-->
+    <b-navbar fixed="top" style="background-color: #3773AB" toggleable="lg" type="dark">
       <b-link style="padding: 0.1rem;" to="/home">
         <b-navbar-brand>Centrum Krwiodwstwa</b-navbar-brand>
       </b-link>
@@ -173,10 +175,9 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss">
 #app {
-  /*background-image: url("assets/background_image_blue.png");*/
-  background-image: url("assets/background_image_red_cut.png");
+  background-image: url("assets/background_image_blue_darker_cut.png");
   background-repeat: no-repeat;
   background-size: 100%;
 }

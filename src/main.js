@@ -20,6 +20,7 @@ import setupInterceptors from './services/setupInterceptors';
 
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';
+import "./assets/scss/_custom.scss";
 
 Vue.config.productionTip = false;
 Vue.config.devtools = true

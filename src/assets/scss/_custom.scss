@@ -1,0 +1,10 @@
+$theme-colors: (
+        "primary": #3e84c6,
+  //"info": #32A5A3,
+  //"info": #289864,
+  //"danger": #cb0735,
+  //"secondary": blue
+);
+
+@import '../../../node_modules/bootstrap/scss/bootstrap';
+@import '../../../node_modules/bootstrap-vue/src/index';

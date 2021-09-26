@@ -1,140 +1,153 @@
 <template>
-  <b-container style="margin-top: -2rem">
+  <b-container>
+<span v-if="!successful">
 
+</span>
+    <b-row align-h="center">
+      <b-col md="7">
+        <b-card bg-variant="light">
+          <b-img
+              v-if="role === undefined"
+              :srcset="require('../../assets/user_img_blue_darker.png')"
+              alt="User image"
+              center
+              height="88"
+              style="margin: 1rem 0 2rem"
+              width="88">
+          </b-img>
+          <b-form @submit.prevent="handleRegister">
+            <span v-if="!successful">
+              <b-row>
+              <b-col>
+                <b-form-group>
+                  <label>Login</label>
+                  <b-form-input
+                      v-model.trim="user.username"
+                      v-validate="'required|min:5|max:20'"
+                      data-vv-as="'login'"
+                      name="username"
+                      type="text"
+                      @keydown.space.prevent
+                  ></b-form-input>
+                  <b-alert
+                      :show="submitted && errors.has('username')"
+                      variant="danger"
+                  >{{ errors.first('username') }}
+                  </b-alert>
+                </b-form-group>
+                <b-form-group>
+                  <label>Hasło</label>
+                  <b-form-input
+                      ref="password"
+                      v-model="user.password"
+                      v-validate="'required|min:6|max:40'"
+                      data-vv-as="'hasło'"
+                      name="password"
+                      type="password"
+                  ></b-form-input>
+                  <b-alert
+                      :show="submitted && errors.has('password')"
+                      variant="danger"
+                  >{{ errors.first('password') }}
+                  </b-alert>
+                </b-form-group>
+                <b-form-group>
+                  <label>Powtórz hasło</label>
+                  <b-form-input
+                      v-model="passwordRepeated"
+                      v-validate="'required|min:6|max:40|confirmed:password'"
+                      data-vv-as="'powtórzone hasło'"
+                      name="passwordRepeated"
+                      type="password"
+                  ></b-form-input>
+                  <b-alert
+                      :show="submitted && errors.has('passwordRepeated')"
+                      variant="danger"
+                  >{{ errors.first('passwordRepeated') }}
+                  </b-alert>
+                </b-form-group>
+              </b-col>
+              <b-col>
+                <b-form-group>
+                  <label>Imię</label>
+                  <b-form-input
+                      v-model="user.firstName"
+                      v-validate="'required|min:1|max:40|alpha'"
+                      data-vv-as="'imię'"
+                      name="firstName"
+                      type="text"
+                  ></b-form-input>
+                  <b-alert
+                      :show="submitted && errors.has('firstName')"
+                      variant="danger"
+                  >{{ errors.first('firstName') }}
+                  </b-alert>
+                </b-form-group>
+                <b-form-group>
+                  <label>Nazwisko</label>
+                  <b-form-input
+                      v-model="user.lastName"
+                      v-validate="'required|min:1|max:40|alpha'"
+                      data-vv-as="'Nazwisko'"
+                      name="lastName"
+                      type="text"
+                  ></b-form-input>
+                  <b-alert
+                      :show="submitted && errors.has('lastName')"
+                      variant="danger"
+                  >{{ errors.first('lastName') }}
+                  </b-alert>
+                </b-form-group>
+                <b-form-group>
+                  <label>E-mail</label>
+                  <b-form-input
+                      v-model="user.email"
+                      v-validate="'required|email|max:50'"
+                      data-vv-as="'e-mail'"
+                      name="email"
+                      type="text"
+                  ></b-form-input>
+                  <b-alert
+                      :show="submitted && errors.has('email')"
+                      variant="danger"
+                  >{{ errors.first('email') }}
+                  </b-alert>
+                </b-form-group>
+              </b-col>
+            </b-row>
+              <b-form-group>
+              <b-button v-if="role === undefined" block type="sumbit" variant="primary"> Zarejestruj się</b-button>
+              <b-button v-else block type="sumbit" variant="primary">Zarejestruj nowego pracownika w systemie</b-button>
+            </b-form-group>
+            </span>
+          </b-form>
 
-    <div :class="{'card card-container' : role === undefined}">
-      <b-row>
-        <img
-            v-if="role === undefined"
-            id="profile-img"
-            class="profile-img-card"
-            src="../../assets/user_img.png"
-        />
-      </b-row>
+          <b-form-group>
+            <b-alert
+                :show="message.length > 0"
+                :variant="successful ? 'success' : 'danger'"
+            >{{ message }}
+            </b-alert>
+          </b-form-group>
 
-      <form name="form" @submit.prevent="handleRegister">
-        <div v-if="!successful">
-          <b-row>
-            <b-col>
-              <div class="form-group">
-                <label>Login</label>
-                <input
-                    v-model.trim="user.username"
-                    v-validate="'required|min:5|max:20'"
-                    class="form-control"
-                    data-vv-as="'login'"
-                    name="username"
-                    type="text"
-                    @keydown.space.prevent
-                />
-                <div
-                    v-if="submitted && errors.has('username')"
-                    class="alert-danger"
-                >{{ errors.first('username') }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>Hasło</label>
-                <input
-                    ref="password"
-                    v-model="user.password"
-                    v-validate="'required|min:6|max:40'"
-                    class="form-control"
-                    data-vv-as="'hasło'"
-                    name="password"
-                    type="password"
-                />
-                <div
-                    v-if="submitted && errors.has('password')"
-                    class="alert-danger"
-                >{{ errors.first('password') }}
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Powtórz hasło</label>
-                <input
-                    v-validate="'required|min:6|max:40|confirmed:password'"
-                    class="form-control"
-                    data-vv-as="'powtórzone hasło'"
-                    name="passwordRepeated"
-                    type="password"
-                />
-                <div
-                    v-if="submitted && errors.has('passwordRepeated')"
-                    class="alert-danger"
-                >{{ errors.first('passwordRepeated') }}
-                </div>
-              </div>
-            </b-col>
-
-            <b-col>
-              <div class="form-group">
-                <label>Imię</label>
-                <input
-                    v-model="user.firstName"
-                    v-validate="'required|min:1|max:40|alpha'"
-                    class="form-control"
-                    data-vv-as="'imię'"
-                    name="firstName"
-                    type="text"
-                />
-                <div
-                    v-if="submitted && errors.has('firstName')"
-                    class="alert-danger"
-                >{{ errors.first('firstName') }}
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Nazwisko</label>
-                <input
-                    v-model="user.lastName"
-                    v-validate="'required|min:1|max:40|alpha'"
-                    class="form-control"
-                    data-vv-as="'Nazwisko'"
-                    name="lastName"
-                    type="text"
-                />
-                <div
-                    v-if="submitted && errors.has('lastName')"
-                    class="alert-danger"
-                >{{ errors.first('lastName') }}
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label>E-mail</label>
-                <input
-                    v-model="user.email"
-                    v-validate="'required|email|max:50'"
-                    class="form-control"
-                    data-vv-as="'e-mail'"
-                    name="email"
-                    type="email"
-                />
-                <div
-                    v-if="submitted && errors.has('email')"
-                    class="alert-danger"
-                >{{ errors.first('email') }}
-                </div>
-              </div>
-            </b-col>
-          </b-row>
-
-          <div class="form-group" style="margin-top: 1rem">
-            <button v-if="role === undefined" class="btn btn-primary btn-block"> Zarejestruj się</button>
-            <button v-else class="btn btn-primary btn-block">Zarejestruj nowego pracownika w systemie</button>
-          </div>
-        </div>
-      </form>
-
-      <div
-          v-if="message"
-          :class="successful ? 'alert-success' : 'alert-danger'"
-          class="alert"
-      >{{ message }}
-      </div>
-    </div>
+          <footer>
+            <b-container v-if="role === undefined" class="text-center">
+              <small>Masz już założone konto? Możesz zalogować się
+                <b-link to="/login"> tutaj.</b-link>
+              </small>
+            </b-container>
+          </footer>
+        </b-card>
+      </b-col>
+    </b-row>
+    <!-- -->
+    <!--    <div-->
+    <!--        v-if="message"-->
+    <!--        :class="successful ? 'alert-success' : 'alert-danger'"-->
+    <!--        class="alert"-->
+    <!--    >{{ message }}-->
+    <!--    </div>-->
+    <!--    </div>-->
 
   </b-container>
 </template>
@@ -166,6 +179,7 @@ export default {
   props: ['role'],
   methods: {
     handleRegister() {
+
       let tmp_array = [];
       if (this.role === 'staff') {
         tmp_array.push(this.role);
@@ -203,37 +217,10 @@ export default {
 };
 </script>
 
-<style scoped>
-label {
-  display: block;
-  margin-top: 10px;
-}
-
-.card-container.card {
-  max-width: 650px !important;
-  padding: 40px 40px;
-}
-
-.card {
-  background-color: #f7f7f7;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
-  -moz-border-radius: 2px;
-  -webkit-border-radius: 2px;
-  border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-}
-
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+<style>
+.alert {
+  margin-top: 0.25rem;
+  padding: 0.25rem 0.25rem;
 }
 </style>
+
