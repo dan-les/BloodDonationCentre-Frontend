@@ -12,7 +12,7 @@
               alt="User image"
               center
               height="88"
-              style="margin: 1rem 0 2rem"
+              style="margin: 1rem 0 1rem"
               width="88">
           </b-img>
           <b-form @submit.prevent="handleRegister">
@@ -114,11 +114,13 @@
                   </b-alert>
                 </b-form-group>
               </b-col>
-            </b-row>
+              </b-row>
               <b-form-group>
-              <b-button v-if="role === undefined" block type="sumbit" variant="primary"> Zarejestruj się</b-button>
-              <b-button v-else block type="sumbit" variant="primary">Zarejestruj nowego pracownika w systemie</b-button>
-            </b-form-group>
+                    <b-button v-if="role === undefined" block type="sumbit"
+                              variant="primary"> Zarejestruj się</b-button>
+                    <b-button v-else block type="sumbit"
+                              variant="primary">Zarejestruj nowego pracownika w systemie</b-button>
+              </b-form-group>
             </span>
           </b-form>
 
@@ -133,7 +135,8 @@
           <footer>
             <b-container v-if="role === undefined" class="text-center">
               <small>Masz już założone konto? Możesz zalogować się
-                <b-link to="/login"> tutaj.</b-link>
+                <b-link to="/login"> tutaj</b-link>
+                .
               </small>
             </b-container>
           </footer>

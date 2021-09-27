@@ -63,7 +63,8 @@
         <footer>
           <b-container class="text-center">
             <small>Nie masz jeszcze założonego konta? <br> Możesz zarejestrować się
-              <b-link to="/register"> tutaj.</b-link>
+              <b-link to="/register"> tutaj</b-link>
+              .
             </small>
           </b-container>
         </footer>

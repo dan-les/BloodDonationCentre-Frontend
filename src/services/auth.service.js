@@ -1,7 +1,7 @@
 import TokenService from "./token.service";
 import api from "./api";
 
-const API_URL = 'auth/';
+const API_URL = 'autha/';
 
 class AuthService {
     login(user) {

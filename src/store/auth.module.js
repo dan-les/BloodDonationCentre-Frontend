@@ -44,6 +44,8 @@ export const auth = {
                         error.response.data.message = "Użytkownik z takim e-mailem już istnieje!";
                     } else if (error.response.data.message === "Role is not found") {
                         error.response.data.message = 'Błędne uprawnienia nowego użytkownika!';
+                    } else {
+                        error.response.data.message = 'Błąd systemu!';
                     }
                     return Promise.reject(error);
                 }
