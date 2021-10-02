@@ -128,7 +128,7 @@
 </template>
 
 <script>
-import EventBus from "./common/EventBus";
+import DocumentEventService from "./services/common/DocumentEventService";
 
 export default {
   computed: {
@@ -164,12 +164,12 @@ export default {
     }
   },
   mounted() {
-    EventBus.on("logout", () => {
+    DocumentEventService.on("logout", () => {
       this.logOut();
     });
   },
   beforeDestroy() {
-    EventBus.remove("logout");
+    DocumentEventService.remove("logout");
   }
 
 };

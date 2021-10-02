@@ -16,7 +16,7 @@ import AddReservationModel from "./components/AddReservationForm";
 import DonorDetailsHeader from "./components/DonorDetailsHeader";
 import LookupField from "./components/LookupField";
 import Register from "./views/authorize/Register";
-import setupInterceptors from './services/setupInterceptors';
+import setupInterceptors from './services/common/setupAxiosInterceptors';
 
 import VueLoading from 'vue-loading-overlay';
 import 'vue-loading-overlay/dist/vue-loading.css';

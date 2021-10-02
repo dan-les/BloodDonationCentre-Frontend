@@ -32,8 +32,6 @@ export const auth = {
                     if (response.data.message === "User successfully register!") {
                         response.data.message = 'Użytkownik pomyślnie zarejestrowany!';
                         return Promise.resolve(response.data);
-                    } else {
-                        Promise.reject("Błąd podczas rejestracji");
                     }
                 },
                 error => {
@@ -44,10 +42,8 @@ export const auth = {
                         error.response.data.message = "Użytkownik z takim e-mailem już istnieje!";
                     } else if (error.response.data.message === "Role is not found") {
                         error.response.data.message = 'Błędne uprawnienia nowego użytkownika!';
-                    } else {
-                        error.response.data.message = 'Błąd systemu!';
                     }
-                    return Promise.reject(error);
+                    Promise.reject("Błąd podczas rejestracji");
                 }
             );
         },
@@ -56,6 +52,16 @@ export const auth = {
         }
     },
     mutations: {
+        registerSuccess(state) {
+            state.status.loggedIn = false;
+        },
+        registerFailure(state) {
+            state.status.loggedIn = false;
+        },
+        logout(state) {
+            state.status.loggedIn = false;
+            state.user = null;
+        },
         loginSuccess(state, user) {
             state.status.loggedIn = true;
             state.user = user;
@@ -63,16 +69,6 @@ export const auth = {
         loginFailure(state) {
             state.status.loggedIn = false;
             state.user = null;
-        },
-        logout(state) {
-            state.status.loggedIn = false;
-            state.user = null;
-        },
-        registerSuccess(state) {
-            state.status.loggedIn = false;
-        },
-        registerFailure(state) {
-            state.status.loggedIn = false;
         },
         refreshToken(state, accessToken) {
             state.status.loggedIn = true;
