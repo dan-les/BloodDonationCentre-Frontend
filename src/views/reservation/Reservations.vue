@@ -1,9 +1,8 @@
 <template>
-  <b-container fluid>
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <b-jumbotron
         header="Przegląd wszystkich zarezerwowanych terminów" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
-
 
     <b-col md="4" offset-md="9">
       <b-link :to="{name: 'reservations', query: {date: false} }">
@@ -184,7 +183,7 @@
         </template>
       </b-table>
     </b-row>
-  </b-container>
+  </b-card>
 </template>
 
 <script>

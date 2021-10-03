@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-card class="p-xl-4">
     <b-jumbotron
         header="Twoje dane" header-level="5" header-tag="h2" style="padding: 1.5rem">
     </b-jumbotron>
@@ -27,8 +27,7 @@
         <strong>Płeć:</strong> {{ user.gender }}
       </p>
     </b-jumbotron>
-
-  </b-container>
+  </b-card>
 </template>
 
 <script>

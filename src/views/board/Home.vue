@@ -1,6 +1,5 @@
 <template>
-  <b-container style="margin-top: 0.5rem">
-
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <b-jumbotron border-variant="dark"
                  fluid
                  header="Witaj na stronie Centrum Krwiodawstwa"
@@ -74,5 +73,5 @@
         </b-card>
       </b-card-group>
     </div>
-  </b-container>
+  </b-card>
 </template>

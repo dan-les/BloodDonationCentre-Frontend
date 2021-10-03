@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <b-jumbotron
         header="Spis wszystkich donacji" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
@@ -168,8 +168,7 @@
         Powrót na stronę z dawcami
       </b-button>
     </b-link>
-  </b-container>
-
+  </b-card>
 </template>
 
 <script>

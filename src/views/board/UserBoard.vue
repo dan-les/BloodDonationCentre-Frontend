@@ -1,5 +1,5 @@
 <template>
-  <b-container style="margin-bottom: 2rem">
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <b-jumbotron style="padding: 1.9rem">
       <h4 v-if="this.$store.state.auth.user.firstName === null">
         Witaj ponownie na naszej stronie!
@@ -89,10 +89,9 @@
         ></add-reservation-model>
       </form>
     </b-modal>
-  </b-container>
+  </b-card>
 </template>
 <script>
-
 
 import DonationService from "../../services/donation.service";
 import {mdbContainer, mdbHorizontalBarChart} from "mdbvue";

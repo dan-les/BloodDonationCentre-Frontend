@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <b-jumbotron
         header="Panel pracownika - aktualny stan materiału biologicznego w magazynie"
         header-level="5" header-tag="h4" style="padding: 0.9rem">
@@ -32,7 +32,7 @@
         </b-tab>
       </b-tabs>
     </b-card>
-  </b-container>
+  </b-card>
 </template>
 
 

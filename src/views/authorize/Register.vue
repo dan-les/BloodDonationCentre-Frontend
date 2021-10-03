@@ -5,7 +5,8 @@
 </span>
     <b-row align-h="center">
       <b-col md="7">
-        <b-card bg-variant="light">
+        <b-card bg-variant="light" class="p-xl-3" style="margin-top: 2rem">
+          <b-card-sub-title class="mb-2">REJESTRACJA</b-card-sub-title>
           <b-img
               v-if="role === undefined"
               :srcset="require('../../assets/user_img_blue_darker.png')"

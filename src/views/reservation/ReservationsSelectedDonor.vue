@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <donor-details-header
         :donorIdx=this.$route.params.id
         :title=this.headerTitle
@@ -158,9 +158,7 @@
         Powrót na stronę z dawcami
       </b-button>
     </b-link>
-  </b-container>
-
-
+  </b-card>
 </template>
 
 <script>

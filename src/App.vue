@@ -114,14 +114,14 @@
     </b-navbar>
 
     <b-container style="padding-top: 5rem">
-      <b-card class="p-xl-3" style="margin-bottom: 2rem">
+<!--      <b-card class="p-xl-3" style="margin-bottom: 2rem">-->
         <transition mode="out-in" name="fade">
           <router-view :key="$route.fullPath"/>
         </transition>
-        <b-card-text class=" small text-muted text-center font-weight-light" style="margin-top: 2rem">Copyright © 2021
-          Daniel Leśniewicz
-        </b-card-text>
-      </b-card>
+      <b-card-text class=" small text-muted text-center font-weight-light" style="margin: 2rem 0 2rem">Copyright © 2021
+        Daniel Leśniewicz
+      </b-card-text>
+      <!--      </b-card>-->
     </b-container>
 
   </b-container>

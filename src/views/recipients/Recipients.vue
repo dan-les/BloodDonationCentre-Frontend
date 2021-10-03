@@ -1,5 +1,5 @@
 <template>
-  <b-container fluid>
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <b-jumbotron
         header="Przegląd wszystkich odbiorców materiału biologicznego" header-level="5" header-tag="h4"
         style="padding: 0.9rem">
@@ -157,8 +157,7 @@
       >
       </b-table>
     </b-row>
-  </b-container>
-
+  </b-card>
 </template>
 
 <script>

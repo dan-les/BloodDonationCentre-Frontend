@@ -1,13 +1,14 @@
 <template>
   <b-row align-h="center">
     <b-col md="4">
-      <b-card bg-variant="light">
+      <b-card bg-variant="light" class="p-xl-3" style="margin-top: 2rem">
+        <b-card-sub-title class="mb-2">LOGOWANIE</b-card-sub-title>
         <b-img
             :srcset="require('../../assets/user_img_blue_darker.png')"
             alt="User image"
             center
             height="88"
-            style="margin: 1rem 0 2rem"
+            style="margin: 1rem 0 1rem"
             width="88">
         </b-img>
 

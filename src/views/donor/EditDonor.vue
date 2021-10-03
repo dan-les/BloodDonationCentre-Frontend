@@ -1,6 +1,5 @@
 <template>
-
-  <b-container class="bv-example-row">
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <b-jumbotron
         header="Edycja danych dawcy" header-level="5" header-tag="h4" style="padding: 0.9rem">
     </b-jumbotron>
@@ -94,8 +93,7 @@
 
     </b-row>
 
-  </b-container>
-
+  </b-card>
 </template>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <b-container>
+  <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <donor-details-header
         v-if="donorIdx !== null"
         :donorIdx=this.donorIdx
@@ -35,9 +35,7 @@
         Powrót na stronę z rezerwacjami
       </b-button>
     </b-link>
-
-  </b-container>
-
+  </b-card>
 </template>
 
 <script>
