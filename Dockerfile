@@ -14,10 +14,10 @@ EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 
 
-# docker build -f Dockerfile -t vue-bdc:v4 .
-# docker run -itd -p 30103:80 vue-bdc:v4
-
-# docker images
-# docker save -o d:/vue-bdc-v4.tar vue-bdc:v4
-
-# docker load -i d:/vue-bdc-v4.tar
+#  --- LOCAL ---
+# 1. docker build -f Dockerfile -t vue-bdc:v5 .
+# 2. docker images
+# 3. docker save -o d:/vue-bdc-v5.tar vue-bdc:v5
+#  --- VPN ---
+# 4. docker load -i ./vue-bdc-v5.tar
+# 5. docker run -itd -p 30103:80 vue-bdc:v5
