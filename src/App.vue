@@ -1,12 +1,11 @@
 <template>
   <b-container id="app" fluid>
-    <!--    #ab3739-->
-    <!--    #a53234-->
     <b-navbar fixed="top" style="background-color: #3773AB" toggleable="lg" type="dark">
+      <img height="42" src="../public/icon.png"/>
       <b-link style="padding: 0.1rem;" to="/home">
-        <b-navbar-brand>Centrum Krwiodwstwa</b-navbar-brand>
+        <b-navbar-brand> Centrum Krwiodwstwa
+        </b-navbar-brand>
       </b-link>
-
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
       <b-collapse id="nav-collapse" is-nav>
@@ -114,10 +113,10 @@
     </b-navbar>
 
     <b-container style="padding-top: 5rem">
-<!--      <b-card class="p-xl-3" style="margin-bottom: 2rem">-->
-        <transition mode="out-in" name="fade">
-          <router-view :key="$route.fullPath"/>
-        </transition>
+      <!--      <b-card class="p-xl-3" style="margin-bottom: 2rem">-->
+      <transition mode="out-in" name="fade">
+        <router-view :key="$route.fullPath"/>
+      </transition>
       <b-card-text class=" small text-muted text-center font-weight-light" style="margin: 2rem 0 2rem">Copyright © 2021
         Daniel Leśniewicz
       </b-card-text>
