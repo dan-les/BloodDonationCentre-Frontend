@@ -5,7 +5,7 @@ const API_URL = 'reservation/';
 class ReservationService {
 
     getHoursWithAvailability(date) {
-        return api.get(API_URL + 'available-hours/list',
+        return api.get(API_URL + 'available-hours',
             {
                 params: {
                     date: date
@@ -18,15 +18,15 @@ class ReservationService {
     }
 
     getAllReservations() {
-        return api.get(API_URL + 'list');
+        return api.get(API_URL);
     }
 
     getAllReservationsByDonorId(donorId) {
-        return api.get(API_URL + 'list/donor/' + `${donorId}`);
+        return api.get(API_URL + 'donor/' + `${donorId}`);
     }
 
     getAllReservationsByDate(date) {
-        return api.get(API_URL + 'list',
+        return api.get(API_URL,
             {
                 params: {
                     date: date,

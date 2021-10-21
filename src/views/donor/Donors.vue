@@ -219,13 +219,10 @@ export default {
       donors: [],
       tableFields: [
         {key: 'id', label: 'ID', sortable: true, sortDirection: 'desc'},
-        // {key: 'username', label: 'Login', sortable: true, sortDirection: 'desc'},
-        // {key: 'email', label: 'Email', sortable: true, sortDirection: 'desc'},
         {key: 'firstName', label: 'Imię', sortable: true, sortDirection: 'desc'},
         {key: 'lastName', label: 'Nazwisko', sortable: true, sortDirection: 'desc'},
         {key: 'pesel', label: 'PESEL', sortable: true},
-        {key: 'bloodGroupWithRh', label: 'Krew', sortable: true,},
-        // {key: 'gender', label: 'Płeć', sortable: true,},
+        {key: 'bloodGroupWithRh', label: 'Krew', sortable: true},
         {key: 'actions', label: 'Akcje', class: 'text-center'}
       ],
       totalRows: 1,

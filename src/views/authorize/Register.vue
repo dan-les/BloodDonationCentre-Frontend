@@ -1,8 +1,5 @@
 <template>
   <b-container>
-<span v-if="!successful">
-
-</span>
     <b-row align-h="center">
       <b-col md="7">
         <b-card bg-variant="light" class="p-xl-3" style="margin-top: 2rem">
@@ -183,7 +180,6 @@ export default {
   props: ['role'],
   methods: {
     handleRegister() {
-
       let tmp_array = [];
       if (this.role === 'staff') {
         tmp_array.push(this.role);

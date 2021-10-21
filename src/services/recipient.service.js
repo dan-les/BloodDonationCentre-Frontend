@@ -4,7 +4,7 @@ const API_URL = 'recipient/';
 
 class RecipientService {
     getAllRecipients() {
-        return api.get(API_URL + 'list');
+        return api.get(API_URL);
     }
 
     addNewRecipient(data) {

@@ -263,7 +263,7 @@ export default {
     if (!this.$store.state.auth.user && !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
-    // sprawdzenie, czy w ścieżce jest date jako true czy jako false
+    // isDatePickerEnabled = true or isDatePickerEnabled = false
     this.isDatePickerEnabled = this.$route.query.date;
   },
   methods: {

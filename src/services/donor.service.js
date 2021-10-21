@@ -4,7 +4,7 @@ const API_URL = 'donor/';
 
 class DonorService {
     getAllDonors() {
-        return api.get(API_URL + 'list');
+        return api.get(API_URL);
     }
 
     getDonorById(id) {

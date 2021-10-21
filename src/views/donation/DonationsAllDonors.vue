@@ -195,7 +195,7 @@ export default {
   },
   watch: {
     propertiesChangeChecker(newVal) {
-      // sprawdzanie czy zmieniła się wartość którejś z trzech zmiennych
+      // check if any of (three) values changed
       let [newSelectedDonationType, newSelectedIsReleased, newSelectedBloodGroupWithRh] = newVal.split('|');
       newSelectedDonationType = newSelectedDonationType === 'null' ? null : newSelectedDonationType;
       newSelectedIsReleased = newSelectedIsReleased === 'null' ? null : newSelectedIsReleased;
@@ -209,7 +209,7 @@ export default {
       }
     },
     selectedIsReleased() {
-      // ukrywanie kolumny "Akcje" gdy przeglądamy dawki już wydane
+      // hide column 'Akcje' id dose is released
       if (this.selectedIsReleased === 'true') {
         this.fieldsDonations.pop();
       } else {

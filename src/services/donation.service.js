@@ -32,7 +32,7 @@ class DonationService {
     }
 
     getAllDonations(selectedDonationType, selectedIsReleased, selectedBloodGroupWithRh) {
-        return api.get(API_URL + 'list', {
+        return api.get(API_URL, {
             params: {
                 donationType: selectedDonationType,
                 isReleased: selectedIsReleased,
@@ -42,7 +42,7 @@ class DonationService {
     }
 
     getAllDonationsByDonorId(donorId) {
-        return api.get(API_URL + 'list',
+        return api.get(API_URL,
             {
                 params: {
                     donorId: donorId,
