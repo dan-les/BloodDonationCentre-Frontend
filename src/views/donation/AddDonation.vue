@@ -1,15 +1,15 @@
 <template>
   <b-card class="p-xl-4" style="margin-bottom: 2rem">
     <donor-details-header
-        v-if="donorIdx !== null"
-        :donorIdx=this.donorIdx
+        v-if="reservationDetails.donorId !== null"
+        :donorIdx=this.reservationDetails.donorId
         :title=this.headerTitle
     ></donor-details-header>
 
-    <div v-if="shouldBeUnHide">
+    <div v-if="!isDonationAdded">
       <b-form-group v-slot="{ ariaDescribedby }" label="Typ pobrania:">
         <b-form-radio-group
-            v-model="selectedDonationType"
+            v-model="reservationDetails.donationType"
             :aria-describedby="ariaDescribedby"
             :options="options"
             name="radios-stacked"
@@ -52,21 +52,16 @@ export default {
     let loader = this.$loading.show();
     ReservationService.getReservationById(this.$route.params.id)
         .then(response => {
-          const results_tmp = [];
-          results_tmp.push(
-              new Reservation(
-                  response.data.id,
-                  response.data.donorId,
-                  response.data.donorFirstName,
-                  response.data.donorLastName,
-                  response.data.pesel,
-                  response.data.date,
-                  response.data.time,
-                  response.data.donationType
-              ));
-          this.reservationDetails = results_tmp;
-          this.donorIdx = response.data.donorId;
-          this.selectedDonationType = response.data.donationType;
+          this.reservationDetails = new Reservation(
+              response.data.id,
+              response.data.donorId,
+              response.data.donorFirstName,
+              response.data.donorLastName,
+              response.data.pesel,
+              response.data.date,
+              response.data.time,
+              response.data.donationType
+          )
         })
         .finally(() => {
           loader.hide();
@@ -75,12 +70,10 @@ export default {
   data() {
     return {
       headerTitle: "Dodawanie donacji",
-      donorIdx: null,
-      shouldBeUnHide: true,
+      isDonationAdded: false,
       isReleased: false,
       amount: '',
       reservationDetails: null,
-      selectedDonationType: '',
       options: [
         {text: 'Pobranie krwi pełnej', value: 'blood'},
         {text: 'Donacja osocza', value: 'plasma'},
@@ -88,8 +81,8 @@ export default {
     }
   },
   watch: {
-    selectedDonationType() {
-      this.amount = this.selectedDonationType === 'plasma' ? 600 : 450;
+    reservationDetails() {
+      this.amount = this.reservationDetails.donationType === 'plasma' ? 600 : 450;
     }
   },
   methods: {
@@ -97,21 +90,21 @@ export default {
       DonationService.addNewDonation(
           new Donation(
               null,
-              this.reservationDetails[0].date,
+              this.reservationDetails.date,
               this.amount,
-              this.selectedDonationType,
-              this.donorIdx,
+              this.reservationDetails.donationType,
+              this.reservationDetails.donorId,
               '',
               '',
               '',
               false,
               null,
               '',
-              this.$route.params.id
+              this.reservationDetails.id
           )
       ).then(() => {
         this.makeToastSuccess('Donacja została została dodana do systemu!');
-        this.shouldBeUnHide = false;
+        this.isDonationAdded = true;
       })
     },
 
