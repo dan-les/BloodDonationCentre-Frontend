@@ -88,12 +88,14 @@ export default {
   },
   methods: {
     addNewDonation() {
+      const isReleased = false;
       DonationService.addNewDonation(
           new DonationRequest(
               this.reservationDetails.date,
               this.amount,
               this.reservationDetails.donationType,
               this.reservationDetails.donorId,
+              isReleased,
               this.reservationDetails.id
           )
       ).then(() => {
