@@ -7,27 +7,28 @@
     ></donor-details-header>
 
     <div v-if="!isDonationAdded">
-      <b-form-group v-slot="{ ariaDescribedby }" label="Typ pobrania:">
-        <b-form-radio-group
-            v-model="reservationDetails.donationType"
-            :aria-describedby="ariaDescribedby"
-            :options="options"
-            name="radios-stacked"
-            required
-            stacked
-        ></b-form-radio-group>
-      </b-form-group>
+      <b-form @submit.prevent="addNewDonation">
+        <b-form-group v-slot="{ ariaDescribedby }" label="Typ pobrania:">
+          <b-form-radio-group
+              v-model="reservationDetails.donationType"
+              :aria-describedby="ariaDescribedby"
+              :options="options"
+              name="radios-stacked"
+              required
+              stacked
+          ></b-form-radio-group>
+        </b-form-group>
 
-      <label>Ilość pobranego materiału biologicznego: <b>{{ amount }}</b> [ml]:</label><br>
-      <b-row>
-        <b-col class="mb-2" md="8">
-          <b-form-input v-model="amount" max="1000" min="25" step="25" type="range"></b-form-input>
-        </b-col>
-      </b-row>
-
-      <div @click="addNewDonation">
-        <b-button block variant="primary">Dodaj pobranie materiału biologicznego do systemu</b-button>
-      </div>
+        <label>Ilość pobranego materiału biologicznego: <b>{{ amount }}</b> [ml]:</label><br>
+        <b-row>
+          <b-col class="mb-2" md="8">
+            <b-form-input v-model="amount" max="1000" min="25" step="25" type="range"></b-form-input>
+          </b-col>
+        </b-row>
+        <div>
+          <b-button block type="submit" variant="primary">Dodaj pobranie materiału biologicznego do systemu</b-button>
+        </div>
+      </b-form>
     </div>
 
     <b-link :to="'/reservation?date=false'">
@@ -41,8 +42,8 @@
 <script>
 import DonationService from '../../services/donation.service';
 import ReservationService from '../../services/reservation.service'
-import Donation from "../../model/donation";
 import Reservation from "../../model/reservation";
+import DonationRequest from "../../model/donationRequest";
 
 export default {
   mounted() {
@@ -88,18 +89,11 @@ export default {
   methods: {
     addNewDonation() {
       DonationService.addNewDonation(
-          new Donation(
-              null,
+          new DonationRequest(
               this.reservationDetails.date,
               this.amount,
               this.reservationDetails.donationType,
               this.reservationDetails.donorId,
-              '',
-              '',
-              '',
-              false,
-              null,
-              '',
               this.reservationDetails.id
           )
       ).then(() => {
