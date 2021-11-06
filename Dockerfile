@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build
+FROM node:14-alpine as build
 WORKDIR /app
 COPY package.json /app/package.json
 RUN npm install
@@ -11,7 +11,7 @@ FROM nginx:alpine
 COPY --from=build /app/dist /usr/share/nginx/html
 EXPOSE 80
 # run nginx
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 
 #  --- LOCAL ---
