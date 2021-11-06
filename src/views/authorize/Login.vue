@@ -78,10 +78,9 @@
 import User from '../../model/user';
 
 export default {
-  name: 'Login',
   data() {
     return {
-      user: new User('', ''),
+      user: new User(),
       loading: false,
       message: ''
     };
@@ -104,7 +103,6 @@ export default {
           this.loading = false;
           return;
         }
-
         if (this.user.username && this.user.password) {
           this.$store.dispatch('auth/login', this.user).then(
               () => {

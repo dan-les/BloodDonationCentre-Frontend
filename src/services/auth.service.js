@@ -8,13 +8,12 @@ class AuthService {
         return api.post(API_URL + 'signin', {
             username: user.username,
             password: user.password
-        })
-            .then(response => {
-                if (response.data.accessToken) {
-                    TokenService.setUser(response.data);
-                }
-                return response.data;
-            });
+        }).then(response => {
+            if (response.data.accessToken) {
+                TokenService.setUser(response.data);
+            }
+            return response.data;
+        });
     }
 
     logout() {

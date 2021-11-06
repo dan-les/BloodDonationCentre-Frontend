@@ -45,18 +45,18 @@
             <template #cell(actions)="row">
               <span v-if="row.item.isAppointmentFinished !== true">
                 <b-button class="mr-1 mt-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">
-                Usuń rezerwację
-              </b-button>
+                  Usuń rezerwację
+                </b-button>
               </span>
               <span v-else>
-            <b-button
-                v-b-popover.hover.top="'Dla tej rezerwacji odnotowano już pobranie, zatem nie można jej usunąć'"
-                class="mr-1 mt-1"
-                size="sm"
-                title="Pobranie zostało zarejestrowane w systemie"
-                variant="info">
+               <b-button
+                   v-b-popover.hover.top="'Dla tej rezerwacji odnotowano już pobranie, zatem nie można jej usunąć'"
+                   class="mr-1 mt-1"
+                   size="sm"
+                   title="Pobranie zostało zarejestrowane w systemie"
+                   variant="info">
                 <font-awesome-icon icon="question"/>
-              </b-button>
+               </b-button>
               </span>
             </template>
           </b-table>
@@ -107,21 +107,20 @@ export default {
   data() {
     return {
       donations: null,
-      reservations: null,
       fieldsDonations: [
         {key: 'date', label: 'Data pobrania', sortable: true, sortDirection: 'desc'},
         {key: 'amount', label: 'Ilość pobranego materiału [ml]', sortable: true, class: 'text-center'},
         {key: 'donationType', label: 'Rodzaj pobrania', sortable: true, class: 'text-center'},
       ],
-
+      reservations: null,
       fieldsReservations: [
         {key: 'date', label: 'Data', sortable: true, sortDirection: 'desc', class: 'text-center'},
         {key: 'time', label: 'Godzina', sortable: true, class: 'text-center'},
         {key: 'donationType', label: 'Rodzaj pobrania', sortable: true, class: 'text-center'},
         {key: 'actions', label: 'Akcje', class: 'text-center'}
       ],
-      showDonations: null,
       showReservations: false,
+      showDonations: null,
       barChartData: {
         labels: ["krew", "osocze"],
         datasets: [{
@@ -191,7 +190,6 @@ export default {
     reloadData() {
       this.getAllReservationsByDonor()
     },
-
     getAllReservationsByDonor() {
       ReservationService.getAllReservationsByDonorId(this.$store.state.auth.user.id).then(
           response => {
@@ -247,7 +245,6 @@ export default {
           .catch(() => {
             this.makeToastError();
           });
-
     },
     makeToastSuccess(message) {
       this.$bvToast.toast(message, {
