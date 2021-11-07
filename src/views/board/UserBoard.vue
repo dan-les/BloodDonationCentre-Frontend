@@ -96,8 +96,8 @@
 import DonationService from "../../services/donation.service";
 import {mdbContainer, mdbHorizontalBarChart} from "mdbvue";
 import ReservationService from "../../services/reservation.service";
-import Reservation from "../../model/reservation";
-import Donation from "../../model/donation";
+import Reservation from "../../models/reservation";
+import Donation from "../../models/donation";
 
 export default {
   components: {

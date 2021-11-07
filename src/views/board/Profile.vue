@@ -32,7 +32,7 @@
 
 <script>
 import DonorService from "../../services/donor.service";
-import User from "../../model/donor";
+import User from "../../models/donor";
 
 export default {
   data() {

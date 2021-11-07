@@ -162,7 +162,7 @@
 
 <script>
 import RecipientService from '../../services/recipient.service';
-import Recipient from "../../model/recipient";
+import Recipient from "../../models/recipient";
 
 export default {
   data() {

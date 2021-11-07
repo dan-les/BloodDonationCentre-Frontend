@@ -98,7 +98,7 @@
 
 <script>
 import DonorService from '../../services/donor.service';
-import Donor from "../../model/donor";
+import Donor from "../../models/donor";
 
 export default {
   mounted() {

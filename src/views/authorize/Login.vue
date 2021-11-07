@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import User from '../../model/user';
+import User from '../../models/user';
 
 export default {
   data() {

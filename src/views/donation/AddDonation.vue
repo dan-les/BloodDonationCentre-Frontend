@@ -42,8 +42,8 @@
 <script>
 import DonationService from '../../services/donation.service';
 import ReservationService from '../../services/reservation.service'
-import Reservation from "../../model/reservation";
-import DonationRequest from "../../model/donationRequest";
+import Reservation from "../../models/reservation";
+import DonationRequest from "../../models/donationRequest";
 
 export default {
   mounted() {

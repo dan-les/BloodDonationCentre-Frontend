@@ -188,7 +188,7 @@
 
 <script>
 import ReservationService from '../../services/reservation.service';
-import Reservation from "../../model/reservation";
+import Reservation from "../../models/reservation";
 
 export default {
   data() {

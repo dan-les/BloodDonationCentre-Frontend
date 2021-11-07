@@ -157,7 +157,7 @@
 
 <script>
 import DonationService from '../../services/donation.service';
-import Donation from "../../model/donation";
+import Donation from "../../models/donation";
 
 export default {
   computed: {

@@ -164,8 +164,8 @@
 <script>
 import ReservationService from '../../services/reservation.service';
 import DonorService from "../../services/donor.service";
-import Reservation from "../../model/reservation";
-import Donor from "../../model/donor";
+import Reservation from "../../models/reservation";
+import Donor from "../../models/donor";
 
 export default {
   data() {

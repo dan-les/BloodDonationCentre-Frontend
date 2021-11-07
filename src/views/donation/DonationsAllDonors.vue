@@ -174,8 +174,8 @@
 <script>
 import DonationService from '../../services/donation.service';
 import RecipientService from '../../services/recipient.service';
-import Donation from "../../model/donation";
-import Recipient from "../../model/recipient";
+import Donation from "../../models/donation";
+import Recipient from "../../models/recipient";
 
 export default {
   computed: {
