@@ -1,6 +1,6 @@
 const USER_KEY = "user";
 
-class TokenService {
+class JwtTokenService {
     updateLocalAccessToken(token) {
         let user = JSON.parse(localStorage.getItem(USER_KEY));
         user.accessToken = token;
@@ -32,4 +32,4 @@ class TokenService {
     }
 }
 
-export default new TokenService();
+export default new JwtTokenService();

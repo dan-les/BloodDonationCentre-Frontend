@@ -12,11 +12,11 @@ export const auth = {
         login({commit}, user) {
             return AuthService.login(user).then(
                 user => {
-                    commit('loginSuccess', user);
+                    commit('loggedSuccessfully', user);
                     return Promise.resolve(user);
                 },
                 error => {
-                    commit('loginFailure');
+                    commit('loggedNotSuccessfully');
                     return Promise.reject(error);
                 }
             );
@@ -28,14 +28,14 @@ export const auth = {
         register({commit}, user) {
             return AuthService.register(user).then(
                 response => {
-                    commit('registerSuccess');
+                    commit('registeredSuccessfully');
                     if (response.data.message === "User successfully register!") {
                         response.data.message = 'Użytkownik pomyślnie zarejestrowany!';
                         return Promise.resolve(response.data);
                     }
                 },
                 error => {
-                    commit('registerFailure');
+                    commit('registeredNotSuccessfully');
                     if (error.response.data.message === "Username is already taken") {
                         error.response.data.message = 'Użytkownik o takim loginie już istnieje!';
                     } else if (error.response.data.message === "Email is already in use") {
@@ -52,21 +52,21 @@ export const auth = {
         }
     },
     mutations: {
-        registerSuccess(state) {
+        registeredSuccessfully(state) {
             state.status.loggedIn = false;
         },
-        registerFailure(state) {
+        registeredNotSuccessfully(state) {
             state.status.loggedIn = false;
         },
         logout(state) {
             state.status.loggedIn = false;
             state.user = null;
         },
-        loginSuccess(state, user) {
+        loggedSuccessfully(state, user) {
             state.status.loggedIn = true;
             state.user = user;
         },
-        loginFailure(state) {
+        loggedNotSuccessfully(state) {
             state.status.loggedIn = false;
             state.user = null;
         },

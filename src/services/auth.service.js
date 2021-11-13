@@ -9,10 +9,12 @@ class AuthService {
             username: user.username,
             password: user.password
         }).then(response => {
-            if (response.data.accessToken) {
-                TokenService.setUser(response.data);
+            const data = response.data;
+            const accessToken = data.accessToken;
+            if (accessToken) {
+                TokenService.setUser(data);
             }
-            return response.data;
+            return data;
         });
     }
 

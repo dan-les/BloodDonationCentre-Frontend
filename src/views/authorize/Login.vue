@@ -12,7 +12,7 @@
             width="88">
         </b-img>
 
-        <b-form @submit.prevent="handleLogin">
+        <b-form @submit.prevent="triggerLogin">
           <b-form-group>
             <label>Login</label>
             <b-form-input
@@ -46,8 +46,8 @@
           </b-form-group>
 
           <b-form-group>
-            <b-button :disabled="loading" block type="sumbit" variant="primary">
-              <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+            <b-button :disabled="isLoading" block type="sumbit" variant="primary">
+              <span v-show="isLoading" class="spinner-border spinner-border-sm"></span>
               <span> Zaloguj się</span>
             </b-button>
           </b-form-group>
@@ -81,7 +81,7 @@ export default {
   data() {
     return {
       user: new User(),
-      loading: false,
+      isLoading: false,
       message: ''
     };
   },
@@ -96,20 +96,22 @@ export default {
     }
   },
   methods: {
-    handleLogin() {
-      this.loading = true;
-      this.$validator.validateAll().then(isValid => {
-        if (!isValid) {
-          this.loading = false;
+    triggerLogin() {
+      this.isLoading = true;
+      this.$validator.validateAll().then(isValidForm => {
+        if (!isValidForm) {
+          this.isLoading = false;
           return;
         }
-        if (this.user.username && this.user.password) {
+        const username = this.user.username;
+        const password = this.user.password;
+        if (username && password) {
           this.$store.dispatch('auth/login', this.user).then(
               () => {
                 this.$router.push('/home');
               },
               () => {
-                this.loading = false;
+                this.isLoading = false;
                 this.message = "Błąd logowania!"
               }
           );
