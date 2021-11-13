@@ -43,7 +43,7 @@
               striped
           >
             <template #cell(actions)="row">
-              <span v-if="row.item.isAppointmentFinished !== true">
+              <span v-if="!row.item.isAppointmentFinished">
                 <b-button class="mr-1 mt-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">
                   Usuń rezerwację
                 </b-button>
