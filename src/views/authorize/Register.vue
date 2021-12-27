@@ -6,7 +6,7 @@
           <b-card-sub-title class="mb-2">REJESTRACJA</b-card-sub-title>
           <b-img
               v-if="role === undefined"
-              :srcset="require('../../assets/user_img_blue_darker.png')"
+              :srcset="require('../../assets/user_icon_image.png')"
               alt="User image"
               center
               height="88"
@@ -141,15 +141,6 @@
         </b-card>
       </b-col>
     </b-row>
-    <!-- -->
-    <!--    <div-->
-    <!--        v-if="message"-->
-    <!--        :class="successful ? 'alert-success' : 'alert-danger'"-->
-    <!--        class="alert"-->
-    <!--    >{{ message }}-->
-    <!--    </div>-->
-    <!--    </div>-->
-
   </b-container>
 </template>
 

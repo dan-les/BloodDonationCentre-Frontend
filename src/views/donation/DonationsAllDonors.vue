@@ -209,7 +209,7 @@ export default {
       }
     },
     selectedIsReleased() {
-      // hide column 'Akcje' id dose is released
+      // hide column 'Akcje' if dose is released
       if (this.selectedIsReleased === 'true') {
         this.fieldsDonations.pop();
       } else {
@@ -227,17 +227,9 @@ export default {
   methods: {
     changeDisplayedFields(newSelectedIsReleased) {
       let objIndexRecipientName = this.fieldsDonations.findIndex((obj => obj.key === 'recipientName'));
-      if (newSelectedIsReleased === 'false') {
-        this.fieldsDonations[objIndexRecipientName].visible = false;
-      } else {
-        this.fieldsDonations[objIndexRecipientName].visible = true;
-      }
+      this.fieldsDonations[objIndexRecipientName].visible = newSelectedIsReleased !== 'false';
       let objIndexActions = this.fieldsDonations.findIndex((obj => obj.key === 'actions'));
-      if (newSelectedIsReleased === 'true') {
-        this.fieldsDonations[objIndexActions].visible = false;
-      } else {
-        this.fieldsDonations[objIndexActions].visible = true;
-      }
+      this.fieldsDonations[objIndexActions].visible = newSelectedIsReleased !== 'true';
     },
     setSelectedRecipient(recipientData) {
       this.selectedRecipient = recipientData.id;

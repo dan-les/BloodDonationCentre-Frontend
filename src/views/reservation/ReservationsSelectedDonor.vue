@@ -45,7 +45,6 @@
         </b-col>
 
         <b-col class="my-1" lg="6">
-
         </b-col>
 
         <b-col class="my-1" lg="6">
@@ -149,7 +148,6 @@
         <template #cell(actions)="row">
           <b-button class="mr-1" size="sm" variant="danger" @click="deleteReservation(row.item.id)">Usuń</b-button>
         </template>
-
       </b-table>
     </b-row>
 
@@ -206,7 +204,6 @@ export default {
           })
     }
   },
-
   mounted() {
     if (!this.$store.state.auth.user && !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
@@ -231,7 +228,6 @@ export default {
     )
     this.getAllReservationsByDonorId()
   },
-
   methods: {
     deleteReservation(id) {
       ReservationService.deleteReservation(id)
@@ -290,10 +286,8 @@ export default {
     onFiltered(filteredItems) {
       this.totalRows = filteredItems.length
       this.currentPage = 1
-    },
-  },
-
-
+    }
+  }
 }
 </script>
 

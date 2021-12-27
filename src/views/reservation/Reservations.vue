@@ -263,7 +263,7 @@ export default {
     if (!this.$store.state.auth.user && !this.$store.state.auth.user.roles.includes('ROLE_STAFF')) {
       this.$router.push('/login');
     }
-    // isDatePickerEnabled = true or isDatePickerEnabled = false
+    // check if 'isDatePickerEnabled = true' or 'isDatePickerEnabled = false'
     this.isDatePickerEnabled = this.$route.query.date;
   },
   methods: {
@@ -332,10 +332,8 @@ export default {
             .finally(() => {
               loader.hide();
             })
-
       }
     },
-
     info(item, index, button) {
       this.infoModal.title = `Row index: ${index}`
       this.infoModal.content = JSON.stringify(item, null, 2)

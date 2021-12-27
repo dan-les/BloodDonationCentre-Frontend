@@ -37,7 +37,6 @@
             name="radio-btn-outline"
         ></b-form-radio-group>
       </b-form-group>
-
     </div>
 
     <div ref="hoursContainer"/>
@@ -45,9 +44,7 @@
     <div v-if="selectedTime !== null && dateValue !== '' &&  selectedDonationType !== ''" @click="addNewReservation">
       <b-button block variant="primary">Zarezerwuj termin na pobranie materiału biologicznego</b-button>
     </div>
-
   </b-container>
-
 </template>
 
 <script>
@@ -94,7 +91,6 @@ export default {
       options: [
         {text: 'Pobranie krwi pełnej', value: 'blood'},
         {text: 'Donacja osocza', value: 'plasma'},
-        // { text: 'Third radio', value: 'third' }
       ],
       selectedTime: null,
       optionsTime: [],

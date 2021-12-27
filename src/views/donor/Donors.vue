@@ -6,9 +6,7 @@
       </b-jumbotron>
 
       <b-row style="margin-top: 1rem;">
-        <!-- User Interface controls -->
         <b-row>
-          <!-- sortowanie-->
           <b-col class="my-1" lg="6">
             <b-form-group
                 v-slot="{ ariaDescribedby }"
@@ -133,7 +131,6 @@
           </b-col>
         </b-row>
 
-        <!-- Main table element -->
         <b-table
             :current-page="currentPage"
             :empty-filtered-text="emptyFilteredText"
@@ -153,10 +150,6 @@
             stacked="md"
             @filtered="onFiltered"
         >
-          <!--        <template #cell(name)="row">-->
-          <!--          {{ row.value.firstName }} {{ row.value.lastName }}-->
-          <!--        </template>-->
-
           <template #cell(actions)="row">
 
             <b-button class="mr-1 mt-1" size="sm" variant="info" @click="row.toggleDetails">
@@ -167,9 +160,6 @@
             <b-link :to="{ name: 'donationsSelectedDonor', params: { id: row.item.id}  }">
               <b-button class="mr-1 mt-1" size="sm" variant="primary">Pobrania</b-button>
             </b-link>
-            <!--          <b-link :to="{ name: 'addReservation', params: { id: row.item.id}  }">-->
-            <!--            <b-button class="mr-1" size="sm" variant="primary">Umów termin</b-button>-->
-            <!--          </b-link>-->
 
             <b-dropdown class="mr-1 mt-1" size="sm" text="Rezerwacje" variant="primary">
               <b-dropdown-item>

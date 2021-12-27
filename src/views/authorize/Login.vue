@@ -4,7 +4,7 @@
       <b-card bg-variant="light" class="p-xl-3" style="margin-top: 2rem">
         <b-card-sub-title class="mb-2">LOGOWANIE</b-card-sub-title>
         <b-img
-            :srcset="require('../../assets/user_img_blue_darker.png')"
+            :srcset="require('../../assets/user_icon_image.png')"
             alt="User image"
             center
             height="88"

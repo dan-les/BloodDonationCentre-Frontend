@@ -174,7 +174,6 @@ export default {
     if (!this.$store.state.auth.user) {
       this.$router.push('/login');
     }
-
     DonationService.getAllDonationsByDonorId(this.$route.params.id)
         .then(response => {
           const results_tmp = [];
@@ -215,7 +214,6 @@ export default {
       sortDirection: 'asc',
       filter: null,
       filterOn: [],
-
       fieldsDonations: [
         {key: 'id', label: 'ID', sortable: true, class: 'text-center'},
         {key: 'date', label: 'Data pobrania', sortable: true, class: 'text-center'},

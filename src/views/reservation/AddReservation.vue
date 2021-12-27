@@ -29,8 +29,6 @@ export default {
     return {
       headerTitle: 'Rezerwacja terminu na pobranie materiału biologicznego'
     }
-  },
-
-
+  }
 }
 </script>

@@ -172,7 +172,7 @@ export default {
 
 <style lang="scss">
 #app {
-  background-image: url("assets/background_image_blue_darker_cut.png");
+  background-image: url("assets/background_image.png");
   background-repeat: no-repeat;
   background-size: 100%;
 }

@@ -205,7 +205,6 @@ export default {
       this.$router.push('/login');
     }
     this.getRecipients()
-
   },
   methods: {
     getRecipients() {
@@ -223,7 +222,6 @@ export default {
           .finally(() => {
             loader.hide();
           })
-
     },
     addRecipient() {
       RecipientService.addNewRecipient({
@@ -246,7 +244,6 @@ export default {
         })
       })
     },
-
     resetData() {
       this.newRecipient = null;
     },
