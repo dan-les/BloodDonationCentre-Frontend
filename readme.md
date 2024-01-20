@@ -21,11 +21,11 @@ Core technologies used in the project:
 * Logged employee can:
     * manage the donors' personal data ![](ui_screenshots/przegląd_dawców.png) ![](ui_screenshots/edycja_danych_dawcy.png)
     * book/manage appointments for donations![](ui_screenshots/rezerwacje_użytkownika.png) ![](ui_screenshots/zarezerwowane_terminy_all_donors.png)
-    * manage/view donations ![](ui_screenshots/panel_pracownika_dodawanie donacji.png)![](ui_screenshots/panel_pracownika_spis_donacji_magazyn.png)![](ui_screenshots/panel_pracownika_spis_donacji_wydane.png)
+    * manage/view donations ![](ui_screenshots/panel_pracownika_dodawanie_donacji.png)![](ui_screenshots/panel_pracownika_spis_donacji_magazyn.png)![](ui_screenshots/panel_pracownika_spis_donacji_wydane.png)
     * mark the release of doses of biological material to other entities ![](ui_screenshots/wydanie_dawki.png)
     * view statistics about stored biological material ![](ui_screenshots/statystyki_centrum_panel_pracownika.png)
 * Admin can manage all employees in donation centre
 * The system takes care of providing the appropriate interval between donations
 
-More screenshot availabe [here](ui_screenshots)
+More screenshot available [here](ui_screenshots)
 
